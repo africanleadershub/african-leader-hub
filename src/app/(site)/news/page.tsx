@@ -13,6 +13,7 @@ import { NewsletterSubscribe } from "@/components/newsletter-subscribe";
 export default function News() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [newsArticles, setNewsArticles] = useState<ReturnType<typeof toPostView>[]>([]);
+  const [categoryNames, setCategoryNames] = useState<string[]>([]);
   const organizationSchema = generateOrganizationSchema();
 
   useEffect(() => {
@@ -20,10 +21,16 @@ export default function News() {
       .then((res) => res.json())
       .then((data) => setNewsArticles((data.items || []).map(toPostView)))
       .catch(() => undefined);
+    fetch("/api/content/categories?kind=NEWS")
+      .then((res) => res.json())
+      .then((data) =>
+        setCategoryNames((data.items || []).map((item: { name: string }) => item.name).filter(Boolean))
+      )
+      .catch(() => undefined);
   }, []);
 
   const featuredNews = newsArticles.filter((article) => article.featured).slice(0, 1);
-  const categories = ["All", ...Array.from(new Set(newsArticles.map((article) => article.category)))];
+  const categories = ["All", ...(categoryNames.length ? categoryNames : Array.from(new Set(newsArticles.map((article) => article.category))))];
   const filteredArticles =
     activeCategory === "All"
       ? newsArticles

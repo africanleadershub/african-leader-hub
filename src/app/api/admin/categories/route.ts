@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth/middleware";
 import { slugify } from "@/lib/slug";
-import { CategoryKind } from "@/generated/prisma/enums";
 
 const KINDS = ["NEWS", "PROGRAM"] as const;
 type Kind = (typeof KINDS)[number];
@@ -99,7 +98,7 @@ export async function PATCH(request: NextRequest) {
   });
 
   if (name !== current.name) {
-    if (current.kind === CategoryKind.NEWS) {
+    if (current.kind === "NEWS") {
       await prisma.post.updateMany({
         where: { category: current.name },
         data: { category: name },
@@ -126,7 +125,7 @@ export async function DELETE(request: NextRequest) {
   if (!current) return NextResponse.json({ error: "Category not found" }, { status: 404 });
 
   const inUse =
-    current.kind === CategoryKind.NEWS
+    current.kind === "NEWS"
       ? await prisma.post.count({ where: { category: current.name } })
       : await prisma.program.count({ where: { category: current.name } });
 

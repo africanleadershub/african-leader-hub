@@ -1,9 +1,30 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, X, Linkedin, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, X, Linkedin, Instagram, Facebook, Youtube, Github, Globe, Music2, MessageCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 
 type SocialLink = { platform?: string; label?: string; url?: string };
 type LegalLink = { slug: string; title: string };
+
+const DEFAULT_SOCIAL: SocialLink[] = [
+  { platform: "twitter", label: "@A_LeadersHub", url: "https://twitter.com/A_LeadersHub" },
+  { platform: "linkedin", label: "African Leaders Hub", url: "https://www.linkedin.com/company/african-leaders-hub" },
+  { platform: "instagram", label: "@a_leadershub", url: "https://www.instagram.com/a_leadershub/" },
+];
+
+const SOCIAL_ICONS: Record<string, LucideIcon> = {
+  twitter: X,
+  x: X,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  facebook: Facebook,
+  youtube: Youtube,
+  github: Github,
+  website: Globe,
+  globe: Globe,
+  tiktok: Music2,
+  whatsapp: MessageCircle,
+};
 
 export function Footer({
   settings,
@@ -24,15 +45,10 @@ export function Footer({
   const email = settings?.email || "africanleadershub@gmail.com";
   const phone = settings?.phone || "+250 788 358 891";
   const location = `${settings?.city || "Kigali"}, ${settings?.country || "Rwanda"}`;
-  const twitter =
-    settings?.socialLinks?.find((link) => link.platform === "twitter")?.url ||
-    "https://twitter.com/A_LeadersHub";
-  const linkedin =
-    settings?.socialLinks?.find((link) => link.platform === "linkedin")?.url ||
-    "https://www.linkedin.com/company/african-leaders-hub";
-  const instagram =
-    settings?.socialLinks?.find((link) => link.platform === "instagram")?.url ||
-    "https://www.instagram.com/a_leadershub/";
+  const socialLinks =
+    settings?.socialLinks?.filter((link) => link.url)?.length
+      ? settings.socialLinks.filter((link) => link.url)
+      : DEFAULT_SOCIAL;
 
   return (
     <footer className="bg-amber-900/40 text-black w-full">
@@ -106,24 +122,17 @@ export function Footer({
                 <MapPin className="w-4 h-4 text-[#8B4513]" />
                 <span className="text-black text-sm">{location}</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <X className="w-4 h-4 text-[#8B4513]" />
-                <Link href={twitter} target="_blank" rel="noopener noreferrer" className="text-black hover:text-[#8B4513] transition-colors text-sm">
-                  @A_LeadersHub
-                </Link>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Linkedin className="w-4 h-4 text-[#8B4513]" />
-                <Link href={linkedin} target="_blank" rel="noopener noreferrer" className="text-black hover:text-[#8B4513] transition-colors text-sm">
-                  African Leaders Hub
-                </Link>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Instagram className="w-4 h-4 text-[#8B4513]" />
-                <Link href={instagram} target="_blank" rel="noopener noreferrer" className="text-black hover:text-[#8B4513] transition-colors text-sm">
-                  @a_leadershub
-                </Link>
-              </div>
+              {socialLinks.map((link) => {
+                const Icon = SOCIAL_ICONS[(link.platform || "").toLowerCase()] || Globe;
+                return (
+                  <div key={`${link.platform}-${link.url}`} className="flex items-center space-x-3">
+                    <Icon className="w-4 h-4 text-[#8B4513]" />
+                    <Link href={link.url || "#"} target="_blank" rel="noopener noreferrer" className="text-black hover:text-[#8B4513] transition-colors text-sm">
+                      {link.label || link.platform || link.url}
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

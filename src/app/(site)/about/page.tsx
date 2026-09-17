@@ -3,6 +3,7 @@ import { Target, Eye, Users, Handshake, Mail, Phone, MapPin, Shield, Heart, Tree
 import { getOrganizationIdentity, getWebsiteSettings, publicContact } from "@/lib/content";
 import { generateOrganizationSchema } from "@/lib/seo";
 import type { LucideIcon } from "lucide-react";
+import { HtmlContent } from "@/components/html-content";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
@@ -68,10 +69,7 @@ export default async function About() {
     GraduationCap,
     Lightbulb,
   };
-  const backgroundParagraphs = (identity?.background || "")
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
+  const backgroundHtml = identity?.background || "";
 
   return (
     <div className="min-h-screen">
@@ -117,10 +115,11 @@ export default async function About() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
               </div>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                {identity?.mission ||
-                  "To empower youth, children, and women as ethical leaders for sustainable African development."}
-              </p>
+              <HtmlContent
+                className="text-lg text-gray-700 leading-relaxed prose-p:my-0"
+                html={identity?.mission}
+                fallback="To empower youth, children, and women as ethical leaders for sustainable African development."
+              />
             </div>
 
             {/* Vision Card */}
@@ -131,10 +130,11 @@ export default async function About() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
               </div>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                {identity?.vision ||
-                  "A resilient Africa led by informed, innovative generations."}
-              </p>
+              <HtmlContent
+                className="text-lg text-gray-700 leading-relaxed prose-p:my-0"
+                html={identity?.vision}
+                fallback="A resilient Africa led by informed, innovative generations."
+              />
             </div>
           </div>
 
@@ -177,16 +177,11 @@ export default async function About() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">Our Background</h2>
             <div className="max-w-4xl mx-auto text-black">
-              {(backgroundParagraphs.length
-                ? backgroundParagraphs
-                : [
-                    "African Leaders Hub (ALH) was founded to address the critical challenges facing Africa's youth, children, and women. Based in Rwanda, we operate across East Africa, focusing on the most pressing issues affecting our communities.",
-                  ]
-              ).map((paragraph) => (
-                <p key={paragraph.slice(0, 40)} className="text-lg text-black leading-relaxed mb-6">
-                  {paragraph}
-                </p>
-              ))}
+              <HtmlContent
+                className="text-lg text-black leading-relaxed prose-p:mb-6"
+                html={backgroundHtml}
+                fallback="African Leaders Hub (ALH) was founded to address the critical challenges facing Africa's youth, children, and women. Based in Rwanda, we operate across East Africa, focusing on the most pressing issues affecting our communities."
+              />
             </div>
           </div>
         </div>

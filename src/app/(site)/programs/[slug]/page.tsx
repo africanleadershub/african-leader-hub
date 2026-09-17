@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: ProgramPageProps): Promise<Me
   }
 
   return {
-    title: `${program.title} - African Leaders Hub`,
-    description: program.description,
+    title: program.seoTitle || `${program.title} - African Leaders Hub`,
+    description: program.seoDescription || program.description,
     keywords: `${program.title}, ${program.category}, African Leaders Hub, Rwanda programs`,
   };
 }
@@ -53,6 +53,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
     .slice(0, 3);
 
   const programSchema = generateProgramSchema(program.title, program.description);
+  const banner = program.imageAsset?.url || program.bannerAsset?.url || "/background-pattern-1.jpg";
 
   return (
     <div className="min-h-screen">
@@ -66,7 +67,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
       <section className="relative text-white py-16 min-h-[calc(100vh-20rem)] md:min-h-[400px] h-[calc(100vh-10rem)] md:h-[450px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/background-pattern-1.jpg)' }}
+          style={{ backgroundImage: `url(${banner})` }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/30 to-black/70"></div>

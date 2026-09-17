@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Users, TreePine, GraduationCap, Heart, Shield, Lightbulb } from "lucide-react";
 import { generateOrganizationSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
+import { HtmlContent } from "@/components/html-content";
 import Image from "next/image";
 import {
   getOrganizationIdentity,
@@ -94,10 +95,11 @@ export default async function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
               Our Mission
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              {identity?.mission ||
-                "To develop principled leaders who drive transformation with courage and empathy, shaping a just, innovative, and sustainable Africa."}
-            </p>
+            <HtmlContent
+              className="text-lg text-gray-700 leading-relaxed prose-p:my-0"
+              html={identity?.mission}
+              fallback="To develop principled leaders who drive transformation with courage and empathy, shaping a just, innovative, and sustainable Africa."
+            />
           </div>
         </div>
       </section>

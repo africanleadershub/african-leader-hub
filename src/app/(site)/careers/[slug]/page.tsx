@@ -9,6 +9,7 @@ import { getCareerBySlug } from "@/lib/content";
 import { toCareerView } from "@/lib/content-views";
 import { generateOrganizationSchema } from "@/lib/seo";
 import { CareerApplyForm } from "@/components/career-apply-form";
+import { HtmlContent } from "@/components/html-content";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
@@ -126,10 +127,7 @@ export default async function CareerPage({ params }: CareerPageProps) {
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Career Details (HTML Content) */}
-              <div
-                className="prose prose-lg max-w-none mb-8"
-                dangerouslySetInnerHTML={{ __html: career.detailsHtml }}
-              />
+              <HtmlContent className="mb-8" html={career.detailsHtml} />
             </div>
 
             {/* Sidebar */}
@@ -209,11 +207,11 @@ export default async function CareerPage({ params }: CareerPageProps) {
             Ready to Apply?
           </h2>
           <p className="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
-            Send us your resume, cover letter and any other relevant documents through the designated email address. We look forward to hearing from you!
+            Upload your resume, cover letter, and any supporting documents in the form above. We look forward to hearing from you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-white text-[#8B4513] hover:bg-gray-100 rounded-full">
-              <Link href="/contact">View All Positions</Link>
+              <Link href="/careers">View all positions</Link>
             </Button>
           </div>
         </div>

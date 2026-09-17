@@ -8,7 +8,7 @@ import { TableKit } from "@tiptap/extension-table/kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
-import { generateHTML } from "@tiptap/html";
+import { generateHTML, generateJSON } from "@tiptap/html";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,18 +53,40 @@ export function htmlFromJson(json: JSONContent | null | undefined): string {
   }
 }
 
+export function jsonFromHtml(html: string | null | undefined): JSONContent {
+  const source = (html || "").trim();
+  if (!source) {
+    return { type: "doc", content: [{ type: "paragraph" }] };
+  }
+  const markup = /<\/?[a-z][\s\S]*>/i.test(source)
+    ? source
+    : `<p>${source.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br>")}</p>`;
+  try {
+    return generateJSON(markup, editorExtensions) as JSONContent;
+  } catch {
+    return {
+      type: "doc",
+      content: [{ type: "paragraph", content: [{ type: "text", text: source }] }],
+    };
+  }
+}
+
 type RichTextEditorProps = {
-  value: JSONContent | null;
+  value?: JSONContent | null;
+  html?: string | null;
   onChange: (json: JSONContent, html: string) => void;
   placeholder?: string;
   className?: string;
+  compact?: boolean;
 };
 
 export function RichTextEditor({
   value,
+  html,
   onChange,
   placeholder = "Write content…",
   className,
+  compact = false,
 }: RichTextEditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -72,11 +94,12 @@ export function RichTextEditor({
       ...editorExtensions,
       Placeholder.configure({ placeholder }),
     ],
-    content: value ?? { type: "doc", content: [{ type: "paragraph" }] },
+    content: value ?? jsonFromHtml(html),
     editorProps: {
       attributes: {
-        class:
-          "prose prose-neutral max-w-none min-h-[240px] px-4 py-3 focus:outline-none",
+        class: compact
+          ? "prose prose-neutral max-w-none min-h-[160px] px-4 py-3 focus:outline-none [&_li_p]:my-0 [&_li]:my-0.5 [&_ul]:my-2 [&_ol]:my-2 [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3"
+          : "prose prose-neutral max-w-none min-h-[240px] px-4 py-3 focus:outline-none [&_li_p]:my-0 [&_li]:my-0.5 [&_ul]:my-2 [&_ol]:my-2 [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3",
       },
     },
     onUpdate: ({ editor: instance }) => {
@@ -85,13 +108,23 @@ export function RichTextEditor({
   });
 
   useEffect(() => {
-    if (!editor || !value) return;
-    const current = JSON.stringify(editor.getJSON());
-    const next = JSON.stringify(value);
-    if (current !== next) {
-      editor.commands.setContent(value);
+    if (!editor) return;
+    if (value) {
+      const current = JSON.stringify(editor.getJSON());
+      const next = JSON.stringify(value);
+      if (current !== next) {
+        editor.commands.setContent(value);
+      }
+      return;
     }
-  }, [editor, value]);
+    if (html && !editor.isFocused) {
+      const next = jsonFromHtml(html);
+      const current = JSON.stringify(editor.getJSON());
+      if (current !== JSON.stringify(next)) {
+        editor.commands.setContent(next);
+      }
+    }
+  }, [editor, value, html]);
 
   if (!editor) return <div className="h-64 rounded-md border bg-muted/30" />;
 

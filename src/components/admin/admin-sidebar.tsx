@@ -20,6 +20,7 @@ import {
   CircleUser,
   LogOut,
   GalleryVerticalEnd,
+  Tags,
 } from "lucide-react";
 import {
   Sidebar,
@@ -64,7 +65,9 @@ const NAV: NavGroup[] = [
     title: "Content",
     items: [
       { title: "News", href: "/admin/news", icon: Newspaper },
+      { title: "News categories", href: "/admin/news/categories", icon: Tags },
       { title: "Programs", href: "/admin/programs", icon: GraduationCap },
+      { title: "Program categories", href: "/admin/programs/categories", icon: Tags },
       { title: "Careers", href: "/admin/careers", icon: Briefcase },
       { title: "Team", href: "/admin/team", icon: Users },
       { title: "Partners", href: "/admin/partners", icon: Handshake },
@@ -144,8 +147,11 @@ export function AdminSidebar({
                 {group.items.length ? (
                   <SidebarMenuSub>
                     {group.items.map((item) => {
-                      const active =
-                        pathname === item.href || pathname.startsWith(`${item.href}/`);
+                      const nested = pathname.startsWith(`${item.href}/`);
+                      const isCategoryChild =
+                        (item.href === "/admin/news" || item.href === "/admin/programs") &&
+                        pathname.startsWith(`${item.href}/categories`);
+                      const active = pathname === item.href || (nested && !isCategoryChild);
                       return (
                         <SidebarMenuSubItem key={item.href}>
                           <SidebarMenuSubButton asChild isActive={active}>

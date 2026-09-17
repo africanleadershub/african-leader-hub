@@ -12,6 +12,7 @@ import { toProgramView, type ProgramView } from "@/lib/content-views";
 export default function Programs() {
   const [activeCategory, setActiveCategory] = useState("youth-and-children-empowerment");
   const [programs, setPrograms] = useState<ProgramView[]>([]);
+  const [categoryNames, setCategoryNames] = useState<string[]>([]);
   const [impactStats, setImpactStats] = useState<{ id: string; title: string; value: string; description: string }[]>([]);
   const organizationSchema = generateOrganizationSchema();
 
@@ -27,13 +28,19 @@ export default function Programs() {
         }
       })
       .catch(() => undefined);
+    fetch("/api/content/categories?kind=PROGRAM")
+      .then((res) => res.json())
+      .then((data) =>
+        setCategoryNames((data.items || []).map((item: { name: string }) => item.name).filter(Boolean))
+      )
+      .catch(() => undefined);
     fetch("/api/content/impact")
       .then((res) => res.json())
       .then((data) => setImpactStats(data.items || []))
       .catch(() => undefined);
   }, []);
 
-  const categories = Array.from(new Set(programs.map((program) => program.category)));
+  const categories = categoryNames.length > 0 ? categoryNames : Array.from(new Set(programs.map((program) => program.category)));
   const displayCategories = categories.length > 0 ? categories : programCategories;
 
   const getProgramsByCategory = (category: string) => {
@@ -280,7 +287,7 @@ export default function Programs() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-white text-[#8B4513] hover:bg-gray-100 rounded-full">
-              <Link href="/get-involved#donate">Support Our Programs</Link>
+              <Link href="/donate">Support Our Programs</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#8B4513] rounded-full bg-black">
               <Link href="/contact">Get in Touch</Link>

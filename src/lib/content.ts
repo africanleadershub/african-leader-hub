@@ -69,6 +69,13 @@ export const getPublishedPosts = cache(async () => {
   });
 });
 
+export const getContentCategories = cache(async (kind?: "NEWS" | "PROGRAM") => {
+  return prisma.contentCategory.findMany({
+    where: kind ? { kind } : undefined,
+    orderBy: [{ kind: "asc" }, { sortOrder: "asc" }, { name: "asc" }],
+  });
+});
+
 export const getPublishedCareers = cache(async () => {
   return prisma.career.findMany({
     where: { status: "PUBLISHED" },

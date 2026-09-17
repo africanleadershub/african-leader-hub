@@ -3,23 +3,39 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, Briefcase, ArrowRight, Calendar } from "lucide-react";
-import { getPublishedCareers } from "@/lib/content";
+import {
+  MapPin,
+  Clock,
+  Briefcase,
+  ArrowRight,
+  Calendar,
+  Heart,
+  GraduationCap,
+  Users,
+  Sparkles,
+  Globe,
+  Handshake,
+  FileText,
+  MessagesSquare,
+  BadgeCheck,
+} from "lucide-react";
+import { getOrganizationIdentity, getPublishedCareers } from "@/lib/content";
 import { toCareerView } from "@/lib/content-views";
 import { generateOrganizationSchema } from "@/lib/seo";
+import { CareerApplyForm } from "@/components/career-apply-form";
 
 const callToActionBackground = {
-  background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-}
+  background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 export const metadata: Metadata = {
   title: "Careers - African Leaders Hub",
-  description: "Join our team and help empower Africa's future leaders. Explore career opportunities at African Leaders Hub in Kigali, Rwanda.",
+  description:
+    "Join African Leaders Hub in Kigali. Explore open roles, our culture, benefits, and how we hire people who want to build Africa's future.",
   keywords: "ALH careers, jobs Rwanda, NGO jobs, African Leaders Hub careers, non-profit jobs Rwanda",
-  authors: [{ name: "African Leaders Hub" }],
   openGraph: {
     title: "Careers - African Leaders Hub",
     description: "Join our team and help empower Africa's future leaders.",
@@ -27,119 +43,213 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://africanleadershub.org/careers",
     siteName: "African Leaders Hub",
-    images: [
-      {
-        url: "https://africanleadershub.org/hero-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "African Leaders Hub Careers",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Careers - African Leaders Hub",
-    description: "Join our team and help empower Africa's future leaders.",
-    images: ["https://africanleadershub.org/hero-image.jpg"],
-    creator: "@A_LeadersHub",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: "https://africanleadershub.org/careers",
+    images: [{ url: "https://africanleadershub.org/hero-image.jpg", width: 1200, height: 630, alt: "African Leaders Hub Careers" }],
   },
 };
 
+function typeColor(type: string) {
+  switch (type) {
+    case "full-time":
+      return "bg-green-600";
+    case "part-time":
+      return "bg-blue-600";
+    case "contract":
+      return "bg-purple-600";
+    case "internship":
+      return "bg-orange-600";
+    default:
+      return "bg-gray-600";
+  }
+}
+
 export default async function Careers() {
   const organizationSchema = generateOrganizationSchema();
-  const careers = (await getPublishedCareers()).map(toCareerView);
+  const [careerRecords, identity] = await Promise.all([getPublishedCareers(), getOrganizationIdentity()]);
+  const careers = careerRecords.map(toCareerView);
   const featuredCareers = careers.filter((career) => career.featured);
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'full-time':
-        return 'bg-green-600';
-      case 'part-time':
-        return 'bg-blue-600';
-      case 'contract':
-        return 'bg-purple-600';
-      case 'internship':
-        return 'bg-orange-600';
-      default:
-        return 'bg-gray-600';
-    }
-  };
+  const values = Array.isArray(identity?.values)
+    ? (identity.values as { title: string; description: string }[])
+    : [];
 
   return (
     <div className="min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
-      {/* Hero Section */}
-      <section className="relative text-white py-16 h-[300px]">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/background-pattern-3.jpg)' }}
-        ></div>
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/30 to-black/70"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end justify-start">
-          <div className="text-start">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Careers</h1>
-            {/* <p className="text-xl md:text-2xl text-gray-200 max-w-3xl">
-              Join us in building Africa&apos;s future through people, purpose, and possibility
-            </p> */}
+
+      <section className="relative h-[420px] text-white">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/hero-image.jpg)" }} />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/40 to-black/70" />
+        <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-12 sm:px-6 lg:px-8">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-amber-200">Work with us</p>
+          <h1 className="max-w-3xl text-4xl font-bold md:text-6xl">Build Africa&apos;s future with us</h1>
+          <p className="mt-4 max-w-2xl text-lg text-gray-100">
+            African Leaders Hub is looking for people who care about education, rights, entrepreneurship, and climate action.
+            Come do work that reaches youth, women, and communities across the continent.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button asChild size="lg" className="rounded-full bg-white text-[#8B4513] hover:bg-gray-100">
+              <a href="#open-roles">See open roles</a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="rounded-full border-white bg-transparent text-white hover:bg-white/10">
+              <a href="#talent-pool">Join the talent pool</a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Featured Careers */}
-      {featuredCareers.length > 0 && (
-        <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Featured Opportunities
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Explore our current openings and find your place in our mission
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">Why African Leaders Hub</h2>
+            <p className="mt-4 text-lg text-gray-600">
+              This is not just a jobs board. We hire people who want to grow as professionals while contributing to ethical
+              leadership across Africa.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              {
+                icon: Heart,
+                title: "Purpose with proximity",
+                text: "Your work sits close to the communities we serve, from classrooms and youth hubs in Rwanda to partners across the region.",
+              },
+              {
+                icon: Users,
+                title: "A small, serious team",
+                text: "You will collaborate with program leads, communicators, and partners who care about quality, dignity, and results.",
+              },
+              {
+                icon: Globe,
+                title: "Continental ambition",
+                text: "Kigali is our home. Africa is the canvas. We build programs that can travel, be adapted, and be owned locally.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-[#8B4513]/20 bg-amber-50/40 p-6">
+                <item.icon className="mb-4 h-8 w-8 text-[#8B4513]" />
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <p className="mt-2 text-gray-600">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {values.length > 0 ? (
+        <section className="bg-stone-50 py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">How we work</h2>
+              <p className="mt-4 text-lg text-gray-600">
+                These values shape how we hire, how we give feedback, and how we show up for young people.
               </p>
             </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {values.map((value) => (
+                <div key={value.title} className="rounded-2xl bg-white p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold text-[#8B4513]">{value.title}</h3>
+                  <p className="mt-2 text-gray-600">{value.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">What you can expect</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+              Benefits look different in a growing non-profit, but we are intentional about growth, care, and fairness.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: GraduationCap, title: "Learning", text: "Coaching, program exposure, and room to stretch into new skills." },
+              { icon: Sparkles, title: "Meaningful work", text: "You will see the impact of your work in people, not only in reports." },
+              { icon: Handshake, title: "Partnerships", text: "Work with government, civil society, and funders on real delivery." },
+              { icon: Heart, title: "A humane pace", text: "We take the mission seriously without treating people as disposable." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border p-5">
+                <item.icon className="mb-3 h-6 w-6 text-[#8B4513]" />
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-gradient-to-br from-gray-50 to-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">How hiring works</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+              A clear process, so you always know where you stand.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-4">
+            {[
+              { icon: FileText, step: "01", title: "Apply", text: "Send your CV and any supporting documents through the role page." },
+              { icon: BadgeCheck, step: "02", title: "Review", text: "We read every application and shortlist against the role, not against noise." },
+              { icon: MessagesSquare, step: "03", title: "Conversation", text: "Interviews are two-way: we learn about you, and you learn about the work." },
+              { icon: Handshake, step: "04", title: "Offer", text: "We move as promptly as we can and keep unsuccessful candidates informed." },
+            ].map((item) => (
+              <div key={item.step} className="rounded-2xl bg-white p-6 shadow-sm">
+                <item.icon className="mb-4 h-6 w-6 text-[#8B4513]" />
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#8B4513]">{item.step}</p>
+                <h3 className="mt-2 text-xl font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {featuredCareers.length > 0 ? (
+        <section className="bg-white py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">Featured opportunities</h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+                Roles we are actively hiring for right now.
+              </p>
+            </div>
+            <div className="mb-4 grid grid-cols-1 gap-8 md:grid-cols-2">
               {featuredCareers.map((career) => (
                 <Link key={career.id} href={`/careers/${career.slug}`}>
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 border-[#8B4513] hover:border-[#6B3410]">
+                  <Card className="h-full border-2 border-[#8B4513] transition hover:border-[#6B3410] hover:shadow-xl">
                     <CardHeader>
-                      <div className="flex items-start justify-between mb-4">
-                        <Badge className={`${getTypeColor(career.type)} text-white`}>
-                          {career.type.replace('-', ' ')}
-                        </Badge>
+                      <div className="mb-4 flex items-start justify-between">
+                        <Badge className={`${typeColor(career.type)} text-white`}>{career.type.replace("-", " ")}</Badge>
                         <Badge variant="secondary" className="bg-[#8B4513] text-white">
                           Featured
                         </Badge>
                       </div>
-                      <CardTitle className="text-2xl mb-2">{career.title}</CardTitle>
+                      <CardTitle className="mb-2 text-2xl">{career.title}</CardTitle>
                       <CardDescription className="text-base">
                         {career.department} • {career.location}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-700 mb-4 line-clamp-3">
-                        {career.description}
-                      </p>
-                      <div className="flex items-center text-sm text-gray-600 mb-4">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        <span>Posted: {new Date(career.postedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      <p className="mb-4 line-clamp-3 text-gray-700">{career.description}</p>
+                      <div className="mb-4 flex items-center text-sm text-gray-600">
+                        <Calendar className="mr-2 h-4 w-4" />
+                        <span>
+                          Posted:{" "}
+                          {new Date(career.postedDate).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </span>
                       </div>
-                      <Button className="w-full bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full">
-                        View Details
-                        <ArrowRight className="ml-2 w-4 h-4" />
+                      <Button className="w-full rounded-full bg-[#8B4513] text-white hover:bg-[#6B3410]">
+                        View details
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </CardContent>
                   </Card>
@@ -148,60 +258,52 @@ export default async function Careers() {
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
-      {/* All Careers */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              All Open Positions
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {careers.length} position{careers.length !== 1 ? 's' : ''} available
+      <section id="open-roles" className="bg-stone-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">All open positions</h2>
+            <p className="text-lg text-gray-600">
+              {careers.length === 1 ? "1 position available" : `${careers.length} positions available`}
             </p>
           </div>
-
           {careers.length > 0 ? (
             <div className="flex flex-col gap-4">
               {careers.map((career) => (
                 <Link key={career.id} href={`/careers/${career.slug}`}>
-                  <Card className="hover:shadow-lg transition-all duration-300 border border-[#8B4513] hover:border-[#6B3410]">
+                  <Card className="border border-[#8B4513] transition hover:border-[#6B3410] hover:shadow-lg">
                     <CardContent className="px-6">
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
+                          <div className="mb-2 flex items-center gap-3">
                             <h3 className="text-xl font-bold text-gray-900">{career.title}</h3>
-                            {career.featured && (
+                            {career.featured ? (
                               <Badge variant="secondary" className="bg-[#8B4513] text-white">
                                 Featured
                               </Badge>
-                            )}
+                            ) : null}
                           </div>
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
-                            <div className="flex items-center">
-                              <Briefcase className="w-4 h-4 mr-2" />
+                          <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                            <span className="flex items-center">
+                              <Briefcase className="mr-2 h-4 w-4" />
                               {career.department}
-                            </div>
-                            <div className="flex items-center">
-                              <MapPin className="w-4 h-4 mr-2" />
+                            </span>
+                            <span className="flex items-center">
+                              <MapPin className="mr-2 h-4 w-4" />
                               {career.location}
-                            </div>
-                            <div className="flex items-center">
-                              <Clock className="w-4 h-4 mr-2" />
-                              {career.type.replace('-', ' ')}
-                            </div>
+                            </span>
+                            <span className="flex items-center">
+                              <Clock className="mr-2 h-4 w-4" />
+                              {career.type.replace("-", " ")}
+                            </span>
                           </div>
-                          <p className="text-gray-700 line-clamp-2">
-                            {career.description}
-                          </p>
+                          <p className="line-clamp-2 text-gray-700">{career.description}</p>
                         </div>
-                        <div className="flex items-center">
-                          <Button className="bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full">
-                            View Details
-                            <ArrowRight className="ml-2 w-4 h-4" />
-                          </Button>
-                        </div>
+                        <Button className="rounded-full bg-[#8B4513] text-white hover:bg-[#6B3410]">
+                          View details
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -209,33 +311,37 @@ export default async function Careers() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-gray-600 mb-4">
-                We don&apos;t have any open positions at the moment.
-              </p>
-              <p className="text-gray-500">
-                Check back soon or send us your resume for future opportunities.
-              </p>
+            <div className="py-12 text-center">
+              <p className="mb-4 text-lg text-gray-600">We do not have any open positions at the moment.</p>
+              <p className="text-gray-500">Join the talent pool below and we will reach out when a role fits.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-[#8B4513] text-white" style={callToActionBackground}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Don&apos;t See a Role That Fits?
-          </h2>
-          <p className="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
-            We&apos;re always looking for passionate individuals to join our mission. Send us your resume and we&apos;ll keep you in mind for future opportunities.
+      <section id="talent-pool" className="bg-white py-20">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:px-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">Do not see a role that fits?</h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Send your CV anyway. We keep a talent pool for future program, operations, and communications roles.
+            </p>
+          </div>
+          <CareerApplyForm heading="Join the talent pool" />
+        </div>
+      </section>
+
+      <section className="bg-[#8B4513] py-16 text-white" style={callToActionBackground}>
+        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold md:text-4xl">Questions about working here?</h2>
+          <p className="mx-auto mt-4 mb-8 max-w-2xl text-xl text-gray-200">
+            If you would like to learn more about a team or a hiring timeline, we are happy to talk.
           </p>
-          <Button asChild size="lg" className="bg-white text-[#8B4513] hover:bg-gray-100 rounded-full">
-            <Link href="/contact">Get in Touch</Link>
+          <Button asChild size="lg" className="rounded-full bg-white text-[#8B4513] hover:bg-gray-100">
+            <Link href="/contact">Get in touch</Link>
           </Button>
         </div>
       </section>
     </div>
   );
 }
-

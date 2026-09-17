@@ -1,17 +1,18 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
-import { getPublishedLegalPages, getPublishedPrograms, getWebsiteSettings } from "@/lib/content";
+import { getOrganizationIdentity, getPublishedLegalPages, getPublishedPrograms, getWebsiteSettings } from "@/lib/content";
 
 export default async function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [programs, settings, legalPages] = await Promise.all([
+  const [programs, settings, legalPages, identity] = await Promise.all([
     getPublishedPrograms(),
     getWebsiteSettings(),
     getPublishedLegalPages(),
+    getOrganizationIdentity(),
   ]);
   const organizationSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
@@ -31,11 +32,15 @@ export default async function SiteLayout({
           slug: program.slug,
           title: program.title,
           category: program.category,
+          description: program.description,
+          imageUrl: program.imageAsset?.url || program.bannerAsset?.url || "/background-pattern-3.jpg",
+          featured: program.featured,
         }))}
         settings={{
           siteName: settings?.siteName ?? "African Leaders Hub",
           logoUrl: settings?.logoAsset?.url,
         }}
+        identityImage={identity?.heroAsset?.url}
       />
       <main>{children}</main>
       <Footer

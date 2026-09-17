@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,11 +15,13 @@ export function CollectionManager({
   title,
   columns,
   createHref,
+  actions,
 }: {
   collection: string;
   title: string;
   columns: Column[];
   createHref?: string;
+  actions?: ReactNode;
 }) {
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,11 +101,14 @@ export function CollectionManager({
           <h1 className="text-3xl font-semibold">{title}</h1>
           <p className="text-muted-foreground">{items.length} records</p>
         </div>
-        {createHref ? (
-          <Button asChild className="bg-[#8B4513] hover:bg-[#6B3410]">
-            <Link href={createHref}>New</Link>
-          </Button>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-2">
+          {createHref ? (
+            <Button asChild className="bg-[#8B4513] hover:bg-[#6B3410]">
+              <Link href={createHref}>New</Link>
+            </Button>
+          ) : null}
+          {actions}
+        </div>
       </div>
       <DataTable
         columns={tableColumns}

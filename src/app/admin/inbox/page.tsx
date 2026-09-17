@@ -26,25 +26,32 @@ type InboxRow = {
   details: string;
   status: string;
   received: string;
+  documents: { label: string; url: string; name?: string }[];
 };
 
 function inboxRow(row: Record<string, unknown>): InboxRow {
   const received = row.createdAt || row.subscribedAt;
+  const career = row.career as { title?: string } | undefined;
+  const documents = Array.isArray(row.documents)
+    ? (row.documents as { label: string; url: string; name?: string }[])
+    : [];
   return {
     id: String(row.id ?? ""),
     from: String(row.email || row.contactEmail || ""),
     name: `${String(row.firstName || row.contactName || row.orgName || "")} ${String(row.lastName || "")}`.trim(),
     details: String(
-      row.subject ||
+      career?.title ||
+        row.subject ||
         row.interest ||
         row.partnershipInterest ||
         row.amount ||
-        row.coverLetter ||
+        row.additionalInfo ||
         row.source ||
         ""
     ),
     status: String(row.status || (row.isActive ? "active" : "inactive")),
     received: received ? new Date(String(received)).toLocaleDateString() : "",
+    documents,
   };
 }
 
@@ -96,7 +103,26 @@ export default function InboxPage() {
       {
         accessorKey: "details",
         header: sortableHeader<InboxRow>("Details"),
-        cell: ({ row }: DataTableCellProps<InboxRow>) => <p className="max-w-md truncate">{row.original.details}</p>,
+        cell: ({ row }: DataTableCellProps<InboxRow>) => (
+          <div className="max-w-md">
+            <p className="truncate">{row.original.details}</p>
+            {row.original.documents.length > 0 ? (
+              <div className="mt-1 flex flex-wrap gap-2">
+                {row.original.documents.map((doc) => (
+                  <a
+                    key={`${doc.label}-${doc.url}`}
+                    href={doc.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs font-medium text-[#8B4513] hover:underline"
+                  >
+                    {doc.label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ),
       },
       {
         accessorKey: "status",

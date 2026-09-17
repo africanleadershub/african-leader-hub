@@ -22,6 +22,7 @@ const LABELS: Record<string, string> = {
   assets: "Assets",
   news: "News",
   programs: "Programs",
+  categories: "Categories",
   careers: "Careers",
   team: "Team",
   partners: "Partners",

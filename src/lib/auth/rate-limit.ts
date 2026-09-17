@@ -16,6 +16,11 @@ const apiLimiter = new RateLimiterMemory({
   duration: 60,
 });
 
+const applyLimiter = new RateLimiterMemory({
+  points: 8,
+  duration: 15 * 60,
+});
+
 function clientKey(request: NextRequest): string {
   const forwarded = request.headers.get("x-forwarded-for");
   return forwarded?.split(",")[0]?.trim() || "local";
@@ -66,6 +71,23 @@ export async function rateLimitReset(request: NextRequest): Promise<
       success: false,
       response: NextResponse.json(
         { error: "Too many reset attempts. Please try again later." },
+        { status: 429 }
+      ),
+    };
+  }
+}
+
+export async function rateLimitApply(request: NextRequest): Promise<
+  { success: true } | { success: false; response: NextResponse }
+> {
+  try {
+    await applyLimiter.consume(clientKey(request));
+    return { success: true };
+  } catch {
+    return {
+      success: false,
+      response: NextResponse.json(
+        { error: "Too many applications. Please try again later." },
         { status: 429 }
       ),
     };

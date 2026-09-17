@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, User, ArrowRight, Clock, Tag } from "lucide-react"
 import { getPostBySlug, getPublishedPosts } from "@/lib/content";
 import { toPostView } from "@/lib/content-views";
 import { generateNewsArticleSchema } from "@/lib/seo";
+import { HtmlContent } from "@/components/html-content";
 import { ShareButton } from "@/components/share-button";
 import { NewsletterSubscribe } from "@/components/newsletter-subscribe";
 import Image from "next/image";
@@ -29,8 +30,8 @@ export async function generateMetadata({ params }: NewsPageProps): Promise<Metad
   }
 
   return {
-    title: `${article.title} - African Leaders Hub`,
-    description: article.excerpt,
+    title: article.seoTitle || `${article.title} - African Leaders Hub`,
+    description: article.seoDescription || article.excerpt,
     keywords: `${article.title}, ${article.category}, African Leaders Hub, Rwanda news`,
   };
 }
@@ -52,11 +53,11 @@ export default async function NewsPage({ params }: NewsPageProps) {
   );
 
   const bannerBackground = {
-    background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  }
+    background: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${article.image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  };
   const callToActionBackground = {
     background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
     backgroundSize: 'cover',
@@ -76,7 +77,7 @@ export default async function NewsPage({ params }: NewsPageProps) {
       <section className="relative text-white py-20 min-h-[calc(100vh-20rem)] md:min-h-[400px] h-[calc(100vh-10rem)] md:h-[600px]" style={bannerBackground}>
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/background-pattern-1.jpg)' }}
+          style={{ backgroundImage: `url(${article.image})` }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/30 to-black/70"></div>
@@ -131,10 +132,7 @@ export default async function NewsPage({ params }: NewsPageProps) {
           <div className="wfull">
             <div className="w-full md:w-3/4 mx-auto">
               {/* Article Content */}
-              <div
-                className="prose prose-lg max-w-none mb-8"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+              <HtmlContent className="mb-8" html={article.content} />
 
               {/* Article Meta */}
               <div className="flex flex-wrap items-center gap-4">

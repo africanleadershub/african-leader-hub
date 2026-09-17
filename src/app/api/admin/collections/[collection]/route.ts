@@ -59,7 +59,7 @@ function includes(name: CollectionName): Prisma.PostInclude | object {
   return {};
 }
 
-function coerce(body: Record<string, unknown>) {
+function coerce(body: Record<string, unknown>, collection?: CollectionName) {
   if (body.published === "true") body.published = true;
   if (body.published === "false") body.published = false;
   if (body.featured === "true") body.featured = true;
@@ -74,6 +74,16 @@ function coerce(body: Record<string, unknown>) {
   }
   if (typeof body.detailsHtmlJson !== "undefined") {
     body.detailsJson = body.detailsHtmlJson;
+  }
+  if (collection === "posts") {
+    const imageId = body.featuredImageId || body.bannerImageId || null;
+    body.featuredImageId = imageId;
+    body.bannerImageId = imageId;
+  }
+  if (collection === "programs") {
+    const imageId = body.imageAssetId || body.bannerAssetId || null;
+    body.imageAssetId = imageId;
+    body.bannerAssetId = imageId;
   }
   for (const key of Object.keys(body)) {
     if (key.endsWith("Json") && key !== "contentJson" && key !== "detailsJson") {
@@ -102,6 +112,33 @@ function withSlug(name: CollectionName, body: Record<string, unknown>) {
   const title = String(body.title || body.name || "");
   if (!body.slug && title) body.slug = slugify(title);
   return body;
+}
+
+function validateRecord(collection: CollectionName, body: Record<string, unknown>) {
+  if (collection === "posts" || collection === "programs") {
+    const title = String(body.title || "").trim();
+    const summary = String((collection === "posts" ? body.excerpt : body.description) || "").trim();
+    const category = String(body.category || "").trim();
+    if (!title) throw new Error("Title is required");
+    if (title.length > 70) throw new Error("Title must be 70 characters or fewer");
+    if (!summary) {
+      throw new Error(collection === "posts" ? "Excerpt is required" : "Description is required");
+    }
+    if (summary.length > 160) {
+      throw new Error(
+        collection === "posts"
+          ? "Excerpt must be 160 characters or fewer"
+          : "Description must be 160 characters or fewer"
+      );
+    }
+    if (!category) throw new Error("Category is required");
+    if (body.seoTitle && String(body.seoTitle).length > 60) {
+      throw new Error("SEO title must be 60 characters or fewer");
+    }
+    if (body.seoDescription && String(body.seoDescription).length > 160) {
+      throw new Error("SEO description must be 160 characters or fewer");
+    }
+  }
 }
 
 export async function GET(
@@ -135,7 +172,12 @@ export async function POST(
   const model = delegate(collection);
   if (!model) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
   const body = withSlug(collection, (await request.json()) as Record<string, unknown>);
-  coerce(body);
+  coerce(body, collection);
+  try {
+    validateRecord(collection, body);
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid record" }, { status: 400 });
+  }
   const item = await (model as typeof prisma.post).create({
     data: body as never,
     include: includes(collection),
@@ -158,7 +200,12 @@ export async function PATCH(
   const id = String(body.id || "");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
   delete body.id;
-  coerce(body);
+  coerce(body, collection);
+  try {
+    validateRecord(collection, body);
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid record" }, { status: 400 });
+  }
   const item = await (model as typeof prisma.post).update({
     where: { id },
     data: withSlug(collection, body) as never,

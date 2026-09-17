@@ -38,6 +38,48 @@ export async function GET(request: NextRequest) {
     ...(include ? { include } : {}),
   } as never);
 
+  if (type === "applications") {
+    const applications = items as unknown as Array<{
+      resumeAssetId?: string | null;
+      coverLetterAssetId?: string | null;
+      additionalAssetIds?: string[];
+    }>;
+    const assetIds = applications.flatMap((item) =>
+      [item.resumeAssetId, item.coverLetterAssetId, ...(item.additionalAssetIds || [])].filter(
+        (id): id is string => Boolean(id)
+      )
+    );
+    const assets = assetIds.length
+      ? await prisma.asset.findMany({
+          where: { id: { in: assetIds } },
+          select: { id: true, url: true, originalFilename: true, title: true },
+        })
+      : [];
+    const byId = new Map(assets.map((asset) => [asset.id, asset]));
+    return NextResponse.json({
+      items: applications.map((item) => ({
+        ...item,
+        documents: [
+          item.resumeAssetId
+            ? { label: "Resume", url: byId.get(item.resumeAssetId)?.url, name: byId.get(item.resumeAssetId)?.originalFilename }
+            : null,
+          item.coverLetterAssetId
+            ? {
+                label: "Cover letter",
+                url: byId.get(item.coverLetterAssetId)?.url,
+                name: byId.get(item.coverLetterAssetId)?.originalFilename,
+              }
+            : null,
+          ...(item.additionalAssetIds || []).map((id) => ({
+            label: "Document",
+            url: byId.get(id)?.url,
+            name: byId.get(id)?.originalFilename || byId.get(id)?.title,
+          })),
+        ].filter((doc) => doc?.url),
+      })),
+    });
+  }
+
   return NextResponse.json({ items });
 }
 

@@ -3,8 +3,9 @@ import { PrismaClient, CareerType } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import { hashPassword } from "../src/lib/auth/password";
-import { programs } from "../src/data/programs";
-import { sampleNewsArticles } from "../src/data/news";
+import { programs, programCategories } from "../src/data/programs";
+import { sampleNewsArticles, newsCategories } from "../src/data/news";
+import { slugify } from "../src/lib/slug";
 import { currentCareers } from "../src/data/careers";
 import {
   executiveCommittee,
@@ -149,6 +150,21 @@ async function main() {
       values: IDENTITY_VALUES,
     },
   });
+
+  for (const [index, name] of newsCategories.entries()) {
+    await prisma.contentCategory.upsert({
+      where: { kind_slug: { kind: "NEWS", slug: slugify(name) } },
+      update: { name, sortOrder: index },
+      create: { kind: "NEWS", name, slug: slugify(name), sortOrder: index },
+    });
+  }
+  for (const [index, name] of programCategories.entries()) {
+    await prisma.contentCategory.upsert({
+      where: { kind_slug: { kind: "PROGRAM", slug: slugify(name) } },
+      update: { name, sortOrder: index },
+      create: { kind: "PROGRAM", name, slug: slugify(name), sortOrder: index },
+    });
+  }
 
   await prisma.legalPage.upsert({
     where: { slug: "privacy-policy" },

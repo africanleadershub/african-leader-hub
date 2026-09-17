@@ -16,6 +16,8 @@ type ProgramLike = {
   budget?: string | null;
   imageAsset?: { url: string } | null;
   bannerAsset?: { url: string } | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
 };
 
 type PostLike = {
@@ -33,6 +35,8 @@ type PostLike = {
   readTime?: string | null;
   featuredImage?: { url: string } | null;
   bannerImage?: { url: string } | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
 };
 
 type CareerLike = {
@@ -66,8 +70,10 @@ export function toProgramView(program: ProgramLike) {
     partners: program.partners,
     duration: program.duration || undefined,
     budget: program.budget || undefined,
-    image: program.imageAsset?.url || "/background-pattern-3.jpg",
-    bannerImage: program.bannerAsset?.url || "/hero-image.jpg",
+    image: program.imageAsset?.url || program.bannerAsset?.url || "/background-pattern-3.jpg",
+    bannerImage: program.imageAsset?.url || program.bannerAsset?.url || "/hero-image.jpg",
+    seoTitle: program.seoTitle || undefined,
+    seoDescription: program.seoDescription || undefined,
   };
 }
 
@@ -81,11 +87,13 @@ export function toPostView(post: PostLike) {
     date: new Date(post.publishedAt ?? post.createdAt).toISOString(),
     author: post.authorName,
     category: post.category,
-    image: post.featuredImage?.url || "/hero-image.jpg",
-    bannerImage: post.bannerImage?.url || "/hero-image.jpg",
+    image: post.featuredImage?.url || post.bannerImage?.url || "/hero-image.jpg",
+    bannerImage: post.featuredImage?.url || post.bannerImage?.url || "/hero-image.jpg",
     featured: post.featured,
     tags: post.tags,
     readTime: post.readTime || undefined,
+    seoTitle: post.seoTitle || undefined,
+    seoDescription: post.seoDescription || undefined,
   };
 }
 

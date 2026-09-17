@@ -48,6 +48,11 @@ enum TeamStatus {
   INACTIVE
 }
 
+enum CategoryKind {
+  NEWS
+  PROGRAM
+}
+
 model User {
   id                   String    @id @default(uuid())
   email                String    @unique
@@ -180,6 +185,21 @@ model Asset {
   @@index([active])
   @@index([createdAt])
   @@index([folder])
+}
+
+model ContentCategory {
+  id          String       @id @default(uuid())
+  kind        CategoryKind
+  name        String
+  slug        String
+  description String?
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@unique([kind, slug])
+  @@index([kind, sortOrder])
+  @@index([kind, name])
 }
 
 model WebsiteSettings {
@@ -400,8 +420,11 @@ model CareerApplication {
   lastName      String
   email         String
   phone         String?
-  coverLetter   String?
-  resumeAssetId String?
+  coverLetter          String?
+  resumeAssetId        String?
+  coverLetterAssetId   String?
+  additionalAssetIds   String[]           @default([])
+  additionalInfo       String?
   status        ApplicationStatus @default(NEW)
   adminNotes    String?
   createdAt     DateTime          @default(now())

@@ -2,11 +2,11 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { adminFetch } from "@/lib/admin-fetch";
 import { toast } from "sonner";
+import { RichTextEditor } from "@/components/editor/rich-text-editor";
 
 type ValueItem = { title: string; description: string; icon?: string };
 
@@ -16,6 +16,7 @@ export default function IdentityPage() {
   const [background, setBackground] = useState("");
   const [values, setValues] = useState<ValueItem[]>([]);
   const [saving, setSaving] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     adminFetch("/api/admin/site")
@@ -25,8 +26,9 @@ export default function IdentityPage() {
         setVision(data.identity?.vision || "");
         setBackground(data.identity?.background || "");
         setValues(Array.isArray(data.identity?.values) ? data.identity.values : []);
+        setLoaded(true);
       })
-      .catch(() => undefined);
+      .catch(() => setLoaded(true));
   }, []);
 
   async function onSubmit(event: FormEvent) {
@@ -47,35 +49,40 @@ export default function IdentityPage() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="max-w-3xl space-y-6">
+    <form onSubmit={onSubmit} className="max-w-4xl space-y-6">
       <h1 className="text-3xl font-semibold">Mission, vision & values</h1>
-      <div className="space-y-2">
-        <Label>Mission</Label>
-        <Textarea
-          rows={5}
-          placeholder="Describe the organization’s purpose and who it serves"
-          value={mission}
-          onChange={(e) => setMission(e.target.value)}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Vision</Label>
-        <Textarea
-          rows={5}
-          placeholder="Describe the future the organization is working toward"
-          value={vision}
-          onChange={(e) => setVision(e.target.value)}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Background</Label>
-        <Textarea
-          rows={7}
-          placeholder="Share the organization’s history, context, and founding story"
-          value={background}
-          onChange={(e) => setBackground(e.target.value)}
-        />
-      </div>
+      {loaded ? (
+        <>
+          <div className="space-y-2">
+            <Label>Mission</Label>
+            <RichTextEditor
+              compact
+              html={mission}
+              placeholder="Describe the organization’s purpose and who it serves"
+              onChange={(_json, html) => setMission(html)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Vision</Label>
+            <RichTextEditor
+              compact
+              html={vision}
+              placeholder="Describe the future the organization is working toward"
+              onChange={(_json, html) => setVision(html)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Background</Label>
+            <RichTextEditor
+              html={background}
+              placeholder="Share the organization’s history, context, and founding story"
+              onChange={(_json, html) => setBackground(html)}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="h-64 rounded-md border bg-muted/30" />
+      )}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <Label>Values</Label>
@@ -92,16 +99,18 @@ export default function IdentityPage() {
             <Input
               placeholder="Integrity"
               value={item.title}
-              onChange={(e) =>
-                setValues((current) => current.map((row, i) => (i === index ? { ...row, title: e.target.value } : row)))
+              onChange={(event) =>
+                setValues((current) =>
+                  current.map((row, i) => (i === index ? { ...row, title: event.target.value } : row))
+                )
               }
             />
             <Input
               placeholder="We act with honesty and accountability"
               value={item.description}
-              onChange={(e) =>
+              onChange={(event) =>
                 setValues((current) =>
-                  current.map((row, i) => (i === index ? { ...row, description: e.target.value } : row))
+                  current.map((row, i) => (i === index ? { ...row, description: event.target.value } : row))
                 )
               }
             />
