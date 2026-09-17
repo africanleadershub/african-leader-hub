@@ -1,0 +1,454 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum AssetKind {
+  IMAGE
+  FILE
+}
+
+enum AssetSource {
+  CLOUDINARY
+  EXTERNAL
+}
+
+enum ApplicationStatus {
+  NEW
+  IN_REVIEW
+  ACCEPTED
+  DECLINED
+  ARCHIVED
+}
+
+enum CareerType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+}
+
+enum TeamStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  email                String    @unique
+  firstName            String
+  lastName             String
+  password             String
+  role                 UserRole  @default(EDITOR)
+  active               Boolean   @default(true)
+  requirePasswordReset Boolean   @default(false)
+  lastLogin            DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  sessions Session[]
+  assets   Asset[]   @relation("AssetUploadedBy")
+
+  @@index([role])
+  @@index([active])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  token        String   @unique
+  refreshToken String?  @unique
+  ipAddress    String?
+  userAgent    String?
+  device       String?
+  browser      String?
+  os           String?
+  isActive     Boolean  @default(true)
+  expiresAt    DateTime
+  lastActivity DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([expiresAt])
+}
+
+model Asset {
+  id               String      @id @default(uuid())
+  source           AssetSource @default(CLOUDINARY)
+  kind             AssetKind   @default(IMAGE)
+  publicId         String?     @unique
+  url              String
+  urlRaw           String?
+  title            String?
+  alt              String?
+  description      String?
+  folder           String?
+  originalFilename String?
+  mimeType         String?
+  width            Int?
+  height           Int?
+  format           String?
+  bytes            Int?
+  tags             String[]    @default([])
+  active           Boolean     @default(true)
+  uploadedById     String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  uploadedBy User? @relation("AssetUploadedBy", fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  programImages        Program[]    @relation("ProgramImage")
+  programBanners       Program[]    @relation("ProgramBanner")
+  teamImages           TeamMember[] @relation("TeamImage")
+  partnerLogos         Partner[]    @relation("PartnerLogo")
+  postFeaturedImages   Post[]       @relation("PostFeaturedImage")
+  postBannerImages     Post[]       @relation("PostBannerImage")
+  settingsLogo         WebsiteSettings[] @relation("SettingsLogo")
+  identityHero         OrganizationIdentity[] @relation("IdentityHero")
+
+  @@index([kind])
+  @@index([active])
+  @@index([createdAt])
+  @@index([folder])
+}
+
+model WebsiteSettings {
+  id             String  @id @default("default")
+  siteName       String  @default("African Leaders Hub")
+  tagline        String  @default("Building Africa's Future through People, Purpose, and Possibility")
+  addressLine1   String?
+  addressLine2   String?
+  city           String  @default("Kigali")
+  country        String  @default("Rwanda")
+  phonePrimary   String?
+  phoneSecondary String?
+  emailPrimary   String?
+  emailSecondary String?
+  businessHours  String?
+  mapEmbedUrl    String?
+  socialLinks    Json    @default("[]")
+  logoAssetId    String?
+  logoAsset      Asset?  @relation("SettingsLogo", fields: [logoAssetId], references: [id], onDelete: SetNull)
+  updatedAt      DateTime @updatedAt
+}
+
+model OrganizationIdentity {
+  id            String   @id @default("default")
+  mission       String   @default("")
+  vision        String   @default("")
+  background    String   @default("")
+  values        Json     @default("[]")
+  heroAssetId   String?
+  heroAsset     Asset?   @relation("IdentityHero", fields: [heroAssetId], references: [id], onDelete: SetNull)
+  updatedAt     DateTime @updatedAt
+}
+
+model LegalPage {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  title           String
+  excerpt         String?
+  contentHtml     String   @default("")
+  contentJson     Json?
+  published       Boolean  @default(true)
+  sortOrder       Int      @default(0)
+  seoTitle        String?
+  seoDescription  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([published])
+  @@index([sortOrder])
+}
+
+model Faq {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published])
+  @@index([sortOrder])
+}
+
+model Program {
+  id                  String         @id @default(uuid())
+  slug                String         @unique
+  title               String
+  category            String
+  description         String
+  background          String         @default("")
+  goal                String         @default("")
+  objectives          String[]       @default([])
+  keyActivities       String[]       @default([])
+  targetGroups        String[]       @default([])
+  expectedOutcomes    String[]       @default([])
+  implementationPlan  String?
+  partners            String[]       @default([])
+  duration            String?
+  budget              String?
+  imageAssetId        String?
+  bannerAssetId       String?
+  imageAsset          Asset?         @relation("ProgramImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+  bannerAsset         Asset?         @relation("ProgramBanner", fields: [bannerAssetId], references: [id], onDelete: SetNull)
+  status              ContentStatus  @default(PUBLISHED)
+  featured            Boolean        @default(false)
+  sortOrder           Int            @default(0)
+  seoTitle            String?
+  seoDescription      String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@index([category])
+  @@index([status])
+  @@index([featured])
+  @@index([sortOrder])
+}
+
+model TeamMember {
+  id               String     @id @default(uuid())
+  slug             String     @unique
+  name             String
+  position         String
+  committee        String?
+  responsibilities String?
+  biography        String?
+  nationality      String?
+  linkedin         String?
+  twitter          String?
+  facebook         String?
+  instagram        String?
+  imageAssetId     String?
+  imageAsset       Asset?     @relation("TeamImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+  status           TeamStatus @default(ACTIVE)
+  sortOrder        Int        @default(0)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@index([committee])
+  @@index([status])
+  @@index([sortOrder])
+}
+
+model Partner {
+  id          String   @id @default(uuid())
+  name        String
+  category    String
+  website     String?
+  logoAssetId String?
+  logoAsset   Asset?   @relation("PartnerLogo", fields: [logoAssetId], references: [id], onDelete: SetNull)
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([published])
+  @@index([sortOrder])
+}
+
+model ImpactStat {
+  id          String   @id @default(uuid())
+  title       String
+  value       String
+  description String
+  category    String
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([published])
+  @@index([sortOrder])
+}
+
+model Post {
+  id                 String        @id @default(uuid())
+  slug               String        @unique
+  title              String
+  excerpt            String
+  contentHtml        String        @default("")
+  contentJson        Json?
+  authorName         String        @default("African Leaders Hub")
+  category           String
+  tags               String[]      @default([])
+  featuredImageId    String?
+  bannerImageId      String?
+  featuredImage      Asset?        @relation("PostFeaturedImage", fields: [featuredImageId], references: [id], onDelete: SetNull)
+  bannerImage        Asset?        @relation("PostBannerImage", fields: [bannerImageId], references: [id], onDelete: SetNull)
+  featured           Boolean       @default(false)
+  status             ContentStatus @default(DRAFT)
+  publishedAt        DateTime?
+  readTime           String?
+  seoTitle           String?
+  seoDescription     String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@index([featured])
+  @@index([category])
+  @@index([publishedAt])
+}
+
+model Career {
+  id                   String        @id @default(uuid())
+  slug                 String        @unique
+  title                String
+  department           String
+  location             String
+  type                 CareerType    @default(FULL_TIME)
+  description          String
+  detailsHtml          String        @default("")
+  detailsJson          Json?
+  applicationDeadline  DateTime?
+  postedAt             DateTime      @default(now())
+  featured             Boolean       @default(false)
+  status               ContentStatus @default(PUBLISHED)
+  applyEmail           String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  applications         CareerApplication[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([department])
+  @@index([type])
+  @@index([postedAt])
+}
+
+model CareerApplication {
+  id            String            @id @default(uuid())
+  careerId      String?
+  career        Career?           @relation(fields: [careerId], references: [id], onDelete: SetNull)
+  firstName     String
+  lastName      String
+  email         String
+  phone         String?
+  coverLetter   String?
+  resumeAssetId String?
+  status        ApplicationStatus @default(NEW)
+  adminNotes    String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([careerId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model VolunteerApplication {
+  id            String            @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  location      String
+  skills        String
+  interest      String
+  availability  String
+  motivation    String
+  status        ApplicationStatus @default(NEW)
+  adminNotes    String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model PartnershipApplication {
+  id                   String            @id @default(uuid())
+  orgName              String
+  orgType              String
+  contactName          String
+  contactEmail         String
+  contactPhone         String
+  orgLocation          String
+  orgDescription       String
+  partnershipInterest  String
+  partnershipGoals     String
+  status               ApplicationStatus @default(NEW)
+  adminNotes           String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([contactEmail])
+}
+
+model ContactInquiry {
+  id           String            @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String
+  phone        String?
+  subject      String
+  organization String?
+  message      String
+  newsletter   Boolean           @default(false)
+  status       ApplicationStatus @default(NEW)
+  adminNotes   String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model DonationInquiry {
+  id         String            @id @default(uuid())
+  firstName  String
+  lastName   String
+  email      String
+  phone      String?
+  amount     String?
+  message    String?
+  status     ApplicationStatus @default(NEW)
+  adminNotes String?
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  source       String?
+  isActive     Boolean  @default(true)
+  subscribedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([subscribedAt])
+}

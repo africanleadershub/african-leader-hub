@@ -12,9 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { programs } from "@/data/programs";
 
-export function Navigation() {
+type NavProgram = { slug: string; title: string; category: string };
+
+export function Navigation({
+  programs = [],
+  settings,
+}: {
+  programs?: NavProgram[];
+  settings?: { siteName?: string; logoUrl?: string | null };
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProgramsOpen, setIsProgramsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
@@ -52,14 +59,14 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image 
-              src="/african-leaders-hub-logo.png" 
-              alt="African Leaders Hub Logo" 
+              src={settings?.logoUrl || "/african-leaders-hub-logo.png"} 
+              alt={`${settings?.siteName || "African Leaders Hub"} Logo`} 
               className="h-12 w-auto"
               width={100}
               height={100}
             />
             <span className="text-sm font-medium hidden sm:block">
-              AFRICAN LEADERS HUB
+              {(settings?.siteName || "AFRICAN LEADERS HUB").toUpperCase()}
             </span>
           </Link>
 
