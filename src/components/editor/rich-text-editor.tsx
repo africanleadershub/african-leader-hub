@@ -97,9 +97,11 @@ export function RichTextEditor({
     content: value ?? jsonFromHtml(html),
     editorProps: {
       attributes: {
-        class: compact
-          ? "prose prose-neutral max-w-none min-h-[160px] px-4 py-3 focus:outline-none [&_li_p]:my-0 [&_li]:my-0.5 [&_ul]:my-2 [&_ol]:my-2 [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3"
-          : "prose prose-neutral max-w-none min-h-[240px] px-4 py-3 focus:outline-none [&_li_p]:my-0 [&_li]:my-0.5 [&_ul]:my-2 [&_ol]:my-2 [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3",
+        class: cn(
+          "prose prose-neutral max-w-none px-4 py-3 focus:outline-none",
+          "[&_li_p]:my-0 [&_li]:my-0.5 [&_ul]:my-2 [&_ol]:my-2 [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3",
+          compact ? "min-h-[160px]" : "min-h-[240px]"
+        ),
       },
     },
     onUpdate: ({ editor: instance }) => {
@@ -126,11 +128,17 @@ export function RichTextEditor({
     }
   }, [editor, value, html]);
 
-  if (!editor) return <div className="h-64 rounded-md border bg-muted/30" />;
+  if (!editor) {
+    return (
+      <div
+        className={cn("rounded-md border bg-muted/30", compact ? "h-48" : "h-[min(32rem,80vh)]")}
+      />
+    );
+  }
 
   return (
-    <div className={cn("overflow-hidden rounded-lg border bg-white", className)}>
-      <div className="flex flex-wrap items-center gap-1 border-b bg-muted/40 p-2">
+    <div className={cn("flex flex-col overflow-hidden rounded-lg border bg-white", className)}>
+      <div className="sticky top-0 z-10 flex shrink-0 flex-wrap items-center gap-1 border-b bg-muted/40 p-2">
         <ToolbarButton active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}>
           <Bold className="h-4 w-4" />
         </ToolbarButton>
@@ -194,7 +202,16 @@ export function RichTextEditor({
           </ToolbarButton>
         </div>
       </div>
-      <EditorContent editor={editor} />
+      <div
+        className={cn(
+          "min-h-0 overflow-y-auto overscroll-contain",
+          compact
+            ? "max-h-[min(36vh,18rem)]"
+            : "max-h-[min(80vh,calc(100dvh-11rem))]"
+        )}
+      >
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
