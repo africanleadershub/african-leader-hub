@@ -4,6 +4,7 @@ import {
   verifyAuthenticationResponse,
   verifyRegistrationResponse,
   type AuthenticationResponseJSON,
+  type AuthenticatorTransportFuture,
   type RegistrationResponseJSON,
 } from "@simplewebauthn/server";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
@@ -39,10 +40,7 @@ export async function registrationOptions(params: {
       residentKey: "preferred",
       userVerification: "preferred",
     },
-    excludeCredentials: params.excludeCredentialIds.map((id) => ({
-      id,
-      type: "public-key",
-    })),
+    excludeCredentials: params.excludeCredentialIds.map((id) => ({ id })),
   });
 }
 
@@ -51,10 +49,11 @@ export async function authenticationOptions(params: { allowCredentialIds: string
   return generateAuthenticationOptions({
     rpID,
     userVerification: "preferred",
-    allowCredentials: params.allowCredentialIds.map((id) => ({
-      id,
-      type: "public-key",
-    })),
+    ...(params.allowCredentialIds.length
+      ? {
+          allowCredentials: params.allowCredentialIds.map((id) => ({ id })),
+        }
+      : {}),
   });
 }
 
@@ -88,7 +87,7 @@ export async function verifyAuthentication(
       id: credential.id,
       publicKey: isoBase64URL.toBuffer(credential.publicKey),
       counter: credential.counter,
-      transports: credential.transports as AuthenticatorTransport[],
+      transports: credential.transports as AuthenticatorTransportFuture[],
     },
   });
 }

@@ -8,6 +8,7 @@ import {
   registerChallengeAttempt,
 } from "@/lib/auth/challenges";
 import { issueSessionResponse } from "@/lib/auth/issue";
+import { rateLimitLogin } from "@/lib/auth/rate-limit";
 import { z } from "zod";
 
 const schema = z.object({
@@ -16,6 +17,9 @@ const schema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const limited = await rateLimitLogin(request);
+  if (!limited.success) return limited.response;
+
   const parsed = schema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json({ error: "Enter a valid code" }, { status: 400 });

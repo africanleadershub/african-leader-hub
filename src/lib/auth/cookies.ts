@@ -38,6 +38,13 @@ export async function clearAuthCookies() {
   cookieStore.delete("csrf-token");
 }
 
+export function clearAuthCookiesOnResponse(response: NextResponse) {
+  response.cookies.delete("access-token");
+  response.cookies.delete("refresh-token");
+  response.cookies.delete("csrf-token");
+  return response;
+}
+
 export function applyAuthCookies(
   response: NextResponse,
   params: { accessToken: string; refreshToken: string; csrfToken: string }

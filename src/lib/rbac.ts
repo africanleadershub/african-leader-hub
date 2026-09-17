@@ -20,7 +20,7 @@ export function canAccessRoute(
   route: string
 ): boolean {
   if (!userRole) return false;
-  if (route === "/admin" || route.startsWith("/admin/dashboard") || route.startsWith("/admin/profile")) {
+  if (route === "/admin" || route.startsWith("/admin/dashboard") || route.startsWith("/admin/account") || route.startsWith("/admin/profile")) {
     return true;
   }
   if (ADMIN_ONLY_PREFIXES.some((prefix) => route.startsWith(prefix))) {

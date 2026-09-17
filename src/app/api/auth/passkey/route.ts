@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth/middleware";
-import { createChallenge, getActiveChallenge } from "@/lib/auth/challenges";
+import { createChallenge } from "@/lib/auth/challenges";
 import { publicKeyToString, registrationOptions, verifyRegistration } from "@/lib/auth/webauthn";
 import { displayName } from "@/lib/auth/current-user";
 import type { RegistrationResponseJSON } from "@simplewebauthn/server";

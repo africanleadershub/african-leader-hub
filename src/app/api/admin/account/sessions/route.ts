@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth/middleware";
+import { clearAuthCookiesOnResponse } from "@/lib/auth/cookies";
 
 export async function GET(request: NextRequest) {
   const auth = await requireAuth(request, { requireCSRF: false });
@@ -41,7 +42,13 @@ export async function DELETE(request: NextRequest) {
     where: { id, userId: auth.auth.userId },
     data: { isActive: false },
   });
-  return NextResponse.json({ success: true, signedOut: id === auth.auth.sessionId });
+
+  const signedOut = id === auth.auth.sessionId;
+  const response = NextResponse.json({ success: true, signedOut });
+  if (signedOut) {
+    return clearAuthCookiesOnResponse(response);
+  }
+  return response;
 }
 
 export async function POST(request: NextRequest) {

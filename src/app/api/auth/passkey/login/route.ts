@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { createChallenge } from "@/lib/auth/challenges";
-import { authenticationOptions, verifyAuthentication } from "@/lib/auth/webauthn";
+import { createChallenge, getActiveChallengeByToken } from "@/lib/auth/challenges";
+import {
+  authenticationOptions,
+  challengeFromClientDataJSON,
+  verifyAuthentication,
+} from "@/lib/auth/webauthn";
+import { rateLimitLogin } from "@/lib/auth/rate-limit";
 import { issueSessionResponse } from "@/lib/auth/issue";
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { z } from "zod";
@@ -11,6 +16,9 @@ const optionsSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const limited = await rateLimitLogin(request);
+  if (!limited.success) return limited.response;
+
   const parsed = optionsSchema.safeParse(await request.json().catch(() => ({})));
   const email = parsed.success ? parsed.data.email?.toLowerCase() : undefined;
 
@@ -36,6 +44,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const limited = await rateLimitLogin(request);
+  if (!limited.success) return limited.response;
+
   const body = (await request.json()) as { credential?: AuthenticationResponseJSON };
   if (!body.credential?.id) {
     return NextResponse.json({ error: "Missing passkey assertion" }, { status: 400 });
@@ -49,14 +60,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Unknown passkey" }, { status: 401 });
   }
 
-  const challenge = await prisma.authChallenge.findFirst({
-    where: {
-      type: "PASSKEY_LOGIN",
-      consumedAt: null,
-      expiresAt: { gt: new Date() },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const expectedChallenge = challengeFromClientDataJSON(body.credential.response.clientDataJSON);
+  const challenge = expectedChallenge
+    ? await getActiveChallengeByToken(expectedChallenge, "PASSKEY_LOGIN")
+    : null;
   if (!challenge) {
     return NextResponse.json({ error: "Passkey sign-in expired. Try again." }, { status: 400 });
   }

@@ -17,6 +17,7 @@ import {
   Settings,
   IdCard,
   UserCog,
+  CircleUser,
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ import { adminFetch } from "@/lib/admin-fetch";
 
 const NAV = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { name: "Account", href: "/admin/account", icon: CircleUser },
   { name: "Assets", href: "/admin/assets", icon: Images },
   { name: "News", href: "/admin/news", icon: Newspaper },
   { name: "Programs", href: "/admin/programs", icon: GraduationCap },

@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
   const email = parsed.data.email.toLowerCase().trim();
   const user = await prisma.user.findUnique({ where: { email } });
 
+  let challengeId = "";
+
   if (user?.active) {
     const { challenge, otp } = await createChallenge({
       type: "PASSWORD_RESET",
@@ -30,6 +32,7 @@ export async function POST(request: NextRequest) {
       ttlMinutes: 30,
       withOtp: true,
     });
+    challengeId = challenge.id;
     const confirmUrl = `${appUrl()}/confirm-otp?challengeId=${challenge.id}&purpose=reset`;
     try {
       await sendAuthEmail({
@@ -49,15 +52,19 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.error("Password reset email failed:", error);
     }
-    return NextResponse.json({
-      success: true,
-      challengeId: challenge.id,
-      message: "If an account exists, we sent a verification code.",
+  } else {
+    const { challenge } = await createChallenge({
+      type: "PASSWORD_RESET",
+      email,
+      ttlMinutes: 30,
+      withOtp: true,
     });
+    challengeId = challenge.id;
   }
 
   return NextResponse.json({
     success: true,
+    challengeId,
     message: "If an account exists, we sent a verification code.",
   });
 }
