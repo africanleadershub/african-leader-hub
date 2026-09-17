@@ -3,18 +3,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Users, TreePine, GraduationCap, Heart, Shield, Lightbulb } from "lucide-react";
-import { programs } from "@/data/programs";
-import { impactStats } from "@/data/impact";
-import { getLatestNews } from "@/data/news";
 import { generateOrganizationSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
 import Image from "next/image";
-import { partners } from "@/data/partners";
+import {
+  getOrganizationIdentity,
+  getPublishedImpact,
+  getPublishedPartners,
+  getPublishedPosts,
+  getPublishedPrograms,
+} from "@/lib/content";
+import { toPostView, toProgramView } from "@/lib/content-views";
 
-export default function Home() {
-  const featuredPrograms = programs.slice(0, 6);
+export default async function Home() {
+  const [programs, impactStats, posts, partners, identity] = await Promise.all([
+    getPublishedPrograms(),
+    getPublishedImpact(),
+    getPublishedPosts(),
+    getPublishedPartners(),
+    getOrganizationIdentity(),
+  ]);
+  const featuredPrograms = programs.slice(0, 6).map(toProgramView);
   const featuredStats = impactStats.slice(0, 4);
-  const latestNews = getLatestNews(3);
+  const latestNews = posts.slice(0, 3).map(toPostView);
   const organizationSchema = generateOrganizationSchema();
   
   const impactSectionBackground = {
@@ -84,7 +95,8 @@ export default function Home() {
               Our Mission
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-            To develop principled leaders who drive transformation with courage and empathy, shaping a just, innovative, and sustainable Africa.
+              {identity?.mission ||
+                "To develop principled leaders who drive transformation with courage and empathy, shaping a just, innovative, and sustainable Africa."}
             </p>
           </div>
         </div>
@@ -306,22 +318,18 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-8">
-            {partners.slice(0, 12).map((partner) => (
+            {partners
+              .filter((partner) => partner.logoAsset?.url)
+              .slice(0, 12)
+              .map((partner) => (
               <div key={partner.id} className="group">
-                {partner.logoType === "image" && (
-                  <Image
-                    src={partner.logo as string}
-                    alt={`${partner.name} logo`}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                )}
-                {partner.logoType === "custom" && (
-                  <div className="">
-                    {partner.logo}
-                  </div>
-                )}
+                <Image
+                  src={partner.logoAsset!.url}
+                  alt={`${partner.name} logo`}
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                />
               </div>
             ))}
           </div>

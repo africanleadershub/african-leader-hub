@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { generateOrganizationSchema } from "@/lib/seo";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
+import { getPublishedFaqs, getWebsiteSettings, publicContact } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact Us - African Leaders Hub",
@@ -41,8 +42,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Contact() {
+export default async function Contact() {
   const organizationSchema = generateOrganizationSchema();
+  const [settings, faqs] = await Promise.all([
+    getWebsiteSettings(),
+    getPublishedFaqs(),
+  ]);
+  const contact = publicContact(settings);
 
   return (
     <div className="min-h-screen">
@@ -84,18 +90,18 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
             <div className="text-center lg:text-left">
               <div className="text-2xl font-semibold text-[#8B4513] mb-2">Address</div>
-              <p className="text-gray-600">Kigali, Rwanda</p>
+              <p className="text-gray-600">{contact.location}</p>
             </div>
             <div className="text-center lg:text-left">
               <div className="text-2xl font-semibold text-[#8B4513] mb-2">Phone</div>
-              <a href="tel:+250788358891" className="text-gray-600 hover:text-[#8B4513] transition-colors">
-                +250 788 358 891
+              <a href={contact.telHref} className="text-gray-600 hover:text-[#8B4513] transition-colors">
+                {contact.phone}
               </a>
             </div>
             <div className="text-center lg:text-left">
               <div className="text-2xl font-semibold text-[#8B4513] mb-2">Email</div>
-              <a href="mailto:africanleadershub@gmail.com" className="text-gray-600 hover:text-[#8B4513] transition-colors">
-                africanleadershub@gmail.com
+              <a href={contact.mailHref} className="text-gray-600 hover:text-[#8B4513] transition-colors">
+                {contact.email}
               </a>
             </div>
           </div>
@@ -113,80 +119,37 @@ export default function Contact() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>How can I support ALH?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  You can support us through donations, volunteering, or partnerships. Visit our
-                  <Link href="/get-involved" className="text-[#8B4513] hover:underline"> Get Involved</Link> page
-                  to learn more about the different ways you can help.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>Where does ALH operate?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  We are based in Rwanda and operate primarily in East Africa, with programs
-                  reaching communities across the region.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>How can I volunteer with ALH?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  We welcome volunteers with various skills and backgrounds. Fill out our
-                  volunteer application form on the
-                  <Link href="/get-involved#volunteer" className="text-[#8B4513] hover:underline"> Get Involved</Link> page.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>What programs does ALH offer?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  We offer programs in youth empowerment, environmental protection, civic education,
-                  women&apos;s empowerment, education, and healthcare. Visit our
-                  <Link href="/programs" className="text-[#8B4513] hover:underline"> Programs</Link> page for details.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>How can my organization partner with ALH?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  We welcome partnerships with government agencies, NGOs, educational institutions,
-                  and private companies. Contact us to discuss partnership opportunities.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle>Is ALH a registered organization?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Yes, African Leaders Hub is a registered non-profit organization based in Rwanda,
-                  operating with proper legal status and governance structures.
-                </CardDescription>
-              </CardContent>
-            </Card>
+            {(faqs.length
+              ? faqs
+              : [
+                  { id: "support", question: "How can I support ALH?", answer: "You can support us through donations, volunteering, or partnerships. Visit our Get Involved page to learn more about the different ways you can help." },
+                ]
+            ).map((faq) => (
+              <Card key={faq.id} className="border border-[#8B4513]">
+                <CardHeader>
+                  <CardTitle>{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    {faq.answer.includes("Get Involved") ? (
+                      <>
+                        {faq.answer.split("Get Involved")[0]}
+                        <Link href="/get-involved" className="text-[#8B4513] hover:underline"> Get Involved</Link>
+                        {faq.answer.split("Get Involved")[1]}
+                      </>
+                    ) : faq.answer.includes("Programs") ? (
+                      <>
+                        {faq.answer.split("Programs")[0]}
+                        <Link href="/programs" className="text-[#8B4513] hover:underline"> Programs</Link>
+                        {faq.answer.split("Programs")[1]}
+                      </>
+                    ) : (
+                      faq.answer
+                    )}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>

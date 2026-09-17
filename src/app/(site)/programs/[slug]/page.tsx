@@ -5,14 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle, Activity } from "lucide-react";
-import { programs, getProgramBySlug } from "@/data/programs";
+import { getProgramBySlug, getPublishedPrograms } from "@/lib/content";
+import { toProgramView } from "@/lib/content-views";
 import { generateProgramSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
 
 interface ProgramPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const callToActionBackground = {
@@ -24,7 +25,7 @@ const callToActionBackground = {
 
 export async function generateMetadata({ params }: ProgramPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const program = getProgramBySlug(slug);
+  const program = await getProgramBySlug(slug);
 
   if (!program) {
     return {
@@ -41,11 +42,15 @@ export async function generateMetadata({ params }: ProgramPageProps): Promise<Me
 
 export default async function ProgramPage({ params }: ProgramPageProps) {
   const { slug } = await params;
-  const program = getProgramBySlug(slug);
+  const program = await getProgramBySlug(slug);
 
   if (!program) {
     notFound();
   }
+
+  const relatedPrograms = (await getPublishedPrograms())
+    .filter((item) => item.category === program.category && item.slug !== program.slug)
+    .slice(0, 3);
 
   const programSchema = generateProgramSchema(program.title, program.description);
 
@@ -288,12 +293,12 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {programs
-              .filter(p => p.category === program.category && p.slug !== program.slug)
-              .slice(0, 3)
-              .map((relatedProgram) => (
-                <ProgramsAccordion programs={[relatedProgram]} key={relatedProgram.slug} />
-              ))}
+            {relatedPrograms.map((relatedProgram) => (
+                <ProgramsAccordion
+                  programs={[toProgramView(relatedProgram)]}
+                  key={relatedProgram.slug}
+                />
+            ))}
           </div>
         </div>
       </section>

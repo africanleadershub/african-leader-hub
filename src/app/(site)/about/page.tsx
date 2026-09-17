@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Target, Eye, Users, Handshake, Mail, Phone, MapPin, Shield, Heart, TreePine, GraduationCap, Lightbulb } from "lucide-react";
+import { getOrganizationIdentity, getWebsiteSettings, publicContact } from "@/lib/content";
 import { generateOrganizationSchema } from "@/lib/seo";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { LucideIcon } from "lucide-react";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
@@ -48,8 +49,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function About() {
+export default async function About() {
+  const [identity, settings] = await Promise.all([
+    getOrganizationIdentity(),
+    getWebsiteSettings(),
+  ]);
   const organizationSchema = generateOrganizationSchema();
+  const contact = publicContact(settings);
+  const values = Array.isArray(identity?.values)
+    ? (identity.values as { title: string; description: string; icon?: string }[])
+    : [];
+  const valueIcons: Record<string, LucideIcon> = {
+    Users,
+    Shield,
+    Handshake,
+    Heart,
+    TreePine,
+    GraduationCap,
+    Lightbulb,
+  };
+  const backgroundParagraphs = (identity?.background || "")
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 
   return (
     <div className="min-h-screen">
@@ -96,10 +118,8 @@ export default function About() {
                 <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
               </div>
               <p className="text-lg text-gray-700 leading-relaxed">
-                To empower youth, children, and women as ethical leaders for sustainable African development.
-                We address systemic challenges like poverty, gender inequality, climate change, unemployment,
-                and rights violations through holistic development programs that combine education, rights awareness,
-                entrepreneurship, and environmental action.
+                {identity?.mission ||
+                  "To empower youth, children, and women as ethical leaders for sustainable African development."}
               </p>
             </div>
 
@@ -112,10 +132,8 @@ export default function About() {
                 <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
               </div>
               <p className="text-lg text-gray-700 leading-relaxed">
-                A resilient Africa led by informed, innovative generations. We envision a continent where
-                every young person has access to quality education, understands their rights, and has the
-                skills and opportunities to become ethical leaders who drive sustainable development in
-                their communities.
+                {identity?.vision ||
+                  "A resilient Africa led by informed, innovative generations."}
               </p>
             </div>
           </div>
@@ -128,37 +146,26 @@ export default function About() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center p-6 bg-white rounded-xl hover:shadow-lg border border-[#8B4513] transition-shadow duration-300">
-                <div className="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Empowerment</h4>
-                <p className="text-gray-600 text-sm">Building confidence and capabilities in every individual</p>
-              </div>
-
-              <div className="text-center p-6 bg-white rounded-xl hover:shadow-lg border border-[#8B4513] transition-shadow duration-300">
-                <div className="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Integrity</h4>
-                <p className="text-gray-600 text-sm">Maintaining the highest ethical standards in all actions</p>
-              </div>
-
-              <div className="text-center p-6 bg-white rounded-xl hover:shadow-lg border border-[#8B4513] transition-shadow duration-300">
-                <div className="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Handshake className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Collaboration</h4>
-                <p className="text-gray-600 text-sm">Working together for greater collective impact</p>
-              </div>
-
-              <div className="text-center p-6 bg-white rounded-xl hover:shadow-lg border border-[#8B4513] transition-shadow duration-300">
-                <div className="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Compassion</h4>
-                <p className="text-gray-600 text-sm">Serving communities with empathy and understanding</p>
-              </div>
+              {(values.length
+                ? values
+                : [
+                    { title: "Empowerment", description: "Building confidence and capabilities in every individual", icon: "Users" },
+                    { title: "Integrity", description: "Maintaining the highest ethical standards in all actions", icon: "Shield" },
+                    { title: "Collaboration", description: "Working together for greater collective impact", icon: "Handshake" },
+                    { title: "Compassion", description: "Serving communities with empathy and understanding", icon: "Heart" },
+                  ]
+              ).map((value) => {
+                const Icon = valueIcons[value.icon || ""] || Users;
+                return (
+                  <div key={value.title} className="text-center p-6 bg-white rounded-xl hover:shadow-lg border border-[#8B4513] transition-shadow duration-300">
+                    <div className="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">{value.title}</h4>
+                    <p className="text-gray-600 text-sm">{value.description}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -170,21 +177,16 @@ export default function About() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">Our Background</h2>
             <div className="max-w-4xl mx-auto text-black">
-              <p className="text-lg text-black leading-relaxed mb-6">
-                African Leaders Hub (ALH) was founded to address the critical challenges facing Africa&apos;s youth,
-                children, and women. Based in Rwanda, we operate across East Africa, focusing on the most
-                pressing issues affecting our communities.
-              </p>
-              <p className="text-lg text-black leading-relaxed mb-6">
-                Our work addresses challenges like teenage pregnancies (22,000+ cases annually in Rwanda),
-                gender-based violence (37% of women affected), deforestation (37,000 hectares lost),
-                unemployment among graduates, and widespread rights violations.
-              </p>
-              <p className="text-lg text-black leading-relaxed">
-                Through community-led programs, strategic partnerships, and data-driven approaches, we create
-                sustainable solutions that empower individuals and transform communities. Our programs are
-                designed to be scalable, replicable, and aligned with national development strategies.
-              </p>
+              {(backgroundParagraphs.length
+                ? backgroundParagraphs
+                : [
+                    "African Leaders Hub (ALH) was founded to address the critical challenges facing Africa's youth, children, and women. Based in Rwanda, we operate across East Africa, focusing on the most pressing issues affecting our communities.",
+                  ]
+              ).map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="text-lg text-black leading-relaxed mb-6">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -250,10 +252,10 @@ export default function About() {
               <Mail className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Email Us</h3>
               <a
-                href="mailto:africanleadershub@gmail.com"
+                href={contact.mailHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                africanleadershub@gmail.com
+                {contact.email}
               </a>
             </div>
 
@@ -261,17 +263,17 @@ export default function About() {
               <Phone className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Call Us</h3>
               <a
-                href="tel:+250788358891"
+                href={contact.telHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                +250 788 358 891
+                {contact.phone}
               </a>
             </div>
 
             <div className="text-center">
               <MapPin className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="text-gray-200">Kigali, Rwanda</p>
+              <p className="text-gray-200">{contact.location}</p>
             </div>
           </div>
         </div>

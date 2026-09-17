@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Briefcase, ArrowLeft, Calendar } from "lucide-react";
-import { getCareerBySlug } from "@/data/careers";
-import { generateOrganizationSchema } from "@/lib/seo";
+import { getCareerBySlug } from "@/lib/content";
+import { toCareerView } from "@/lib/content-views";
+import { CareerApplyForm } from "@/components/career-apply-form";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
@@ -16,14 +17,15 @@ const callToActionBackground = {
 }
 
 interface CareerPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: CareerPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const career = getCareerBySlug(slug);
+  const careerRecord = await getCareerBySlug(slug);
+  const career = careerRecord ? toCareerView(careerRecord) : null;
 
   if (!career) {
     return {
@@ -62,7 +64,8 @@ export async function generateMetadata({ params }: CareerPageProps): Promise<Met
 
 export default async function CareerPage({ params }: CareerPageProps) {
   const { slug } = await params;
-  const career = getCareerBySlug(slug);
+  const careerRecord = await getCareerBySlug(slug);
+  const career = careerRecord ? toCareerView(careerRecord) : null;
   const organizationSchema = generateOrganizationSchema();
 
   if (!career) {
@@ -194,10 +197,11 @@ export default async function CareerPage({ params }: CareerPageProps) {
               </Card>
             </div>
           </div>
+          <div className="mt-10">
+            <CareerApplyForm careerId={career.id} />
+          </div>
         </div>
       </section>
-
-      {/* CTA Section */}
       <section className="py-16 bg-[#8B4513] text-white" style={callToActionBackground}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">

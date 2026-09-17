@@ -1,27 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Newspaper, Leaf, Heart, GraduationCap, BookOpen } from "lucide-react";
-import { newsArticles, getFeaturedNews, getNewsByCategory } from "@/data/news";
 import { generateOrganizationSchema } from "@/lib/seo";
+import { toPostView } from "@/lib/content-views";
 import Image from "next/image";
 import { NewsletterSubscribe } from "@/components/newsletter-subscribe";
 
 
 export default function News() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const featuredNews = getFeaturedNews().slice(0, 1);
+  const [newsArticles, setNewsArticles] = useState<ReturnType<typeof toPostView>[]>([]);
   const organizationSchema = generateOrganizationSchema();
 
-  // Get unique categories from news articles
-  const categories = ["All", ...Array.from(new Set(newsArticles.map(article => article.category)))];
+  useEffect(() => {
+    fetch("/api/content/posts")
+      .then((res) => res.json())
+      .then((data) => setNewsArticles((data.items || []).map(toPostView)))
+      .catch(() => undefined);
+  }, []);
 
-  // Filter articles based on selected category
-  const filteredArticles = activeCategory === "All"
-    ? newsArticles
-    : getNewsByCategory(activeCategory);
+  const featuredNews = newsArticles.filter((article) => article.featured).slice(0, 1);
+  const categories = ["All", ...Array.from(new Set(newsArticles.map((article) => article.category)))];
+  const filteredArticles =
+    activeCategory === "All"
+      ? newsArticles
+      : newsArticles.filter((article) => article.category === activeCategory);
 
   const getCategoryIcon = (category: string) => {
     switch (category) {

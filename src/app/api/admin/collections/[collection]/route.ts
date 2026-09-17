@@ -50,7 +50,30 @@ function coerce(body: Record<string, unknown>) {
   if (body.featured === "false") body.featured = false;
   if (body.applicationDeadline === "") body.applicationDeadline = null;
   if (body.publishedAt === "") body.publishedAt = null;
-  ["imageAsset", "bannerAsset", "featuredImage", "bannerImage", "logoAsset"].forEach((key) => {
+  if (typeof body.sortOrder === "string" && body.sortOrder !== "") {
+    body.sortOrder = Number(body.sortOrder);
+  }
+  if (typeof body.contentHtmlJson !== "undefined") {
+    body.contentJson = body.contentHtmlJson;
+  }
+  if (typeof body.detailsHtmlJson !== "undefined") {
+    body.detailsJson = body.detailsHtmlJson;
+  }
+  for (const key of Object.keys(body)) {
+    if (key.endsWith("Json") && key !== "contentJson" && key !== "detailsJson") {
+      delete body[key];
+    }
+  }
+  [
+    "imageAsset",
+    "bannerAsset",
+    "featuredImage",
+    "bannerImage",
+    "logoAsset",
+    "createdAt",
+    "updatedAt",
+    "_count",
+  ].forEach((key) => {
     delete body[key];
   });
 }

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Handshake, Mail, Phone } from "lucide-react";
+import { DollarSign, Handshake, Heart, Mail, Phone, Users } from "lucide-react";
 import { generateOrganizationSchema } from "@/lib/seo";
 import Link from "next/link";
 import { VolunteerForm } from "@/components/volunteer-form";
 import { PartnershipForm } from "@/components/partnership-form";
+import { DonationInquiryForm } from "@/components/donation-inquiry-form";
+import { getWebsiteSettings, publicContact } from "@/lib/content";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-3.jpg)',
@@ -51,8 +53,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GetInvolved() {
+export default async function GetInvolved() {
   const organizationSchema = generateOrganizationSchema();
+  const settings = await getWebsiteSettings();
+  const contact = publicContact(settings);
 
   return (
     <div className="min-h-screen">
@@ -78,7 +82,7 @@ export default function GetInvolved() {
       </section>
 
       {/* Ways to Get Involved */}
-      {/* <section className="py-16 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Ways to Get Involved</h2>
@@ -134,10 +138,10 @@ export default function GetInvolved() {
             </Card>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Donate Section */}
-      {/* <section id="donate" className="py-16 bg-gray-50">
+      <section id="donate" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
@@ -179,113 +183,25 @@ export default function GetInvolved() {
                     </ul>
                   </CardContent>
                 </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Donation Impact</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700">$50</span>
-                        <span className="text-sm text-gray-600">Supports one teacher training session</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700">$100</span>
-                        <span className="text-sm text-gray-600">Provides scholarship for one vulnerable child</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700">$250</span>
-                        <span className="text-sm text-gray-600">Supports teen mother empowerment program</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700">$500</span>
-                        <span className="text-sm text-gray-600">Funds climate ambassador training</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </div>
 
             <div>
               <Card>
                 <CardHeader>
-                  <CardTitle>Donation Form</CardTitle>
+                  <CardTitle>Donation Inquiry</CardTitle>
                   <CardDescription>
-                    Fill out the form below to make a donation
+                    Tell us how you would like to give. Our team will follow up with payment details.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="Enter your first name" />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Enter your last name" />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Enter your email" />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" placeholder="Enter your phone number" />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="amount">Donation Amount (USD)</Label>
-                    <Select>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select amount" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="50">$50</SelectItem>
-                        <SelectItem value="100">$100</SelectItem>
-                        <SelectItem value="250">$250</SelectItem>
-                        <SelectItem value="500">$500</SelectItem>
-                        <SelectItem value="1000">$1,000</SelectItem>
-                        <SelectItem value="custom">Custom Amount</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="program">Program to Support (Optional)</Label>
-                    <Select>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select program" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="general">General Fund</SelectItem>
-                        <SelectItem value="education">Teacher Empowerment</SelectItem>
-                        <SelectItem value="youth">Youth Empowerment</SelectItem>
-                        <SelectItem value="environment">Climate Action</SelectItem>
-                        <SelectItem value="women">Women Empowerment</SelectItem>
-                        <SelectItem value="rights">Rights Education</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="message">Message (Optional)</Label>
-                    <Textarea id="message" placeholder="Add a personal message" />
-                  </div>
-
-                  <Button className="w-full bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full">
-                    Make Donation
-                  </Button>
+                <CardContent>
+                  <DonationInquiryForm />
                 </CardContent>
               </Card>
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Volunteer Section */}
       <section id="volunteer" className="py-16 bg-white">
@@ -474,10 +390,10 @@ export default function GetInvolved() {
               <Mail className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Email Us</h3>
               <a 
-                href="mailto:africanleadershub@gmail.com"
+                href={contact.mailHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                africanleadershub@gmail.com
+                {contact.email}
               </a>
             </div>
 
@@ -485,17 +401,17 @@ export default function GetInvolved() {
               <Phone className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Call Us</h3>
               <a 
-                href="tel:+250788358891"
+                href={contact.telHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                +250 788 358 891
+                {contact.phone}
               </a>
             </div>
 
             <div className="text-center">
               <Handshake className="w-12 h-12 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="text-gray-200">Kigali, Rwanda</p>
+              <p className="text-gray-200">{contact.location}</p>
             </div>
           </div>
 

@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Briefcase, ArrowRight, Calendar } from "lucide-react";
-import { careers, getFeaturedCareers } from "@/data/careers";
+import { getPublishedCareers } from "@/lib/content";
+import { toCareerView } from "@/lib/content-views";
 import { generateOrganizationSchema } from "@/lib/seo";
 
 const callToActionBackground = {
@@ -51,9 +52,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Careers() {
+export default async function Careers() {
   const organizationSchema = generateOrganizationSchema();
-  const featuredCareers = getFeaturedCareers();
+  const careers = (await getPublishedCareers()).map(toCareerView);
+  const featuredCareers = careers.filter((career) => career.featured);
 
   const getTypeColor = (type: string) => {
     switch (type) {

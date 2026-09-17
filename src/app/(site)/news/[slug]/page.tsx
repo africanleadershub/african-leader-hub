@@ -4,21 +4,23 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User, ArrowRight, Clock, Tag } from "lucide-react";
-import { newsArticles, getNewsBySlug } from "@/data/news";
+import { getPostBySlug, getPublishedPosts } from "@/lib/content";
+import { toPostView } from "@/lib/content-views";
 import { generateNewsArticleSchema } from "@/lib/seo";
 import { ShareButton } from "@/components/share-button";
 import { NewsletterSubscribe } from "@/components/newsletter-subscribe";
 import Image from "next/image";
 
 interface NewsPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: NewsPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getNewsBySlug(slug);
+  const articleRecord = await getPostBySlug(slug);
+  const article = articleRecord ? toPostView(articleRecord) : null;
 
   if (!article) {
     return {
@@ -35,7 +37,8 @@ export async function generateMetadata({ params }: NewsPageProps): Promise<Metad
 
 export default async function NewsPage({ params }: NewsPageProps) {
   const { slug } = await params;
-  const article = getNewsBySlug(slug);
+  const articleRecord = await getPostBySlug(slug);
+  const article = articleRecord ? toPostView(articleRecord) : null;
 
   if (!article) {
     notFound();
@@ -171,7 +174,11 @@ export default async function NewsPage({ params }: NewsPageProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsArticles.filter(a => a.slug !== article.slug).slice(0, 3).map((relatedArticle) => (
+            {(await getPublishedPosts())
+              .map(toPostView)
+              .filter((related) => related.slug !== article.slug)
+              .slice(0, 3)
+              .map((relatedArticle) => (
               <Link key={relatedArticle.slug} href={`/news/${relatedArticle.slug}`} className="h-full hover:shadow-lg transition-shadow overflow-hidden bg-white rounded-xl shadow group border border-[#8B4513]">
                 <div className="relative h-48">
                   <Image

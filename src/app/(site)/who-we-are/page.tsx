@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-import { partners } from "@/data/partners";
 import { generateOrganizationSchema } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { TeamSection } from "@/components/team-section";
 import Link from "next/link";
+import { getPublishedPartners, getWebsiteSettings, publicContact } from "@/lib/content";
 
 const callToActionBackground = {
   background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
@@ -51,8 +51,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WhoWeAre() {
+export default async function WhoWeAre() {
   const organizationSchema = generateOrganizationSchema();
+  const [partners, settings] = await Promise.all([
+    getPublishedPartners(),
+    getWebsiteSettings(),
+  ]);
+  const contact = publicContact(settings);
+  const visiblePartners = partners.filter((partner) => partner.logoAsset?.url);
 
   return (
     <div className="min-h-screen">
@@ -81,7 +87,7 @@ export default function WhoWeAre() {
       <TeamSection />
 
       {/* Partners Section */}
-      {partners.length > 0 && <section id="partners" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+      {visiblePartners.length > 0 && <section id="partners" className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Partners</h2>
@@ -91,22 +97,15 @@ export default function WhoWeAre() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 xl:grid-cols-8 gap-8">
-            {partners.map((partner) => (
+            {visiblePartners.map((partner) => (
               <div key={partner.id} className="group">
-                {partner.logoType === "image" && (
-                  <Image
-                    src={partner.logo as string}
-                    alt={`${partner.name} logo`}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                )}
-                {partner.logoType === "custom" && (
-                  <div className="">
-                    {partner.logo}
-                  </div>
-                )}
+                <Image
+                  src={partner.logoAsset!.url}
+                  alt={`${partner.name} logo`}
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                />
               </div>
             ))}
           </div>
@@ -140,10 +139,10 @@ export default function WhoWeAre() {
               <Mail className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Email Us</h3>
               <a
-                href="mailto:africanleadershub@gmail.com"
+                href={contact.mailHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                africanleadershub@gmail.com
+                {contact.email}
               </a>
             </div>
 
@@ -151,17 +150,17 @@ export default function WhoWeAre() {
               <Phone className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Call Us</h3>
               <a
-                href="tel:+250788358891"
+                href={contact.telHref}
                 className="text-gray-200 hover:text-white transition-colors"
               >
-                +250 788 358 891
+                {contact.phone}
               </a>
             </div>
 
             <div className="text-center">
               <MapPin className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="text-gray-200">Kigali, Rwanda</p>
+              <p className="text-gray-200">{contact.location}</p>
             </div>
           </div>
         </div>

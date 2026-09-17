@@ -75,3 +75,41 @@ export const getPublishedCareers = cache(async () => {
     orderBy: [{ featured: "desc" }, { postedAt: "desc" }],
   });
 });
+
+export const getProgramBySlug = cache(async (slug: string) => {
+  return prisma.program.findFirst({
+    where: { slug, status: "PUBLISHED" },
+    include: { imageAsset: true, bannerAsset: true },
+  });
+});
+
+export const getPostBySlug = cache(async (slug: string) => {
+  return prisma.post.findFirst({
+    where: { slug, status: "PUBLISHED" },
+    include: { featuredImage: true, bannerImage: true },
+  });
+});
+
+export const getCareerBySlug = cache(async (slug: string) => {
+  return prisma.career.findFirst({
+    where: { slug, status: "PUBLISHED" },
+  });
+});
+
+export const getLegalPageBySlug = cache(async (slug: string) => {
+  return prisma.legalPage.findFirst({
+    where: { slug, published: true },
+  });
+});
+
+export function publicContact(settings: Awaited<ReturnType<typeof getWebsiteSettings>>) {
+  const email = settings?.emailPrimary || "africanleadershub@gmail.com";
+  const phone = settings?.phonePrimary || "+250 788 358 891";
+  return {
+    email,
+    phone,
+    telHref: `tel:${phone.replace(/[^\d+]/g, "")}`,
+    mailHref: `mailto:${email}`,
+    location: `${settings?.city || "Kigali"}, ${settings?.country || "Rwanda"}`,
+  };
+}

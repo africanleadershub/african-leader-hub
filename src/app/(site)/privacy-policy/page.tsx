@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Shield } from "lucide-react";
-import { privacyPolicyContent } from "@/data/privacy-policy";
+import { getLegalPageBySlug } from "@/lib/content";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 import "../legal-pages.css";
 
 export const metadata: Metadata = {
@@ -40,7 +41,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const page = await getLegalPageBySlug("privacy-policy");
+  const content = sanitizeHtml(page?.contentHtml || "<p>Privacy policy coming soon.</p>");
   const JSONLD = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -125,7 +128,7 @@ export default function PrivacyPolicyPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="prose prose-lg max-w-none article-content"
-            dangerouslySetInnerHTML={{ __html: privacyPolicyContent }}
+            dangerouslySetInnerHTML={{ __html: content }}
           />
         </div>
       </section>

@@ -1,17 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Users, TreePine, GraduationCap, Heart, Shield, Stethoscope, MessageSquare } from "lucide-react";
-import { programs, programCategories } from "@/data/programs";
+import { programCategories } from "@/data/programs";
 import { generateOrganizationSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
-
+import { toProgramView, type ProgramView } from "@/lib/content-views";
 
 export default function Programs() {
   const [activeCategory, setActiveCategory] = useState("youth-and-children-empowerment");
+  const [programs, setPrograms] = useState<ProgramView[]>([]);
+  const [impactStats, setImpactStats] = useState<{ id: string; title: string; value: string; description: string }[]>([]);
   const organizationSchema = generateOrganizationSchema();
+
+  useEffect(() => {
+    fetch("/api/content/programs")
+      .then((res) => res.json())
+      .then((data) => setPrograms((data.items || []).map(toProgramView)))
+      .catch(() => undefined);
+    fetch("/api/content/impact")
+      .then((res) => res.json())
+      .then((data) => setImpactStats(data.items || []))
+      .catch(() => undefined);
+  }, []);
+
+  const categories = Array.from(new Set(programs.map((program) => program.category)));
+  const displayCategories = categories.length > 0 ? categories : programCategories;
 
   const getProgramsByCategory = (category: string) => {
     return programs.filter(program => program.category === category);
@@ -79,7 +95,7 @@ export default function Programs() {
           {/* Custom Category Navigation */}
           <div className="mb-12">
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-              {programCategories.map((category) => {
+              {displayCategories.map((category) => {
                 const categoryValue = category.toLowerCase().replace(/\s+/g, '-').replace('&', 'and');
                 const isActive = activeCategory === categoryValue;
 
@@ -114,7 +130,7 @@ export default function Programs() {
           </div>
 
           {/* Active Category Content */}
-          {programCategories.map((category) => {
+          {displayCategories.map((category) => {
             const categoryPrograms = getProgramsByCategory(category);
             const categoryValue = category.toLowerCase().replace(/\s+/g, '-').replace('&', 'and');
             const isActive = activeCategory === categoryValue;
@@ -165,55 +181,13 @@ export default function Programs() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">5,000+</div>
-              <h3 className="text-xl font-semibold mb-2">Teachers Upgraded</h3>
-              <p className="text-gray-300">Primary teachers upgraded to bachelor&apos;s degree level</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">150+</div>
-              <h3 className="text-xl font-semibold mb-2">Climate Ambassadors</h3>
-              <p className="text-gray-300">Youth trained as climate action champions across 30 districts</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">60,000+</div>
-              <h3 className="text-xl font-semibold mb-2">Youth Reached</h3>
-              <p className="text-gray-300">Young people educated through Know Your Rights program</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">3M</div>
-              <h3 className="text-xl font-semibold mb-2">Trees Target</h3>
-              <p className="text-gray-300">Trees to be planted through One Tree African Family Program</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">25,000+</div>
-              <h3 className="text-xl font-semibold mb-2">Civic Education</h3>
-              <p className="text-gray-300">People trained in human rights awareness and protection</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">2,000+</div>
-              <h3 className="text-xl font-semibold mb-2">Job Readiness</h3>
-              <p className="text-gray-300">Youth trained through Bategure employment program</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">22,000+</div>
-              <h3 className="text-xl font-semibold mb-2">Teen Mothers</h3>
-              <p className="text-gray-300">Annual cases addressed through empowerment program</p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#8B4513] mb-2">20+</div>
-              <h3 className="text-xl font-semibold mb-2">Programs</h3>
-              <p className="text-gray-300">Comprehensive programs across 7 thematic areas</p>
-            </div>
+            {(impactStats.length ? impactStats : []).slice(0, 8).map((stat) => (
+              <div key={stat.id} className="text-center">
+                <div className="text-4xl font-bold text-[#8B4513] mb-2">{stat.value}</div>
+                <h3 className="text-xl font-semibold mb-2">{stat.title}</h3>
+                <p className="text-gray-300">{stat.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
