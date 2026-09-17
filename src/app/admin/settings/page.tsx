@@ -51,17 +51,18 @@ export default function SettingsPage() {
     <form onSubmit={onSubmit} className="max-w-2xl space-y-4">
       <h1 className="text-3xl font-semibold">Website settings</h1>
       {Object.entries({
-        siteName: "Site name",
-        tagline: "Tagline",
-        addressLine1: "Address",
-        city: "City",
-        country: "Country",
-        phonePrimary: "Primary phone",
-        emailPrimary: "Primary email",
-      }).map(([name, label]) => (
+        siteName: ["Site name", "African Leaders Hub"],
+        tagline: ["Tagline", "Developing ethical African leadership"],
+        addressLine1: ["Address", "KG 123 St"],
+        city: ["City", "Kigali"],
+        country: ["Country", "Rwanda"],
+        phonePrimary: ["Primary phone", "+250 788 000 000"],
+        emailPrimary: ["Primary email", "hello@africanleadershub.org"],
+      }).map(([name, [label, placeholder]]) => (
         <div key={name} className="space-y-2">
           <Label>{label}</Label>
           <Input
+            placeholder={placeholder}
             value={String(values[name as keyof typeof values] || "")}
             onChange={(e) => setValues((current) => ({ ...current, [name]: e.target.value }))}
           />
@@ -70,6 +71,7 @@ export default function SettingsPage() {
       <div className="space-y-2">
         <Label>Business hours</Label>
         <Textarea
+          placeholder="Monday–Friday, 8:00–17:00 CAT"
           value={values.businessHours}
           onChange={(e) => setValues((current) => ({ ...current, businessHours: e.target.value }))}
         />

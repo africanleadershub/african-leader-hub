@@ -121,7 +121,7 @@ export function AssetSelector({
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search assets"
+                placeholder="Search by title, filename, or alt text"
                 className="pl-9"
               />
             </div>

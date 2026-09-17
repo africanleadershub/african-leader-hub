@@ -11,14 +11,21 @@ import { toast } from "sonner";
 import { RichTextEditor, htmlFromJson } from "@/components/editor/rich-text-editor";
 import type { JSONContent } from "@tiptap/react";
 import { AssetField, type AssetRecord } from "@/components/admin/asset-selector";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { slugify } from "@/lib/slug";
 
 type Field =
-  | { name: string; label: string; type: "text" | "textarea" | "number" | "datetime" }
-  | { name: string; label: string; type: "select"; options: { label: string; value: string }[] }
-  | { name: string; label: string; type: "asset" }
-  | { name: string; label: string; type: "list" }
-  | { name: string; label: string; type: "richtext" };
+  | { name: string; label: string; type: "text" | "textarea" | "number" | "datetime"; placeholder?: string }
+  | { name: string; label: string; type: "select"; placeholder?: string; options: { label: string; value: string }[] }
+  | { name: string; label: string; type: "asset"; placeholder?: string }
+  | { name: string; label: string; type: "list"; placeholder?: string }
+  | { name: string; label: string; type: "richtext"; placeholder?: string };
 
 export function RecordForm({
   collection,
@@ -103,6 +110,10 @@ export function RecordForm({
             <div key={field.name} className="space-y-2">
               <Label>{field.label}</Label>
               <Textarea
+                placeholder={
+                  field.placeholder ||
+                  (field.type === "list" ? "One item per line" : `Write ${field.label.toLowerCase()}`)
+                }
                 value={
                   field.type === "list"
                     ? Array.isArray(values[field.name])
@@ -125,17 +136,21 @@ export function RecordForm({
           return (
             <div key={field.name} className="space-y-2">
               <Label>{field.label}</Label>
-              <select
-                className="flex h-10 w-full rounded-md border px-3 text-sm"
+              <Select
                 value={String(values[field.name] || field.options[0]?.value || "")}
-                onChange={(e) => setField(field.name, e.target.value)}
+                onValueChange={(value) => setField(field.name, value)}
               >
-                {field.options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={field.placeholder || `Select ${field.label.toLowerCase()}`} />
+                </SelectTrigger>
+                <SelectContent>
+                  {field.options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           );
         }
@@ -163,6 +178,7 @@ export function RecordForm({
             <div key={field.name} className="space-y-2">
               <Label>{field.label}</Label>
               <RichTextEditor
+                placeholder={field.placeholder || `Write ${field.label.toLowerCase()}…`}
                 value={
                   (values[`${field.name}Json`] as JSONContent) ||
                   (field.name === "contentHtml"
@@ -185,6 +201,11 @@ export function RecordForm({
             <Label>{field.label}</Label>
             <Input
               type={field.type === "datetime" ? "datetime-local" : field.type === "number" ? "number" : "text"}
+              placeholder={
+                field.type === "datetime"
+                  ? undefined
+                  : field.placeholder || `Enter ${field.label.toLowerCase()}`
+              }
               value={String(values[field.name] || "")}
               onChange={(e) => setField(field.name, e.target.value)}
             />

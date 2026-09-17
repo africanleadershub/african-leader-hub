@@ -65,6 +65,7 @@ function ResetPasswordForm() {
             id="password"
             type="password"
             autoComplete="new-password"
+            placeholder="At least 8 characters"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
@@ -77,6 +78,7 @@ function ResetPasswordForm() {
             id="confirm"
             type="password"
             autoComplete="new-password"
+            placeholder="Re-enter the new password"
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
             required

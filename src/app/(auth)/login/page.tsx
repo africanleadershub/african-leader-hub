@@ -110,6 +110,7 @@ function LoginForm() {
             id="email"
             type="email"
             autoComplete="username"
+            placeholder="you@africanleadershub.org"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
@@ -126,6 +127,7 @@ function LoginForm() {
             id="password"
             type="password"
             autoComplete="current-password"
+            placeholder="Enter your password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required

@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { adminFetch } from "@/lib/admin-fetch";
 import { toast } from "sonner";
+import { DataTable, sortableHeader, type DataTableCellProps, type DataTableColumn } from "@/components/admin/data-table";
 
 const TABS = [
   { id: "contacts", label: "Contact" },
@@ -16,32 +17,115 @@ const TABS = [
   { id: "subscribers", label: "Subscribers" },
 ] as const;
 
+type InboxTab = (typeof TABS)[number]["id"];
+
+type InboxRow = {
+  id: string;
+  from: string;
+  name: string;
+  details: string;
+  status: string;
+  received: string;
+};
+
+function inboxRow(row: Record<string, unknown>): InboxRow {
+  const received = row.createdAt || row.subscribedAt;
+  return {
+    id: String(row.id ?? ""),
+    from: String(row.email || row.contactEmail || ""),
+    name: `${String(row.firstName || row.contactName || row.orgName || "")} ${String(row.lastName || "")}`.trim(),
+    details: String(
+      row.subject ||
+        row.interest ||
+        row.partnershipInterest ||
+        row.amount ||
+        row.coverLetter ||
+        row.source ||
+        ""
+    ),
+    status: String(row.status || (row.isActive ? "active" : "inactive")),
+    received: received ? new Date(String(received)).toLocaleDateString() : "",
+  };
+}
+
 export default function InboxPage() {
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("contacts");
-  const [items, setItems] = useState<Record<string, unknown>[]>([]);
+  const [tab, setTab] = useState<InboxTab>("contacts");
+  const [items, setItems] = useState<InboxRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const load = useCallback(async (type = tab) => {
+    setLoading(true);
     const response = await adminFetch(`/api/admin/inbox?type=${type}`);
     const data = await response.json();
-    setItems(data.items || []);
+    setItems(((data.items || []) as Record<string, unknown>[]).map(inboxRow));
+    setLoading(false);
   }, [tab]);
 
   useEffect(() => {
     void load();
   }, [load]);
 
-  async function setStatus(id: string, status: string) {
-    const response = await adminFetch("/api/admin/inbox", {
-      method: "PATCH",
-      body: JSON.stringify({ type: tab, id, status }),
-    });
-    if (!response.ok) {
-      toast.error("Update failed");
-      return;
-    }
-    toast.success("Updated");
-    await load();
-  }
+  const setStatus = useCallback(
+    async (id: string, status: string) => {
+      const response = await adminFetch("/api/admin/inbox", {
+        method: "PATCH",
+        body: JSON.stringify({ type: tab, id, status }),
+      });
+      if (!response.ok) {
+        toast.error("Update failed");
+        return;
+      }
+      toast.success("Updated");
+      await load();
+    },
+    [load, tab]
+  );
+
+  const columns = useMemo<DataTableColumn<InboxRow>[]>(
+    () => [
+      {
+        accessorKey: "from",
+        header: sortableHeader<InboxRow>("From"),
+        cell: ({ row }: DataTableCellProps<InboxRow>) => (
+          <div>
+            <p>{row.original.from}</p>
+            <p className="text-xs text-muted-foreground">{row.original.name}</p>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "details",
+        header: sortableHeader<InboxRow>("Details"),
+        cell: ({ row }: DataTableCellProps<InboxRow>) => <p className="max-w-md truncate">{row.original.details}</p>,
+      },
+      {
+        accessorKey: "status",
+        header: sortableHeader<InboxRow>("Status"),
+        cell: ({ row }: DataTableCellProps<InboxRow>) => <Badge variant="secondary">{row.original.status}</Badge>,
+      },
+      {
+        accessorKey: "received",
+        header: sortableHeader<InboxRow>("Received"),
+      },
+      {
+        id: "actions",
+        header: "",
+        enableSorting: false,
+        cell: ({ row }: DataTableCellProps<InboxRow>) =>
+          tab === "subscribers" ? null : (
+            <div className="flex justify-end gap-2">
+              <Button size="sm" variant="outline" onClick={() => void setStatus(row.original.id, "IN_REVIEW")}>
+                Review
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => void setStatus(row.original.id, "ACCEPTED")}>
+                Accept
+              </Button>
+            </div>
+          ),
+      },
+    ],
+    [setStatus, tab]
+  );
 
   return (
     <div className="space-y-6">
@@ -49,7 +133,7 @@ export default function InboxPage() {
         <h1 className="text-3xl font-semibold">Inbox</h1>
         <p className="text-muted-foreground">Applications, inquiries, and newsletter subscribers.</p>
       </div>
-      <Tabs value={tab} onValueChange={(value) => setTab(value as typeof tab)}>
+      <Tabs value={tab} onValueChange={(value) => setTab(value as InboxTab)}>
         <TabsList className="flex flex-wrap">
           {TABS.map((item) => (
             <TabsTrigger key={item.id} value={item.id}>
@@ -59,52 +143,15 @@ export default function InboxPage() {
         </TabsList>
         {TABS.map((item) => (
           <TabsContent key={item.id} value={item.id}>
-            <div className="rounded-lg border bg-white">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>From</TableHead>
-                    <TableHead>Details</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Received</TableHead>
-                    <TableHead></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {items.map((row) => (
-                    <TableRow key={String(row.id)}>
-                      <TableCell>
-                        {String(row.email || row.contactEmail || "")}
-                        <div className="text-xs text-muted-foreground">
-                          {String(row.firstName || row.contactName || row.orgName || "")} {String(row.lastName || "")}
-                        </div>
-                      </TableCell>
-                      <TableCell className="max-w-md truncate text-sm">
-                        {String(row.subject || row.interest || row.partnershipInterest || row.amount || row.coverLetter || row.source || "")}
-                      </TableCell>
-                      <TableCell>{String(row.status || (row.isActive ? "active" : "inactive"))}</TableCell>
-                      <TableCell>
-                        {row.createdAt || row.subscribedAt
-                          ? new Date(String(row.createdAt || row.subscribedAt)).toLocaleDateString()
-                          : ""}
-                      </TableCell>
-                      <TableCell className="space-x-2">
-                        {tab !== "subscribers" && (
-                          <>
-                            <Button size="sm" variant="outline" onClick={() => void setStatus(String(row.id), "IN_REVIEW")}>
-                              Review
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => void setStatus(String(row.id), "ACCEPTED")}>
-                              Accept
-                            </Button>
-                          </>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            <DataTable
+              columns={columns}
+              data={items}
+              loading={loading}
+              searchPlaceholder={`Search ${item.label.toLowerCase()}…`}
+              filterColumn="status"
+              filterTitle="Status"
+              emptyMessage="No items in this inbox."
+            />
           </TabsContent>
         ))}
       </Tabs>

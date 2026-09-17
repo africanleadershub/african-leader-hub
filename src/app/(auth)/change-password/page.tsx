@@ -61,6 +61,7 @@ export default function ChangePasswordPage() {
             id="current"
             type="password"
             autoComplete="current-password"
+            placeholder="Enter your current password"
             value={currentPassword}
             onChange={(event) => setCurrentPassword(event.target.value)}
             required
@@ -72,6 +73,7 @@ export default function ChangePasswordPage() {
             id="new"
             type="password"
             autoComplete="new-password"
+            placeholder="At least 8 characters"
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
             required
@@ -84,6 +86,7 @@ export default function ChangePasswordPage() {
             id="confirm"
             type="password"
             autoComplete="new-password"
+            placeholder="Re-enter the new password"
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
             required

@@ -51,15 +51,30 @@ export default function IdentityPage() {
       <h1 className="text-3xl font-semibold">Mission, vision & values</h1>
       <div className="space-y-2">
         <Label>Mission</Label>
-        <Textarea rows={5} value={mission} onChange={(e) => setMission(e.target.value)} />
+        <Textarea
+          rows={5}
+          placeholder="Describe the organization’s purpose and who it serves"
+          value={mission}
+          onChange={(e) => setMission(e.target.value)}
+        />
       </div>
       <div className="space-y-2">
         <Label>Vision</Label>
-        <Textarea rows={5} value={vision} onChange={(e) => setVision(e.target.value)} />
+        <Textarea
+          rows={5}
+          placeholder="Describe the future the organization is working toward"
+          value={vision}
+          onChange={(e) => setVision(e.target.value)}
+        />
       </div>
       <div className="space-y-2">
         <Label>Background</Label>
-        <Textarea rows={7} value={background} onChange={(e) => setBackground(e.target.value)} />
+        <Textarea
+          rows={7}
+          placeholder="Share the organization’s history, context, and founding story"
+          value={background}
+          onChange={(e) => setBackground(e.target.value)}
+        />
       </div>
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -75,14 +90,14 @@ export default function IdentityPage() {
         {values.map((item, index) => (
           <div key={index} className="grid gap-2 rounded-lg border p-3 md:grid-cols-2">
             <Input
-              placeholder="Title"
+              placeholder="Integrity"
               value={item.title}
               onChange={(e) =>
                 setValues((current) => current.map((row, i) => (i === index ? { ...row, title: e.target.value } : row)))
               }
             />
             <Input
-              placeholder="Description"
+              placeholder="We act with honesty and accountability"
               value={item.description}
               onChange={(e) =>
                 setValues((current) =>

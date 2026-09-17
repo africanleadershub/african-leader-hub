@@ -262,11 +262,11 @@ export default function AccountPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First name</Label>
-                  <Input id="firstName" value={firstName} onChange={(event) => setFirstName(event.target.value)} required />
+                  <Input id="firstName" placeholder="Ada" value={firstName} onChange={(event) => setFirstName(event.target.value)} required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last name</Label>
-                  <Input id="lastName" value={lastName} onChange={(event) => setLastName(event.target.value)} required />
+                  <Input id="lastName" placeholder="Okonkwo" value={lastName} onChange={(event) => setLastName(event.target.value)} required />
                 </div>
               </div>
               <div className="space-y-2">
@@ -298,6 +298,7 @@ export default function AccountPage() {
                 <Input
                   id="currentPassword"
                   type="password"
+                  placeholder="Enter your current password"
                   value={currentPassword}
                   onChange={(event) => setCurrentPassword(event.target.value)}
                   required
@@ -308,6 +309,7 @@ export default function AccountPage() {
                 <Input
                   id="newPassword"
                   type="password"
+                  placeholder="At least 8 characters"
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
                   required
@@ -319,6 +321,7 @@ export default function AccountPage() {
                 <Input
                   id="confirmPassword"
                   type="password"
+                  placeholder="Re-enter the new password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
@@ -366,6 +369,7 @@ export default function AccountPage() {
                     id="setupCode"
                     value={setupCode}
                     onChange={(event) => setSetupCode(event.target.value)}
+                    placeholder="123456"
                     inputMode="numeric"
                     maxLength={8}
                     required
@@ -389,6 +393,7 @@ export default function AccountPage() {
                   id="disableCode"
                   value={disableCode}
                   onChange={(event) => setDisableCode(event.target.value)}
+                  placeholder="123456"
                   required
                 />
               </div>

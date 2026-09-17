@@ -56,6 +56,7 @@ export default function ForgotPasswordPage() {
             id="email"
             type="email"
             autoComplete="email"
+            placeholder="you@africanleadershub.org"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
