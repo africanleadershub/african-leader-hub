@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -20,15 +20,15 @@ export default function InboxPage() {
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("contacts");
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
 
-  async function load(type = tab) {
+  const load = useCallback(async (type = tab) => {
     const response = await adminFetch(`/api/admin/inbox?type=${type}`);
     const data = await response.json();
     setItems(data.items || []);
-  }
+  }, [tab]);
 
   useEffect(() => {
-    void load(tab);
-  }, [tab]);
+    void load();
+  }, [load]);
 
   async function setStatus(id: string, status: string) {
     const response = await adminFetch("/api/admin/inbox", {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -24,17 +24,17 @@ export function CollectionManager({
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     const response = await adminFetch(`/api/admin/collections/${collection}`);
     const data = await response.json();
     setItems(data.items || []);
     setLoading(false);
-  }
+  }, [collection]);
 
   useEffect(() => {
     void load();
-  }, [collection]);
+  }, [load]);
 
   async function remove(id: string) {
     if (!confirm("Delete this item?")) return;
