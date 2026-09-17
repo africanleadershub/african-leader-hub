@@ -55,7 +55,7 @@ function ConfirmOtpForm() {
       }
 
       toast.success("Welcome back");
-      router.push(data.redirectTo || redirect);
+      router.push(data.requirePasswordReset ? data.redirectTo || "/change-password" : redirect);
       router.refresh();
     } catch {
       toast.error("Unable to confirm this code");

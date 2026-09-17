@@ -4,7 +4,7 @@ import {
   verifyAuthenticationResponse,
   verifyRegistrationResponse,
   type AuthenticationResponseJSON,
-  type AuthenticatorTransportFuture,
+  type AuthenticatorTransport,
   type RegistrationResponseJSON,
 } from "@simplewebauthn/server";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
@@ -87,13 +87,13 @@ export async function verifyAuthentication(
       id: credential.id,
       publicKey: isoBase64URL.toBuffer(credential.publicKey),
       counter: credential.counter,
-      transports: credential.transports as AuthenticatorTransportFuture[],
+      transports: credential.transports as AuthenticatorTransport[],
     },
   });
 }
 
 export function publicKeyToString(publicKey: Uint8Array): string {
-  return isoBase64URL.fromBuffer(publicKey);
+  return isoBase64URL.fromBuffer(new Uint8Array(publicKey));
 }
 
 export function challengeFromClientDataJSON(clientDataJSON: string): string | null {

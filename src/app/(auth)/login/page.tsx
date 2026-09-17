@@ -24,6 +24,10 @@ function LoginForm() {
     router.refresh();
   }
 
+  function afterLogin(data: { requirePasswordReset?: boolean; redirectTo?: string }) {
+    continueTo(data.requirePasswordReset ? data.redirectTo || "/change-password" : redirect);
+  }
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     setLoading(true);
@@ -48,7 +52,7 @@ function LoginForm() {
         return;
       }
       toast.success("Welcome back");
-      continueTo(data.redirectTo || redirect);
+      afterLogin(data);
     } catch {
       toast.error("Unable to sign in");
     } finally {
@@ -81,7 +85,7 @@ function LoginForm() {
         return;
       }
       toast.success("Welcome back");
-      continueTo(data.redirectTo || redirect);
+      afterLogin(data);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Passkey sign-in failed");
     } finally {
