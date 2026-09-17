@@ -83,7 +83,11 @@ export default function InboxPage() {
                         {String(row.subject || row.interest || row.partnershipInterest || row.amount || row.coverLetter || row.source || "")}
                       </TableCell>
                       <TableCell>{String(row.status || (row.isActive ? "active" : "inactive"))}</TableCell>
-                      <TableCell>{row.createdAt ? new Date(String(row.createdAt)).toLocaleDateString() : ""}</TableCell>
+                      <TableCell>
+                        {row.createdAt || row.subscribedAt
+                          ? new Date(String(row.createdAt || row.subscribedAt)).toLocaleDateString()
+                          : ""}
+                      </TableCell>
                       <TableCell className="space-x-2">
                         {tab !== "subscribers" && (
                           <>

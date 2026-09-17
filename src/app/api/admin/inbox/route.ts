@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     type === "applications" ? { career: { select: { title: true, slug: true } } } : undefined;
 
   const items = await (modelFor(type) as typeof prisma.contactInquiry).findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: type === "subscribers" ? { subscribedAt: "desc" } : { createdAt: "desc" },
     take: 200,
     ...(include ? { include } : {}),
   } as never);

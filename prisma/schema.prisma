@@ -57,12 +57,18 @@ model User {
   role                 UserRole  @default(EDITOR)
   active               Boolean   @default(true)
   requirePasswordReset Boolean   @default(false)
+  totpEnabled          Boolean   @default(false)
+  totpSecret           String?
+  totpPendingSecret    String?
+  backupCodes          String[]  @default([])
   lastLogin            DateTime?
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
-  sessions Session[]
-  assets   Asset[]   @relation("AssetUploadedBy")
+  sessions  Session[]
+  passkeys  PasskeyCredential[]
+  challenges AuthChallenge[]
+  assets    Asset[]   @relation("AssetUploadedBy")
 
   @@index([role])
   @@index([active])
@@ -88,6 +94,52 @@ model Session {
   @@index([userId])
   @@index([isActive])
   @@index([expiresAt])
+}
+
+enum AuthChallengeType {
+  LOGIN_2FA
+  PASSWORD_RESET
+  PASSKEY_REGISTER
+  PASSKEY_LOGIN
+}
+
+model AuthChallenge {
+  id         String            @id @default(uuid())
+  userId     String?
+  email      String
+  type       AuthChallengeType
+  codeHash   String            @default("")
+  token      String            @unique
+  expiresAt  DateTime
+  consumedAt DateTime?
+  attempts   Int               @default(0)
+  verifiedAt DateTime?
+  metadata   Json?
+  createdAt  DateTime          @default(now())
+  user       User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([email])
+  @@index([type])
+  @@index([expiresAt])
+}
+
+model PasskeyCredential {
+  id           String    @id @default(uuid())
+  userId       String
+  credentialId String    @unique
+  publicKey    String
+  counter      Int       @default(0)
+  deviceType   String?
+  backedUp     Boolean   @default(false)
+  transports   String[]  @default([])
+  name         String?
+  lastUsedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Asset {

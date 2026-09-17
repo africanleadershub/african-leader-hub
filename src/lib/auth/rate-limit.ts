@@ -6,6 +6,11 @@ const loginLimiter = new RateLimiterMemory({
   duration: 15 * 60,
 });
 
+const resetLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 15 * 60,
+});
+
 const apiLimiter = new RateLimiterMemory({
   points: 80,
   duration: 60,
@@ -44,6 +49,23 @@ export async function rateLimitApi(request: NextRequest): Promise<
       success: false,
       response: NextResponse.json(
         { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      ),
+    };
+  }
+}
+
+export async function rateLimitReset(request: NextRequest): Promise<
+  { success: true } | { success: false; response: NextResponse }
+> {
+  try {
+    await resetLimiter.consume(clientKey(request));
+    return { success: true };
+  } catch {
+    return {
+      success: false,
+      response: NextResponse.json(
+        { error: "Too many reset attempts. Please try again later." },
         { status: 429 }
       ),
     };

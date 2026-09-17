@@ -421,3 +421,50 @@ export async function sendNotificationEmail(
     html,
   });
 }
+
+export async function sendAuthEmail(params: {
+  to: string;
+  subject: string;
+  heading: string;
+  bodyHtml: string;
+}) {
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+          .header { background-color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 3px solid #8B4513; }
+          .logo-container img { max-width: 200px; height: auto; display: block; margin: 0 auto; }
+          .content { padding: 30px 20px; background-color: #ffffff; }
+          .code { letter-spacing: 6px; font-size: 28px; font-weight: bold; color: #8B4513; text-align: center; margin: 24px 0; }
+          .button { display: inline-block; background: #8B4513; color: #fff !important; padding: 12px 22px; border-radius: 999px; text-decoration: none; }
+          .footer { background-color: #f9f9f9; padding: 30px 20px; border-top: 2px solid #e0e0e0; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="logo-container">
+              <img src="${LOGO_URL}" alt="African Leaders Hub Logo" />
+            </div>
+            <h1 style="color:#8B4513">${params.heading}</h1>
+          </div>
+          <div class="content">
+            ${params.bodyHtml}
+          </div>
+          ${getEmailFooter()}
+        </div>
+      </body>
+    </html>
+  `;
+
+  return transporter.sendMail({
+    from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+    to: params.to,
+    subject: params.subject,
+    html,
+  });
+}
