@@ -116,7 +116,7 @@ export function Navigation({
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {programs.map((program) => (
-                      <DropdownMenuItem key={program.id} asChild>
+                      <DropdownMenuItem key={program.slug} asChild>
                         <Link href={`/programs/${program.slug}`} className="text-sm hover:text-[#8B4513] transition-colors block py-1">
                           {program.title}
                         </Link>
@@ -133,9 +133,9 @@ export function Navigation({
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white text-black">
-                {/* <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild>
                   <Link href="/get-involved#donate">Donate</Link>
-                </DropdownMenuItem> */}
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/get-involved#volunteer">Volunteer</Link>
                 </DropdownMenuItem>
@@ -309,7 +309,7 @@ export function Navigation({
                     <div className="space-y-1">
                       {programs.map((program) => (
                         <Link
-                          key={program.id}
+                          key={program.slug}
                           href={`/programs/${program.slug}`}
                           className="flex items-center px-4 py-2 rounded-lg text-sm transition-all text-gray-700 hover:bg-gray-100 hover:text-[#8B4513]"
                           onClick={handleLinkClick}

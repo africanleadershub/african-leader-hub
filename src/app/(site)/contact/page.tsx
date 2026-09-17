@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { generateOrganizationSchema } from "@/lib/seo";
-import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { getPublishedFaqs, getWebsiteSettings, publicContact } from "@/lib/content";
 
@@ -130,23 +129,7 @@ export default async function Contact() {
                   <CardTitle>{faq.question}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>
-                    {faq.answer.includes("Get Involved") ? (
-                      <>
-                        {faq.answer.split("Get Involved")[0]}
-                        <Link href="/get-involved" className="text-[#8B4513] hover:underline"> Get Involved</Link>
-                        {faq.answer.split("Get Involved")[1]}
-                      </>
-                    ) : faq.answer.includes("Programs") ? (
-                      <>
-                        {faq.answer.split("Programs")[0]}
-                        <Link href="/programs" className="text-[#8B4513] hover:underline"> Programs</Link>
-                        {faq.answer.split("Programs")[1]}
-                      </>
-                    ) : (
-                      faq.answer
-                    )}
-                  </CardDescription>
+                  <CardDescription>{faq.answer}</CardDescription>
                 </CardContent>
               </Card>
             ))}

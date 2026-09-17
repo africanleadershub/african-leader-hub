@@ -18,7 +18,14 @@ export default function Programs() {
   useEffect(() => {
     fetch("/api/content/programs")
       .then((res) => res.json())
-      .then((data) => setPrograms((data.items || []).map(toProgramView)))
+      .then((data) => {
+        const nextPrograms = (data.items || []).map(toProgramView) as ProgramView[];
+        setPrograms(nextPrograms);
+        const first = nextPrograms[0]?.category;
+        if (first) {
+          setActiveCategory(first.toLowerCase().replace(/\s+/g, "-").replace("&", "and"));
+        }
+      })
       .catch(() => undefined);
     fetch("/api/content/impact")
       .then((res) => res.json())

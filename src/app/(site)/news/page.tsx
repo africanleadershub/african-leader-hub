@@ -141,7 +141,7 @@ export default function News() {
                 const isActive = activeCategory === category;
                 const articleCount = category === "All"
                   ? newsArticles.length
-                  : getNewsByCategory(category).length;
+                  : newsArticles.filter((article) => article.category === category).length;
 
                 return (
                   <button

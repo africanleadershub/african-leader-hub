@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Briefcase, ArrowLeft, Calendar } from "lucide-react";
 import { getCareerBySlug } from "@/lib/content";
 import { toCareerView } from "@/lib/content-views";
+import { generateOrganizationSchema } from "@/lib/seo";
 import { CareerApplyForm } from "@/components/career-apply-form";
 
 const callToActionBackground = {

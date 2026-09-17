@@ -46,7 +46,9 @@ export default async function SiteLayout({
           city: settings?.city ?? "Kigali",
           country: settings?.country ?? "Rwanda",
           logoUrl: settings?.logoAsset?.url,
-          socialLinks: Array.isArray(settings?.socialLinks) ? settings.socialLinks : [],
+          socialLinks: Array.isArray(settings?.socialLinks)
+            ? (settings.socialLinks as { platform?: string; label?: string; url?: string }[])
+            : [],
         }}
       />
     </>

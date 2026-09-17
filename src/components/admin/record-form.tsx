@@ -163,7 +163,15 @@ export function RecordForm({
             <div key={field.name} className="space-y-2">
               <Label>{field.label}</Label>
               <RichTextEditor
-                value={(values[`${field.name}Json`] as JSONContent) || null}
+                value={
+                  (values[`${field.name}Json`] as JSONContent) ||
+                  (field.name === "contentHtml"
+                    ? (values.contentJson as JSONContent)
+                    : field.name === "detailsHtml"
+                      ? (values.detailsJson as JSONContent)
+                      : null) ||
+                  null
+                }
                 onChange={(json, html) => {
                   setField(`${field.name}Json`, json);
                   setField(field.name, html);

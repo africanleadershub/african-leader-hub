@@ -14,6 +14,22 @@ type CollectionName =
   | "partners"
   | "impact";
 
+function parseCollection(name: string): CollectionName | null {
+  switch (name) {
+    case "posts":
+    case "programs":
+    case "careers":
+    case "team":
+    case "legal":
+    case "faqs":
+    case "partners":
+    case "impact":
+      return name;
+    default:
+      return null;
+  }
+}
+
 function delegate(name: CollectionName) {
   switch (name) {
     case "posts":
@@ -90,11 +106,13 @@ function withSlug(name: CollectionName, body: Record<string, unknown>) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ collection: CollectionName }> }
+  { params }: { params: Promise<{ collection: string }> }
 ) {
   const auth = await requireAuth(request, { requireCSRF: false });
   if (!auth.success) return auth.response;
-  const { collection } = await params;
+  const parsed = parseCollection((await params).collection);
+  if (!parsed) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
+  const collection = parsed;
   const model = delegate(collection);
   if (!model) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
 
@@ -107,11 +125,13 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ collection: CollectionName }> }
+  { params }: { params: Promise<{ collection: string }> }
 ) {
   const auth = await requireAuth(request);
   if (!auth.success) return auth.response;
-  const { collection } = await params;
+  const parsed = parseCollection((await params).collection);
+  if (!parsed) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
+  const collection = parsed;
   const model = delegate(collection);
   if (!model) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
   const body = withSlug(collection, (await request.json()) as Record<string, unknown>);
@@ -125,11 +145,13 @@ export async function POST(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ collection: CollectionName }> }
+  { params }: { params: Promise<{ collection: string }> }
 ) {
   const auth = await requireAuth(request);
   if (!auth.success) return auth.response;
-  const { collection } = await params;
+  const parsed = parseCollection((await params).collection);
+  if (!parsed) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
+  const collection = parsed;
   const model = delegate(collection);
   if (!model) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
   const body = (await request.json()) as Record<string, unknown>;
@@ -147,11 +169,13 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ collection: CollectionName }> }
+  { params }: { params: Promise<{ collection: string }> }
 ) {
   const auth = await requireAuth(request);
   if (!auth.success) return auth.response;
-  const { collection } = await params;
+  const parsed = parseCollection((await params).collection);
+  if (!parsed) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
+  const collection = parsed;
   const model = delegate(collection);
   if (!model) return NextResponse.json({ error: "Unknown collection" }, { status: 404 });
   const { searchParams } = new URL(request.url);
