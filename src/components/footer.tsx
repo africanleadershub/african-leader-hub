@@ -3,9 +3,11 @@ import { Mail, Phone, MapPin, X, Linkedin, Instagram } from "lucide-react";
 import Image from "next/image";
 
 type SocialLink = { platform?: string; label?: string; url?: string };
+type LegalLink = { slug: string; title: string };
 
 export function Footer({
   settings,
+  legalPages = [],
 }: {
   settings?: {
     siteName?: string;
@@ -17,6 +19,7 @@ export function Footer({
     logoUrl?: string | null;
     socialLinks?: SocialLink[];
   };
+  legalPages?: LegalLink[];
 }) {
   const email = settings?.email || "africanleadershub@gmail.com";
   const phone = settings?.phone || "+250 788 358 891";
@@ -136,6 +139,17 @@ export function Footer({
             <Link href="/terms-of-service" className="text-black hover:text-[#8B4513] transition-colors text-sm">
               Terms of Service
             </Link>
+            {legalPages
+              .filter((page) => page.slug !== "privacy-policy" && page.slug !== "terms-of-service")
+              .map((page) => (
+                <Link
+                  key={page.slug}
+                  href={`/legal/${page.slug}`}
+                  className="text-black hover:text-[#8B4513] transition-colors text-sm"
+                >
+                  {page.title}
+                </Link>
+              ))}
           </div>
         </div>
       </div>

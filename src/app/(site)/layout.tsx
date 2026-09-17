@@ -1,16 +1,17 @@
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
-import { getPublishedPrograms, getWebsiteSettings } from "@/lib/content";
+import { getPublishedLegalPages, getPublishedPrograms, getWebsiteSettings } from "@/lib/content";
 
 export default async function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [programs, settings] = await Promise.all([
+  const [programs, settings, legalPages] = await Promise.all([
     getPublishedPrograms(),
     getWebsiteSettings(),
+    getPublishedLegalPages(),
   ]);
   const organizationSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
@@ -50,6 +51,7 @@ export default async function SiteLayout({
             ? (settings.socialLinks as { platform?: string; label?: string; url?: string }[])
             : [],
         }}
+        legalPages={legalPages.map((page) => ({ slug: page.slug, title: page.title }))}
       />
     </>
   );

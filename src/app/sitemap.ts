@@ -1,9 +1,13 @@
 import { MetadataRoute } from "next";
-import { getPublishedPrograms, getPublishedPosts } from "@/lib/content";
+import { getPublishedLegalPages, getPublishedPrograms, getPublishedPosts } from "@/lib/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://africanleadershub.org";
-  const [programs, posts] = await Promise.all([getPublishedPrograms(), getPublishedPosts()]);
+  const [programs, posts, legalPages] = await Promise.all([
+    getPublishedPrograms(),
+    getPublishedPosts(),
+    getPublishedLegalPages(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
@@ -31,5 +35,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
+    ...legalPages
+      .filter((page) => page.slug !== "privacy-policy" && page.slug !== "terms-of-service")
+      .map((page) => ({
+        url: `${baseUrl}/legal/${page.slug}`,
+        lastModified: page.updatedAt,
+        changeFrequency: "yearly" as const,
+        priority: 0.4,
+      })),
   ];
 }
