@@ -59,7 +59,7 @@ export default async function Home() {
           style={{ backgroundImage: 'url(/background-pattern-2.jpg)' }}
         ></div>
         <div className="absolute inset-0 bg-black/80"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/20 to-black/60"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-[#8B4513]/20 to-black/60"></div>
         <div className="relative max-w-7xl min-h-[calc(100vh-10rem)] mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col justify-end items-start">
           <div className="text-start">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -127,7 +127,7 @@ export default async function Home() {
       </section>
 
       {/* Impact Stats */}
-      <section className="py-16 text-white" style={impactSectionBackground}>
+      {featuredStats.length > 0 && <section className="py-16 text-white" style={impactSectionBackground}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -150,10 +150,10 @@ export default async function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Latest News */}
-      {latestNews.length > 0 && <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
+      {latestNews.length > 0 && <section className="py-16 bg-linear-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
