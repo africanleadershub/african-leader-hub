@@ -74,7 +74,7 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-start">
               <Link 
                 href="/programs" 
-                className="inline-flex text-white items-center justify-center px-8 py-4 hover:bg-white text-black font-semibold bg-[#8B4513] hover:text-black rounded-full transition-colors"
+                className="inline-flex text-white items-center justify-center px-8 py-4 hover:bg-white font-semibold bg-[#8B4513] hover:text-black rounded-full transition-colors"
               >
                 Discover Our Programs
                 <ArrowRight className="ml-2 w-4 h-4" />
