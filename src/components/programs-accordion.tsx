@@ -3,11 +3,11 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Program } from "@/data/programs";
+import type { ProgramView } from "@/lib/content-views";
 import Image from "next/image";
 
 interface ProgramsAccordionProps {
-  programs: Program[];
+  programs: ProgramView[];
 }
 
 export function ProgramsAccordion({ programs }: ProgramsAccordionProps) {

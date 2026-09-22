@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendConfirmationEmail, sendNotificationEmail, type ContactFormData } from '@/lib/email';
-import connectDB from '@/lib/mongodb';
-import Subscriber from '@/models/Subscriber';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,28 +25,32 @@ export async function POST(request: NextRequest) {
       newsletter: body.newsletter || false,
     };
 
-    // Handle newsletter subscription if checked
+    await prisma.contactInquiry.create({
+      data: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        organization: formData.organization,
+        message: formData.message,
+        newsletter: Boolean(formData.newsletter),
+      },
+    });
+
     if (formData.newsletter) {
       try {
-        await connectDB();
-        const existingSubscriber = await Subscriber.findOne({ email: formData.email.toLowerCase() });
-
-        if (!existingSubscriber) {
-          const subscriber = new Subscriber({
+        await prisma.newsletterSubscriber.upsert({
+          where: { email: formData.email.toLowerCase() },
+          update: { isActive: true, source: "contact-form", subscribedAt: new Date() },
+          create: {
             email: formData.email.toLowerCase(),
-            source: 'contact-form',
+            source: "contact-form",
             isActive: true,
-          });
-          await subscriber.save();
-        } else if (!existingSubscriber.isActive) {
-          existingSubscriber.isActive = true;
-          existingSubscriber.source = 'contact-form';
-          existingSubscriber.subscribedAt = new Date();
-          await existingSubscriber.save();
-        }
+          },
+        });
       } catch (error) {
-        // Log error but don't fail the contact form submission
-        console.error('Error subscribing to newsletter:', error);
+        console.error("Error subscribing to newsletter:", error);
       }
     }
 

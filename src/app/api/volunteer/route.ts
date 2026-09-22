@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendConfirmationEmail, sendNotificationEmail, type VolunteerFormData } from '@/lib/email';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,6 +26,8 @@ export async function POST(request: NextRequest) {
       availability: body.availability,
       motivation: body.motivation,
     };
+
+    await prisma.volunteerApplication.create({ data: formData });
 
     // Send confirmation email to user
     await sendConfirmationEmail(
