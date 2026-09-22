@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendConfirmationEmail, sendNotificationEmail, type PartnershipFormData } from '@/lib/email';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,6 +27,8 @@ export async function POST(request: NextRequest) {
       partnershipInterest: body.partnershipInterest,
       partnershipGoals: body.partnershipGoals,
     };
+
+    await prisma.partnershipApplication.create({ data: formData });
 
     // Send confirmation email to user
     await sendConfirmationEmail(

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -185,7 +186,7 @@
   }
 
   .prose h2 {
-    @apply text-3xl font-bold mb-5 mt-10;
+    @apply text-2xl font-bold mb-3 mt-8;
     color: hsl(var(--foreground));
     line-height: 1.3;
     letter-spacing: -0.02em;
@@ -196,7 +197,7 @@
   }
 
   .prose h3 {
-    @apply text-2xl font-semibold mb-4 mt-8;
+    @apply text-xl font-semibold mb-2 mt-6;
     color: hsl(var(--foreground));
     line-height: 1.4;
   }
@@ -221,11 +222,8 @@
 
   /* Paragraphs and Text */
   .prose p {
-    @apply text-lg mb-6 leading-relaxed;
+    @apply mb-4 text-base leading-relaxed;
     color: hsl(var(--foreground));
-    text-align: justify;
-    -webkit-hyphens: auto;
-    hyphens: auto;
   }
 
   .prose p:last-child {
@@ -280,23 +278,27 @@
 
   /* Lists */
   .prose ul {
-    @apply space-y-3 list-disc pl-6 mb-6;
+    @apply my-3 list-disc pl-6;
     color: hsl(var(--foreground));
   }
 
   .prose ol {
-    @apply space-y-3 list-decimal pl-6 mb-6;
+    @apply my-3 list-decimal pl-6;
     color: hsl(var(--foreground));
   }
 
   .prose li {
-    @apply text-lg leading-relaxed;
+    @apply my-1 text-base leading-relaxed;
     color: hsl(var(--foreground));
+  }
+
+  .prose li p {
+    @apply my-0 mb-0 text-base;
   }
 
   .prose li>ul,
   .prose li>ol {
-    @apply mt-2 mb-0;
+    @apply mt-1 mb-0;
   }
 
   .prose li::marker {

@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { TeamMember } from "@/data/team";
 import Link from "next/link";
 import { Linkedin, Facebook, Instagram, MapPin, Briefcase, X } from "lucide-react";
+import { HtmlContent } from "@/components/html-content";
 
 interface TeamMemberModalProps {
   member: TeamMember | null;
@@ -104,11 +105,7 @@ export function TeamMemberModal({ member, isOpen, onClose }: TeamMemberModalProp
           {/* Biography */}
           {member.biography && (
             <div className="pt-3 border-t">
-              
-              <div 
-                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: member.biography }}
-              />
+              <HtmlContent className="text-gray-700 leading-relaxed prose-sm" html={member.biography} />
             </div>
           )}
 
