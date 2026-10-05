@@ -115,7 +115,7 @@ export function RichTextEditor({
       const current = JSON.stringify(editor.getJSON());
       const next = JSON.stringify(value);
       if (current !== next) {
-        editor.commands.setContent(value);
+        editor.commands.setContent(value, { emitUpdate: false });
       }
       return;
     }
@@ -123,7 +123,7 @@ export function RichTextEditor({
       const next = jsonFromHtml(html);
       const current = JSON.stringify(editor.getJSON());
       if (current !== JSON.stringify(next)) {
-        editor.commands.setContent(next);
+        editor.commands.setContent(next, { emitUpdate: false });
       }
     }
   }, [editor, value, html]);

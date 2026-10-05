@@ -10,6 +10,9 @@ import { toProgramView } from "@/lib/content-views";
 import { generateProgramSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
 import { HtmlContent } from "@/components/html-content";
+import { ProgramGallery } from "@/components/program-gallery";
+import { PartnerLogos } from "@/components/partner-logos";
+import { cn } from "@/lib/utils";
 import {
   formatApplicationCloseDate,
   isProgramAcceptingApplications,
@@ -63,6 +66,14 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
   const brochureUrl = program.brochureAsset ? `/api/programs/${program.slug}/brochure` : null;
   const brochurePreview = program.brochurePreviewAsset?.url;
   const partners = program.partners.filter((partner) => partner.published);
+  const gallery = program.galleryImages
+    .map((image) => image.asset)
+    .filter((asset) => asset?.url)
+    .map((asset) => ({
+      url: asset.url,
+      alt: asset.alt || asset.title || program.title,
+    }));
+  const hasSidebar = Boolean(program.timelineHtml) || partners.length > 0 || Boolean(applyAction);
 
   return (
     <div className="min-h-screen">
@@ -98,7 +109,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
 
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2 space-y-8">
               {program.detailsHtml ? (
                 <div className="flex flex-col gap-4">
@@ -107,7 +118,14 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
                 </div>
               ) : null}
 
-              {/* Testimonials section — to be built later. Place it here, directly under program details. */}
+              {gallery.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-lg font-bold text-[#8B4513]">Gallery</h2>
+                  <ProgramGallery images={gallery} title={program.title} />
+                </div>
+              ) : null}
+
+              {/* Testimonials section — to be built later. Place it here, under the gallery and above the brochure. */}
 
               {brochureUrl ? (
                 <div className="flex flex-col gap-4">
@@ -115,7 +133,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
                   <a
                     href={brochureUrl}
                     download
-                    className="group relative block max-w-md overflow-hidden rounded-xl border border-[#8B4513] focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                    className="group relative block max-w-xl overflow-hidden rounded-xl border border-[#8B4513] focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
                   >
                     {brochurePreview ? (
                       <Image
@@ -140,74 +158,35 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
               ) : null}
             </div>
 
-            <div className="space-y-8">
-              {program.timelineHtml ? (
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-lg font-bold text-[#8B4513]">Program Timeline</h2>
-                  <HtmlContent className="text-gray-700" html={program.timelineHtml} />
-                </div>
-              ) : null}
-
-              {partners.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-lg font-bold text-[#8B4513]">Partners</h2>
-                  <div className="space-y-3">
-                    {partners.map((partner) => {
-                      const content = (
-                        <>
-                          {partner.logoAsset?.url ? (
-                            <Image
-                              src={partner.logoAsset.url}
-                              alt={partner.logoAsset.alt || partner.name}
-                              width={120}
-                              height={64}
-                              className="h-14 w-auto max-w-[140px] object-contain"
-                            />
-                          ) : (
-                            <span className="flex h-14 w-full items-center justify-center text-xs text-gray-400">
-                              Logo
-                            </span>
-                          )}
-                          <span className="text-center text-sm font-medium text-gray-800">
-                            {partner.name}
-                          </span>
-                        </>
-                      );
-                      return partner.website ? (
-                        <a
-                          key={partner.id}
-                          href={partner.website}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex flex-col items-center gap-3 rounded-xl border p-5 hover:border-[#8B4513]"
-                        >
-                          {content}
-                        </a>
-                      ) : (
-                        <div
-                          key={partner.id}
-                          className="flex flex-col items-center gap-3 rounded-xl border p-5"
-                        >
-                          {content}
-                        </div>
-                      );
-                    })}
+            {hasSidebar ? (
+              <aside className="overflow-hidden rounded-r-2xl border border-[#8B4513]/20 border-l-[3px] border-l-[#8B4513] bg-[#f6efe8] shadow-sm">
+                {program.timelineHtml ? (
+                  <div className="border-b border-[#8B4513]/10 px-5 py-6">
+                    <h2 className="mb-3 text-lg font-bold text-[#8B4513]">Program Timeline</h2>
+                    <HtmlContent className="text-gray-700" html={program.timelineHtml} />
                   </div>
-                </div>
-              ) : null}
+                ) : null}
 
-              {applyAction ? (
-                <div className="flex flex-col gap-3 rounded-xl border border-[#8B4513] p-4">
-                  <h2 className="text-lg font-bold text-[#8B4513]">Apply</h2>
-                  <p className="text-sm text-gray-600">
-                    {closeDate
-                      ? `Applications close ${closeDate}.`
-                      : "This program is currently receiving applications."}
-                  </p>
-                  <ApplyNowButton action={applyAction} />
-                </div>
-              ) : null}
-            </div>
+                {partners.length > 0 ? (
+                  <div className="border-b border-[#8B4513]/10 px-5 py-6">
+                    <h2 className="mb-4 text-lg font-bold text-[#8B4513]">Partners</h2>
+                    <PartnerLogos partners={partners} />
+                  </div>
+                ) : null}
+
+                {applyAction ? (
+                  <div className="border-t border-[#8B4513]/15 bg-[#8B4513]/10 px-5 py-6">
+                    <h2 className="mb-2 text-lg font-bold text-[#8B4513]">Apply</h2>
+                    <p className="mb-4 text-sm text-gray-600">
+                      {closeDate
+                        ? `Applications close ${closeDate}.`
+                        : "This program is currently receiving applications."}
+                    </p>
+                    <ApplyNowButton action={applyAction} className="w-full" />
+                  </div>
+                ) : null}
+              </aside>
+            ) : null}
           </div>
         </div>
       </section>
@@ -238,7 +217,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
       ) : null}
 
       {relatedPrograms.length > 0 ? (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-secondary text-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Related Programs</h2>
@@ -263,11 +242,17 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
 
 function ApplyNowButton({
   action,
+  className,
 }: {
   action: { href: string; label: string; external: boolean };
+  className?: string;
 }) {
   return (
-    <Button asChild size="lg" className="bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full px-8 py-6 text-lg">
+    <Button
+      asChild
+      size="lg"
+      className={cn("rounded-full bg-[#8B4513] px-8 py-6 text-lg text-white hover:bg-[#6B3410]", className)}
+    >
       {action.external ? (
         <a href={action.href} target="_blank" rel="noreferrer">
           {action.label}

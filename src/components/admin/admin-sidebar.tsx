@@ -39,6 +39,7 @@ import {
 import { Button } from "@/components/ui/button";
 import type { UserRole } from "@/lib/rbac";
 import { adminFetch } from "@/lib/admin-fetch";
+import { useConfirmLeave } from "@/components/admin/unsaved-changes";
 
 type NavItem = {
   title: string;
@@ -106,15 +107,18 @@ export function AdminSidebar({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const confirmLeave = useConfirmLeave();
   const groups = NAV.filter((group) => !group.admin || role === "ADMIN").map((group) => ({
     ...group,
     items: group.items.filter((item) => !item.admin || role === "ADMIN"),
   }));
 
   async function logout() {
-    await adminFetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-    router.refresh();
+    confirmLeave(async () => {
+      await adminFetch("/api/auth/logout", { method: "POST" });
+      router.push("/login");
+      router.refresh();
+    });
   }
 
   return (

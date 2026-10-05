@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { adminFetch } from "@/lib/admin-fetch";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { useUnsavedChanges } from "@/components/admin/unsaved-changes";
 
 type ValueItem = { title: string; description: string; icon?: string };
 
@@ -17,6 +18,10 @@ export default function IdentityPage() {
   const [values, setValues] = useState<ValueItem[]>([]);
   const [saving, setSaving] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const snapshot = JSON.stringify({ mission, vision, background, values });
+  const [baseline, setBaseline] = useState<string | null>(null);
+  const dirty = loaded && baseline !== null && snapshot !== baseline;
+  useUnsavedChanges(dirty);
 
   useEffect(() => {
     adminFetch("/api/admin/site")
@@ -25,7 +30,16 @@ export default function IdentityPage() {
         setMission(data.identity?.mission || "");
         setVision(data.identity?.vision || "");
         setBackground(data.identity?.background || "");
-        setValues(Array.isArray(data.identity?.values) ? data.identity.values : []);
+        const nextValues = Array.isArray(data.identity?.values) ? data.identity.values : [];
+        setValues(nextValues);
+        setBaseline(
+          JSON.stringify({
+            mission: data.identity?.mission || "",
+            vision: data.identity?.vision || "",
+            background: data.identity?.background || "",
+            values: nextValues,
+          })
+        );
         setLoaded(true);
       })
       .catch(() => setLoaded(true));
@@ -33,6 +47,7 @@ export default function IdentityPage() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
+    if (!dirty) return;
     setSaving(true);
     try {
       const response = await adminFetch("/api/admin/site", {
@@ -41,6 +56,7 @@ export default function IdentityPage() {
       });
       if (!response.ok) throw new Error("Save failed");
       toast.success("Identity saved");
+      setBaseline(JSON.stringify({ mission, vision, background, values }));
     } catch {
       toast.error("Could not save identity");
     } finally {
@@ -117,7 +133,7 @@ export default function IdentityPage() {
           </div>
         ))}
       </div>
-      <Button disabled={saving} className="bg-[#8B4513] hover:bg-[#6B3410]">
+      <Button disabled={saving || !dirty} className="bg-[#8B4513] hover:bg-[#6B3410] disabled:opacity-50">
         {saving ? "Saving…" : "Save identity"}
       </Button>
     </form>

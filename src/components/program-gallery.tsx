@@ -14,12 +14,20 @@ function cellClass(count: number, index: number) {
   return index === 0 ? "col-span-4 row-span-4" : "col-span-2 row-span-2";
 }
 
-export function ProgramGallery({ images, title }: { images: GalleryImage[]; title: string }) {
+export function ProgramGallery({
+  images,
+  title,
+  className,
+}: {
+  images: GalleryImage[];
+  title: string;
+  className?: string;
+}) {
   if (images.length === 0) return null;
   const photos = images.slice(0, 5);
 
   return (
-    <div className="grid h-[280px] grid-cols-6 grid-rows-6 gap-3 sm:h-[420px]">
+    <div className={cn("grid h-[240px] grid-cols-6 grid-rows-6 gap-3 sm:h-[360px]", className)}>
       {photos.map((image, index) => (
         <div key={`${image.url}-${index}`} className={cn("relative overflow-hidden rounded-2xl bg-stone-200", cellClass(photos.length, index))}>
           <Image
