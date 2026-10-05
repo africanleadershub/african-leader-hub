@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ImageIcon, Loader2, Search, Upload, Check } from "lucide-react";
+import { ImageIcon, Loader2, Search, Upload, Check, X } from "lucide-react";
 import { adminFetch } from "@/lib/admin-fetch";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -97,6 +97,12 @@ export function AssetSelector({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
+    accept:
+      kind === "FILE"
+        ? { "application/pdf": [".pdf"] }
+        : kind === "IMAGE"
+          ? { "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif"] }
+          : undefined,
   });
 
   return (
@@ -143,6 +149,7 @@ export function AssetSelector({
               <>
                 <Upload className="mb-2 h-5 w-5" />
                 Drop files here or click to upload
+                {kind === "FILE" ? " (PDF)" : kind === "IMAGE" ? " (images)" : ""}
               </>
             )}
           </div>
@@ -186,6 +193,63 @@ export function AssetSelector({
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function GalleryField({
+  label,
+  value,
+  onChange,
+  max = 5,
+  help,
+}: {
+  label: string;
+  value: AssetRecord[];
+  onChange: (assets: AssetRecord[]) => void;
+  max?: number;
+  help?: string;
+}) {
+  const atLimit = value.length >= max;
+
+  function add(asset: AssetRecord) {
+    if (value.some((item) => item.id === asset.id) || value.length >= max) return;
+    onChange([...value, asset]);
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <Label>{label}</Label>
+        <span className="text-xs text-muted-foreground">
+          {value.length}/{max}
+        </span>
+      </div>
+      {value.length > 0 ? (
+        <div className="grid grid-cols-3 gap-2">
+          {value.map((asset) => (
+            <div key={asset.id} className="relative">
+              <Image
+                src={asset.url}
+                alt={asset.alt || asset.title || ""}
+                width={120}
+                height={80}
+                className="h-16 w-full rounded-md object-cover"
+              />
+              <button
+                type="button"
+                className="absolute top-1 right-1 rounded-full bg-black/70 p-0.5 text-white"
+                aria-label={`Remove ${asset.title || "image"}`}
+                onClick={() => onChange(value.filter((item) => item.id !== asset.id))}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {atLimit ? null : <AssetSelector kind="IMAGE" onSelect={add} />}
+      {help ? <p className="text-xs text-muted-foreground">{help}</p> : null}
+    </div>
   );
 }
 

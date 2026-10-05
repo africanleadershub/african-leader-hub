@@ -80,22 +80,22 @@ export default async function About() {
         }}
       />
       {/* Hero Section */}
-      <section className="relative text-white py-16 h-[300px]">
+      <section className="relative text-white py-16 h-[500px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/background-pattern-3.jpg)' }}
         ></div>
         <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/30 to-black/70"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-[#8B4513]/30 to-black/70"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end justify-start">
           <div className="text-start">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About Us</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">About Us</h1>
           </div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

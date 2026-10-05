@@ -14,6 +14,7 @@ const TABS = [
   { id: "partnerships", label: "Partnerships" },
   { id: "donations", label: "Donations" },
   { id: "applications", label: "Job applications" },
+  { id: "program-applications", label: "Program applications" },
   { id: "subscribers", label: "Subscribers" },
 ] as const;
 
@@ -32,6 +33,7 @@ type InboxRow = {
 function inboxRow(row: Record<string, unknown>): InboxRow {
   const received = row.createdAt || row.subscribedAt;
   const career = row.career as { title?: string } | undefined;
+  const program = row.program as { title?: string } | undefined;
   const documents = Array.isArray(row.documents)
     ? (row.documents as { label: string; url: string; name?: string }[])
     : [];
@@ -41,6 +43,7 @@ function inboxRow(row: Record<string, unknown>): InboxRow {
     name: `${String(row.firstName || row.contactName || row.orgName || "")} ${String(row.lastName || "")}`.trim(),
     details: String(
       career?.title ||
+        program?.title ||
         row.subject ||
         row.interest ||
         row.partnershipInterest ||

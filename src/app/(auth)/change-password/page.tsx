@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { adminFetch } from "@/lib/admin-fetch";
 import { toast } from "sonner";
@@ -57,9 +57,8 @@ export default function ChangePasswordPage() {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="current">Current password</Label>
-          <Input
+          <PasswordInput
             id="current"
-            type="password"
             autoComplete="current-password"
             placeholder="Enter your current password"
             value={currentPassword}
@@ -69,9 +68,8 @@ export default function ChangePasswordPage() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="new">New password</Label>
-          <Input
+          <PasswordInput
             id="new"
-            type="password"
             autoComplete="new-password"
             placeholder="At least 8 characters"
             value={newPassword}
@@ -82,9 +80,8 @@ export default function ChangePasswordPage() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="confirm">Confirm new password</Label>
-          <Input
+          <PasswordInput
             id="confirm"
-            type="password"
             autoComplete="new-password"
             placeholder="Re-enter the new password"
             value={confirmPassword}

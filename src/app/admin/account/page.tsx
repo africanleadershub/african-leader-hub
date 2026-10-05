@@ -6,6 +6,7 @@ import { KeyRound, MonitorSmartphone, ShieldCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -295,9 +296,9 @@ export default function AccountPage() {
             <form onSubmit={savePassword} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword">Current password</Label>
-                <Input
+                <PasswordInput
                   id="currentPassword"
-                  type="password"
+                  autoComplete="current-password"
                   placeholder="Enter your current password"
                   value={currentPassword}
                   onChange={(event) => setCurrentPassword(event.target.value)}
@@ -306,9 +307,9 @@ export default function AccountPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="newPassword">New password</Label>
-                <Input
+                <PasswordInput
                   id="newPassword"
-                  type="password"
+                  autoComplete="new-password"
                   placeholder="At least 8 characters"
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
@@ -318,9 +319,9 @@ export default function AccountPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm new password</Label>
-                <Input
+                <PasswordInput
                   id="confirmPassword"
-                  type="password"
+                  autoComplete="new-password"
                   placeholder="Re-enter the new password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}

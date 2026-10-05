@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle, Activity } from "lucide-react";
-import { getProgramBySlug, getPublishedPrograms } from "@/lib/content";
+import { ArrowLeft, Download, Mail } from "lucide-react";
+import { getProgramBySlug, getPublishedPrograms, getWebsiteSettings } from "@/lib/content";
 import { toProgramView } from "@/lib/content-views";
 import { generateProgramSchema } from "@/lib/seo";
 import { ProgramsAccordion } from "@/components/programs-accordion";
+import { HtmlContent } from "@/components/html-content";
+import {
+  formatApplicationCloseDate,
+  isProgramAcceptingApplications,
+  programApplyAction,
+} from "@/lib/programs";
+
+export const dynamic = "force-dynamic";
 
 interface ProgramPageProps {
   params: Promise<{
     slug: string;
   }>;
-}
-
-const callToActionBackground = {
-  background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(/background-pattern-1.jpg)',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
 }
 
 export async function generateMetadata({ params }: ProgramPageProps): Promise<Metadata> {
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: ProgramPageProps): Promise<Me
 
 export default async function ProgramPage({ params }: ProgramPageProps) {
   const { slug } = await params;
-  const program = await getProgramBySlug(slug);
+  const [program, settings] = await Promise.all([getProgramBySlug(slug), getWebsiteSettings()]);
 
   if (!program) {
     notFound();
@@ -54,6 +55,14 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
 
   const programSchema = generateProgramSchema(program.title, program.description);
   const banner = program.imageAsset?.url || program.bannerAsset?.url || "/background-pattern-1.jpg";
+  const accepting = isProgramAcceptingApplications(program);
+  const applicationEmail =
+    program.applicationEmail || settings?.emailPrimary || "africanleadershub@gmail.com";
+  const applyAction = accepting ? programApplyAction(program, applicationEmail) : null;
+  const closeDate = formatApplicationCloseDate(program.applicationsCloseAt);
+  const brochureUrl = program.brochureAsset ? `/api/programs/${program.slug}/brochure` : null;
+  const brochurePreview = program.brochurePreviewAsset?.url;
+  const partners = program.partners.filter((partner) => partner.published);
 
   return (
     <div className="min-h-screen">
@@ -63,7 +72,6 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
           __html: JSON.stringify(programSchema),
         }}
       />
-      {/* Hero Section */}
       <section className="relative text-white py-16 min-h-[calc(100vh-20rem)] md:min-h-[400px] h-[calc(100vh-10rem)] md:h-[450px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -88,221 +96,190 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
         </div>
       </section>
 
-      {/* Program Overview Stats */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#8B4513] mb-2">{program.targetGroups.length}</div>
-              <h3 className="text-lg font-semibold mb-1">Target Group{program.targetGroups.length > 1 ? "s" : ""}</h3>
-              <p className="text-gray-600 text-sm">Primary beneficiaries</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#8B4513] mb-2">{program.keyActivities.length}</div>
-              <h3 className="text-lg font-semibold mb-1">Key Activity{program.keyActivities.length > 1 ? "s" : ""}</h3>
-              <p className="text-gray-600 text-sm">Core program activities</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#8B4513] mb-2">{program.expectedOutcomes.length}</div>
-              <h3 className="text-lg font-semibold mb-1">Expected Outcome{program.expectedOutcomes.length > 1 ? "s" : ""}</h3>
-              <p className="text-gray-600 text-sm">Measurable results</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#8B4513] mb-2">{program.partners.length}</div>
-              <h3 className="text-lg font-semibold mb-1">Partner{program.partners.length > 1 ? "s" : ""}</h3>
-              <p className="text-gray-600 text-sm">Collaborative organizations</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Program Details */}
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Background */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Background</div>
-                <div className="text-gray-700">{program.background}</div>
-              </div>
+              {program.detailsHtml ? (
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-lg font-bold text-[#8B4513]">Program details</h2>
+                  <HtmlContent className="text-gray-700" html={program.detailsHtml} />
+                </div>
+              ) : null}
 
-              {/* Goal */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Goal</div>
-                <div className="text-gray-700">{program.goal}</div>
-              </div>
+              {/* Testimonials section — to be built later. Place it here, directly under program details. */}
 
-              {/* Objectives */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Objectives</div>
-                <div className="text-gray-700">{program.objectives.join(", ")}</div>
-              </div>
-
-              {/* Key Activities */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Key Activities</div>
-                <div className="text-gray-700">{program.keyActivities.join(", ")}</div>
-              </div>
-
-              {/* Expected Outcomes */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Expected Outcomes</div>
-                <div className="text-gray-700">{program.expectedOutcomes.join(", ")}</div>
-              </div>
+              {brochureUrl ? (
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-lg font-bold text-[#8B4513]">Download program brochure</h2>
+                  <a
+                    href={brochureUrl}
+                    download
+                    className="group relative block max-w-md overflow-hidden rounded-xl border border-[#8B4513] focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                  >
+                    {brochurePreview ? (
+                      <Image
+                        src={brochurePreview}
+                        alt={`${program.title} brochure`}
+                        width={640}
+                        height={400}
+                        className="h-auto w-full object-cover transition group-hover:opacity-90"
+                      />
+                    ) : (
+                      <div className="flex h-48 items-center justify-center bg-stone-100 text-[#8B4513]">
+                        <Download className="mr-2 h-5 w-5" />
+                        Download brochure
+                      </div>
+                    )}
+                    <span className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-black/60 py-3 text-sm font-medium text-white">
+                      <Download className="h-4 w-4" />
+                      Download PDF
+                    </span>
+                  </a>
+                </div>
+              ) : null}
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Target Groups */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Target Groups</div>
-                <div className="text-gray-700">
-                  <ul className="list-disc list-inside">
-                    {program.targetGroups.map((group, index) => (
-                      <li key={index} className="text-gray-700">{group}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Program Timeline */}
-              {(program.duration || program.implementationPlan) && (
+            <div className="space-y-8">
+              {program.timelineHtml ? (
                 <div className="flex flex-col gap-4">
-                  <div className="text-lg font-bold text-[#8B4513]">Program Timeline</div>
-                  <div className="text-gray-700">
-                    {program.duration && (
-                      <div>
-                        <h4 className="font-semibold text-black mb-1">Duration:</h4>
-                        <p className="text-gray-600">{program.duration}</p>
-                      </div>
-                    )}
-                    {program.implementationPlan && (
-                      <div>
-                        <h4 className="font-semibold text-black mb-1">Implementation Plan:</h4>
-                        <p className="text-gray-600">{program.implementationPlan}</p>
-                      </div>
-                    )}
+                  <h2 className="text-lg font-bold text-[#8B4513]">Program Timeline</h2>
+                  <HtmlContent className="text-gray-700" html={program.timelineHtml} />
+                </div>
+              ) : null}
+
+              {partners.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-lg font-bold text-[#8B4513]">Partners</h2>
+                  <div className="space-y-3">
+                    {partners.map((partner) => {
+                      const content = (
+                        <>
+                          {partner.logoAsset?.url ? (
+                            <Image
+                              src={partner.logoAsset.url}
+                              alt={partner.logoAsset.alt || partner.name}
+                              width={120}
+                              height={64}
+                              className="h-14 w-auto max-w-[140px] object-contain"
+                            />
+                          ) : (
+                            <span className="flex h-14 w-full items-center justify-center text-xs text-gray-400">
+                              Logo
+                            </span>
+                          )}
+                          <span className="text-center text-sm font-medium text-gray-800">
+                            {partner.name}
+                          </span>
+                        </>
+                      );
+                      return partner.website ? (
+                        <a
+                          key={partner.id}
+                          href={partner.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex flex-col items-center gap-3 rounded-xl border p-5 hover:border-[#8B4513]"
+                        >
+                          {content}
+                        </a>
+                      ) : (
+                        <div
+                          key={partner.id}
+                          className="flex flex-col items-center gap-3 rounded-xl border p-5"
+                        >
+                          {content}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
+              ) : null}
 
-              {/* Budget */}
-              {program.budget && (
-                <div className="flex flex-col gap-4">
-                  <div className="text-lg font-bold text-[#8B4513]">Budget</div>
-                  <div className="text-gray-700">
-                    <p className="text-gray-600">{program.budget}</p>
-                  </div>
+              {applyAction ? (
+                <div className="flex flex-col gap-3 rounded-xl border border-[#8B4513] p-4">
+                  <h2 className="text-lg font-bold text-[#8B4513]">Apply</h2>
+                  <p className="text-sm text-gray-600">
+                    {closeDate
+                      ? `Applications close ${closeDate}.`
+                      : "This program is currently receiving applications."}
+                  </p>
+                  <ApplyNowButton action={applyAction} />
                 </div>
-              )}
-
-              {/* Partners */}
-              <div className="flex flex-col gap-4">
-                <div className="text-lg font-bold text-[#8B4513]">Partners</div>
-                <div className="text-gray-700">
-                  <ul className="list-disc list-inside">
-                    {program.partners.map((partner, index) => (
-                      <li key={index} className="text-gray-700">{partner}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Program Impact & Success Stories */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Program Impact</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Measuring success through tangible outcomes and community transformation
+      {applyAction ? (
+        <section className="relative overflow-hidden py-32">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${banner})` }}
+          />
+          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-linear-to-br from-[#8B4513]/40 to-black/70" />
+          <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Apply to this program</h2>
+            <p className="mb-8 text-gray-200">
+              {closeDate
+                ? `Applications close ${closeDate}.`
+                : "This program is currently receiving applications."}
             </p>
+            {program.applicationMethod === "EMAIL" && program.applicationGuidelinesHtml ? (
+              <div className="mb-8 rounded-xl bg-white/95 p-6 text-left">
+                <HtmlContent className="text-gray-700" html={program.applicationGuidelinesHtml} />
+              </div>
+            ) : null}
+            <ApplyNowButton action={applyAction} />
           </div>
+        </section>
+      ) : null}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <Card className="hover:shadow-lg transition-shadow border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CheckCircle className="w-6 h-6 text-[#8B4513] mr-2" />
-                  Expected Outcomes
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-1">
-                  {program.expectedOutcomes.map((outcome, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-[#8B4513] mr-3 mt-1">✓</span>
-                      <span className="text-gray-700">{outcome}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow border border-[#8B4513]">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Activity className="w-6 h-6 text-[#8B4513] mr-2" />
-                  Key Activities
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ol className="space-y-1">
-                  {program.keyActivities.map((activity, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-[#8B4513] mr-3 mt-1 font-bold">{index + 1}.</span>
-                      <span className="text-gray-700">{activity}</span>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center">
-            <Card className="bg-[#8B4513] text-white" style={callToActionBackground}>
-              <CardContent className="py-8">
-                <h3 className="text-4xl font-bold mb-4">Join Our Impact</h3>
-                <p className="text-gray-200 mb-6 max-w-2xl mx-auto">
-                  Be part of creating lasting change in the lives of our target groups.
-                  Your support helps us reach more people and create greater impact.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild size="lg" className="bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full">
-                    <Link href="/contact">Contact Us</Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Related Programs */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Related Programs</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore other programs in the same category
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {relatedPrograms.map((relatedProgram) => (
+      {relatedPrograms.length > 0 ? (
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Related Programs</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Explore other programs in the same category
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {relatedPrograms.map((relatedProgram) => (
                 <ProgramsAccordion
                   programs={[toProgramView(relatedProgram)]}
                   key={relatedProgram.slug}
                 />
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </div>
+  );
+}
+
+function ApplyNowButton({
+  action,
+}: {
+  action: { href: string; label: string; external: boolean };
+}) {
+  return (
+    <Button asChild size="lg" className="bg-[#8B4513] hover:bg-[#6B3410] text-white rounded-full px-8 py-6 text-lg">
+      {action.external ? (
+        <a href={action.href} target="_blank" rel="noreferrer">
+          {action.label}
+        </a>
+      ) : action.href.startsWith("mailto:") ? (
+        <a href={action.href}>
+          <Mail className="mr-2 h-4 w-4" />
+          {action.label}
+        </a>
+      ) : (
+        <Link href={action.href}>{action.label}</Link>
+      )}
+    </Button>
   );
 }

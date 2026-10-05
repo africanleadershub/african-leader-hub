@@ -13,7 +13,6 @@ export interface Program {
   implementationPlan?: string;
   partners: string[];
   duration?: string;
-  budget?: string;
   image: string;
   bannerImage: string;
 }

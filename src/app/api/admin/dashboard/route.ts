@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
     partnerships,
     donations,
     applications,
+    programApplications,
     subscribers,
     assets,
   ] = await Promise.all([
@@ -28,6 +29,7 @@ export async function GET(request: NextRequest) {
     prisma.partnershipApplication.count({ where: { status: "NEW" } }),
     prisma.donationInquiry.count({ where: { status: "NEW" } }),
     prisma.careerApplication.count({ where: { status: "NEW" } }),
+    prisma.programApplication.count({ where: { status: "NEW" } }),
     prisma.newsletterSubscriber.count({ where: { isActive: true } }),
     prisma.asset.count({ where: { active: true } }),
   ]);
@@ -41,12 +43,13 @@ export async function GET(request: NextRequest) {
       assets,
       subscribers,
       inbox:
-        contacts + volunteers + partnerships + donations + applications,
+        contacts + volunteers + partnerships + donations + applications + programApplications,
       contacts,
       volunteers,
       partnerships,
       donations,
       applications,
+      programApplications,
     },
   });
 }
