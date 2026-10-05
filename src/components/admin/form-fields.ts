@@ -22,6 +22,7 @@ export type FormField = {
   maxLength?: number;
   recommendedLength?: number;
   help?: string;
+  tooltip?: string;
   visibleWhen?: { field: string; in: Array<string | boolean> };
 } & (
   | { type: "text" | "textarea" | "number" | "datetime" | "url" }
@@ -203,7 +204,7 @@ export const programFields: FormField[] = [
   },
   {
     name: "imageAssetId",
-    label: "Image",
+    label: "Cover Photo",
     type: "asset",
     assetKind: "IMAGE",
     section: "sidebar",
@@ -212,12 +213,12 @@ export const programFields: FormField[] = [
   },
   {
     name: "galleryAssets",
-    label: "Application gallery",
+    label: "Program gallery",
     type: "gallery",
     max: 5,
     section: "sidebar",
     group: "media",
-    help: "Up to 5 images shown beside the application form.",
+    help: "Up to 5 photos shown under the program story, above the brochure.",
   },
   {
     name: "seoTitle",
@@ -228,6 +229,8 @@ export const programFields: FormField[] = [
     recommendedLength: 55,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The headline that appears in Google and in the browser tab. If you leave this blank, we use the program title. Keep it around 50–60 characters so search engines do not cut it off.",
   },
   {
     name: "seoDescription",
@@ -238,6 +241,8 @@ export const programFields: FormField[] = [
     recommendedLength: 155,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The short paragraph shown under the title in search results. Use it to say what the program is and who it is for. If blank, we use the excerpt. Aim for about 150–160 characters so the full sentence appears.",
   },
 ];
 
@@ -494,6 +499,8 @@ export const legalFields: FormField[] = [
     recommendedLength: 55,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The headline that appears in Google and in the browser tab. If you leave this blank, we use the page title. Keep it around 50–60 characters so search engines do not cut it off.",
   },
   {
     name: "seoDescription",
@@ -504,6 +511,8 @@ export const legalFields: FormField[] = [
     recommendedLength: 155,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The short paragraph shown under the title in search results. If blank, we use the excerpt. Aim for about 150–160 characters so the full sentence appears.",
   },
 ];
 
@@ -704,6 +713,8 @@ export const postFields: FormField[] = [
     recommendedLength: 55,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The headline that appears in Google and in the browser tab. If you leave this blank, we use the article title. Keep it around 50–60 characters so search engines do not cut it off.",
   },
   {
     name: "seoDescription",
@@ -714,5 +725,7 @@ export const postFields: FormField[] = [
     recommendedLength: 155,
     section: "sidebar",
     group: "seo",
+    tooltip:
+      "The short paragraph shown under the title in search results. If blank, we use the excerpt. Aim for about 150–160 characters so the full sentence appears.",
   },
 ];

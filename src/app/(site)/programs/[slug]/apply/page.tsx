@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +8,7 @@ import { getProgramBySlug } from "@/lib/content";
 import { formatApplicationCloseDate, isProgramAcceptingApplications } from "@/lib/programs";
 import { ProgramApplyForm } from "@/components/program-apply-form";
 import { ProgramGallery } from "@/components/program-gallery";
+import { PartnerLogos } from "@/components/partner-logos";
 import { HtmlContent } from "@/components/html-content";
 
 export const dynamic = "force-dynamic";
@@ -78,7 +78,7 @@ export default async function ProgramApplyPage({ params }: ApplyPageProps) {
       <section className="bg-stone-50 py-12">
         <div className="mx-auto grid max-w-7xl items-start gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div className="space-y-6">
-            <ProgramGallery images={photos} title={program.title} />
+            <ProgramGallery images={photos} title={program.title} className="h-[280px] sm:h-[420px]" />
             {hasFacts ? <div className="space-y-6 rounded-2xl border bg-white p-6">
               {openDate || closeDate ? (
                 <div className="flex items-start gap-3">
@@ -101,36 +101,7 @@ export default async function ProgramApplyPage({ params }: ApplyPageProps) {
               {partners.length > 0 ? (
                 <div className="space-y-3">
                   <h2 className="text-lg font-bold text-[#8B4513]">Partners</h2>
-                  <div className="flex flex-wrap gap-3">
-                    {partners.map((partner) => {
-                      const logo = partner.logoAsset?.url ? (
-                        <Image
-                          src={partner.logoAsset.url}
-                          alt={partner.logoAsset.alt || partner.name}
-                          width={120}
-                          height={48}
-                          className="h-10 w-auto max-w-[120px] object-contain"
-                        />
-                      ) : (
-                        <span className="text-sm font-medium text-gray-800">{partner.name}</span>
-                      );
-                      return partner.website ? (
-                        <a
-                          key={partner.id}
-                          href={partner.website}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex items-center rounded-xl border px-4 py-3 hover:border-[#8B4513]"
-                        >
-                          {logo}
-                        </a>
-                      ) : (
-                        <div key={partner.id} className="flex items-center rounded-xl border px-4 py-3">
-                          {logo}
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <PartnerLogos partners={partners} />
                 </div>
               ) : null}
             </div> : null}

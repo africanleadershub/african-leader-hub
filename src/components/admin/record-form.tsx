@@ -25,6 +25,9 @@ import { cn } from "@/lib/utils";
 import { CategoryField } from "@/components/admin/category-manager";
 import { PartnerPicker, type PartnerOption } from "@/components/admin/partner-picker";
 import type { FieldGroup, FormField } from "@/components/admin/form-fields";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { CircleHelp } from "lucide-react";
+import { useUnsavedChanges } from "@/components/admin/unsaved-changes";
 
 const GROUP_ORDER: FieldGroup[] = ["publish", "applications", "media", "taxonomy", "details", "seo", "social"];
 const GROUP_LABELS: Record<FieldGroup, string> = {
@@ -50,6 +53,33 @@ function toDatetimeLocal(value: unknown) {
   if (Number.isNaN(date.getTime())) return "";
   const pad = (part: number) => String(part).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function FieldLabel({ field }: { field: FormField }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <Label htmlFor={field.name}>
+        {field.label}
+        {field.required ? " *" : ""}
+      </Label>
+      {field.tooltip ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              className="inline-flex rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B4513]/40"
+              aria-label={`About ${field.label}`}
+            >
+              <CircleHelp className="h-3.5 w-3.5" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="left" sideOffset={8} className="max-w-[17.5rem] text-left leading-relaxed">
+            {field.tooltip}
+          </TooltipContent>
+        </Tooltip>
+      ) : null}
+    </div>
+  );
 }
 
 function CharCount({
@@ -95,11 +125,9 @@ function FieldControl({
         : String(values[field.name] || "");
     return (
       <div className="space-y-2">
-        <Label>
-          {field.label}
-          {field.required ? " *" : ""}
-        </Label>
+        <FieldLabel field={field} />
         <Textarea
+          id={field.name}
           placeholder={
             field.placeholder ||
             (field.type === "list" ? "One item per line" : `Write ${field.label.toLowerCase()}`)
@@ -125,7 +153,7 @@ function FieldControl({
   if (field.type === "select") {
     return (
       <div className="space-y-2">
-        <Label>{field.label}</Label>
+        <FieldLabel field={field} />
         <Select
           value={String(values[field.name] || field.options[0]?.value || "")}
           onValueChange={(value) => setField(field.name, value)}
@@ -150,7 +178,7 @@ function FieldControl({
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-3 rounded-md border px-3 py-2">
-          <Label htmlFor={field.name}>{field.label}</Label>
+          <FieldLabel field={field} />
           <Switch
             id={field.name}
             checked={Boolean(values[field.name])}
@@ -226,7 +254,7 @@ function FieldControl({
   if (field.type === "richtext") {
     return (
       <div className="space-y-2">
-        <Label>{field.label}</Label>
+        <FieldLabel field={field} />
         <RichTextEditor
           compact={field.compact}
           placeholder={field.placeholder || `Write ${field.label.toLowerCase()}…`}
@@ -270,11 +298,9 @@ function FieldControl({
 
   return (
     <div className="space-y-2">
-      <Label>
-        {field.label}
-        {field.required ? " *" : ""}
-      </Label>
+      <FieldLabel field={field} />
       <Input
+        id={field.name}
         type={field.type === "datetime" ? "datetime-local" : field.type === "number" ? "number" : field.type === "url" ? "url" : "text"}
         placeholder={
           field.type === "datetime" ? undefined : field.placeholder || `Enter ${field.label.toLowerCase()}`
@@ -287,6 +313,38 @@ function FieldControl({
       <CharCount value={String(values[field.name] || "")} max={field.maxLength} recommended={field.recommendedLength} />
     </div>
   );
+}
+
+function snapshotForm(values: Record<string, unknown>, fields: FormField[]) {
+  const out: Record<string, unknown> = {};
+  for (const field of fields) {
+    if (field.type === "partners") {
+      const partners = Array.isArray(values.partners) ? (values.partners as PartnerOption[]) : [];
+      out.partnerIds = partners.map((partner) => partner.id);
+    } else if (field.type === "gallery") {
+      const assets = Array.isArray(values.galleryAssets) ? (values.galleryAssets as AssetRecord[]) : [];
+      out.galleryAssetIds = assets.map((asset) => asset.id);
+    } else if (field.type === "asset") {
+      out[field.name] = values[field.name] ?? null;
+    } else if (field.type === "richtext") {
+      out[field.name] = String(values[field.name] || "");
+    } else if (field.type === "datetime") {
+      const raw = values[field.name];
+      if (!raw) {
+        out[field.name] = "";
+      } else {
+        const date = new Date(String(raw));
+        out[field.name] = Number.isNaN(date.getTime()) ? String(raw) : date.toISOString();
+      }
+    } else if (field.type === "switch") {
+      out[field.name] = Boolean(values[field.name]);
+    } else if (field.type === "list") {
+      out[field.name] = Array.isArray(values[field.name]) ? values[field.name] : [];
+    } else {
+      out[field.name] = values[field.name] ?? "";
+    }
+  }
+  return JSON.stringify(out);
 }
 
 export function RecordForm({
@@ -302,6 +360,7 @@ export function RecordForm({
 }) {
   const router = useRouter();
   const [values, setValues] = useState<Record<string, unknown>>({});
+  const [baseline, setBaseline] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const mainFields = useMemo(() => fields.filter((field) => field.section !== "sidebar"), [fields]);
   const sidebarFields = useMemo(() => fields.filter((field) => field.section === "sidebar"), [fields]);
@@ -313,6 +372,8 @@ export function RecordForm({
       })).filter((entry) => entry.fields.length > 0),
     [sidebarFields]
   );
+  const dirty = baseline !== null && snapshotForm(values, fields) !== baseline;
+  useUnsavedChanges(dirty);
 
   useEffect(() => {
     if (id) return;
@@ -333,6 +394,7 @@ export function RecordForm({
       }
     }
     setValues(defaults);
+    setBaseline(snapshotForm(defaults, fields));
   }, [fields, id]);
 
   useEffect(() => {
@@ -347,7 +409,7 @@ export function RecordForm({
             })
           | undefined;
         if (item) {
-          setValues({
+          const loaded = {
             ...item,
             applicationMethod: item.applicationMethod || "NONE",
             partnerIds: Array.isArray(item.partners)
@@ -358,11 +420,13 @@ export function RecordForm({
                   .map((image: { asset?: AssetRecord | null }) => image.asset)
                   .filter((asset: AssetRecord | null | undefined): asset is AssetRecord => Boolean(asset?.url))
               : [],
-          });
+          };
+          setValues(loaded);
+          setBaseline(snapshotForm(loaded, fields));
         }
       })
       .catch(() => toast.error("Failed to load record"));
-  }, [collection, id]);
+  }, [collection, fields, id]);
 
   function setField(name: string, value: unknown) {
     setValues((current) => {
@@ -389,6 +453,7 @@ export function RecordForm({
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
+    if (!dirty) return;
     const error = validate();
     if (error) {
       toast.error(error);
@@ -449,7 +514,11 @@ export function RecordForm({
   }
 
   const saveButton = (className?: string) => (
-    <Button type="submit" disabled={saving} className={cn("bg-[#8B4513] hover:bg-[#6B3410]", className)}>
+    <Button
+      type="submit"
+      disabled={saving || !dirty}
+      className={cn("bg-[#8B4513] hover:bg-[#6B3410] disabled:opacity-50", className)}
+    >
       {saving ? "Saving…" : "Save"}
     </Button>
   );
@@ -501,7 +570,9 @@ export function RecordForm({
       {sidebarFields.length > 0 ? (
         <aside className="flex flex-col gap-4 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)]">
           <div className="shrink-0 rounded-xl border border-[#8B4513]/20 bg-white p-4 shadow-sm">
-            <p className="mb-3 text-sm text-muted-foreground">Save keeps every section on this page.</p>
+            <p className="mb-3 text-sm text-muted-foreground">
+              {dirty ? "You have unsaved changes." : "No unsaved changes."}
+            </p>
             {saveButton("w-full")}
           </div>
           <div className="space-y-4 lg:overflow-y-auto lg:pr-1">

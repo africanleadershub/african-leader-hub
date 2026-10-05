@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useUnsavedChanges } from "@/components/admin/unsaved-changes";
 
 type SocialLink = { platform: string; label: string; url: string };
 
@@ -78,20 +79,27 @@ function parseSocialLinks(value: unknown): SocialLink[] {
 export default function SettingsPage() {
   const [values, setValues] = useState<SettingsValues>(EMPTY_SETTINGS);
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
+  const [baseline, setBaseline] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const snapshot = JSON.stringify({ values, socialLinks });
+  const dirty = baseline !== null && snapshot !== baseline;
+  useUnsavedChanges(dirty);
 
   useEffect(() => {
     adminFetch("/api/admin/site")
       .then((res) => res.json())
       .then((data) => {
         if (data.settings) {
-          setValues((current) => ({
-            ...current,
+          const nextValues = {
+            ...EMPTY_SETTINGS,
             ...Object.fromEntries(
-              Object.keys(current).map((key) => [key, data.settings[key] ?? current[key as keyof SettingsValues]])
+              Object.keys(EMPTY_SETTINGS).map((key) => [key, data.settings[key] ?? EMPTY_SETTINGS[key as keyof SettingsValues]])
             ),
-          }));
-          setSocialLinks(parseSocialLinks(data.settings.socialLinks));
+          } as SettingsValues;
+          const nextSocial = parseSocialLinks(data.settings.socialLinks);
+          setValues(nextValues);
+          setSocialLinks(nextSocial);
+          setBaseline(JSON.stringify({ values: nextValues, socialLinks: nextSocial }));
         }
       })
       .catch(() => undefined);
@@ -103,6 +111,7 @@ export default function SettingsPage() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
+    if (!dirty) return;
     setSaving(true);
     try {
       const cleaned = socialLinks
@@ -118,6 +127,8 @@ export default function SettingsPage() {
       });
       if (!response.ok) throw new Error("Save failed");
       toast.success("Settings saved");
+      setSocialLinks(cleaned);
+      setBaseline(JSON.stringify({ values, socialLinks: cleaned }));
     } catch {
       toast.error("Could not save settings");
     } finally {
@@ -225,7 +236,7 @@ export default function SettingsPage() {
           ))}
         </CardContent>
       </Card>
-      <Button disabled={saving} className="bg-[#8B4513] hover:bg-[#6B3410]">
+      <Button disabled={saving || !dirty} className="bg-[#8B4513] hover:bg-[#6B3410] disabled:opacity-50">
         {saving ? "Saving…" : "Save settings"}
       </Button>
     </form>

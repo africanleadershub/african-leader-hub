@@ -125,13 +125,13 @@ export function ProgramApplyForm({
         hint="Optional PDF or Word · max 8MB"
       />
       <FileUploadField
-        label="Supporting documents"
+        label="Additional documents"
         multiple
         files={additionalDocuments}
         onChange={setAdditionalDocuments}
-        hint="Optional certificates, recommendations, or other files"
+        hint="Optional certificates, recommendations, or other files. Max 5 files, each up to 8MB."
       />
-      <Button disabled={loading} className="bg-[#8B4513] hover:bg-[#6B3410]">
+      <Button disabled={loading} className="bg-[#8B4513] hover:bg-[#6B3410] w-full">
         {loading ? "Submitting…" : "Submit application"}
       </Button>
     </form>
