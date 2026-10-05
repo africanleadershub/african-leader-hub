@@ -3,7 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth/middleware";
 import { Prisma } from "@/generated/prisma/client";
 
-const INBOX = ["contacts", "volunteers", "partnerships", "donations", "applications", "subscribers"] as const;
+const INBOX = [
+  "contacts",
+  "volunteers",
+  "partnerships",
+  "donations",
+  "applications",
+  "program-applications",
+  "subscribers",
+] as const;
 type InboxType = (typeof INBOX)[number];
 
 function modelFor(type: InboxType) {
@@ -18,6 +26,8 @@ function modelFor(type: InboxType) {
       return prisma.donationInquiry;
     case "applications":
       return prisma.careerApplication;
+    case "program-applications":
+      return prisma.programApplication;
     case "subscribers":
       return prisma.newsletterSubscriber;
   }
@@ -30,7 +40,11 @@ export async function GET(request: NextRequest) {
   if (!INBOX.includes(type)) return NextResponse.json({ error: "Invalid type" }, { status: 400 });
 
   const include =
-    type === "applications" ? { career: { select: { title: true, slug: true } } } : undefined;
+    type === "applications"
+      ? { career: { select: { title: true, slug: true } } }
+      : type === "program-applications"
+        ? { program: { select: { title: true, slug: true } } }
+        : undefined;
 
   const items = await (modelFor(type) as typeof prisma.contactInquiry).findMany({
     orderBy: type === "subscribers" ? { subscribedAt: "desc" } : { createdAt: "desc" },
@@ -38,7 +52,7 @@ export async function GET(request: NextRequest) {
     ...(include ? { include } : {}),
   } as never);
 
-  if (type === "applications") {
+  if (type === "applications" || type === "program-applications") {
     const applications = items as unknown as Array<{
       resumeAssetId?: string | null;
       coverLetterAssetId?: string | null;

@@ -1,6 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { cache } from "react";
 
+const programInclude = {
+  imageAsset: true,
+  bannerAsset: true,
+  brochureAsset: true,
+  brochurePreviewAsset: true,
+  partners: { include: { logoAsset: true }, orderBy: { sortOrder: "asc" as const } },
+  galleryImages: { include: { asset: true }, orderBy: { sortOrder: "asc" as const } },
+};
+
 export const getWebsiteSettings = cache(async () => {
   const settings = await prisma.websiteSettings.findUnique({
     where: { id: "default" },
@@ -19,7 +28,7 @@ export const getOrganizationIdentity = cache(async () => {
 export const getPublishedPrograms = cache(async () => {
   return prisma.program.findMany({
     where: { status: "PUBLISHED" },
-    include: { imageAsset: true, bannerAsset: true },
+    include: programInclude,
     orderBy: [{ sortOrder: "asc" }, { title: "asc" }],
   });
 });
@@ -86,7 +95,7 @@ export const getPublishedCareers = cache(async () => {
 export const getProgramBySlug = cache(async (slug: string) => {
   return prisma.program.findFirst({
     where: { slug, status: "PUBLISHED" },
-    include: { imageAsset: true, bannerAsset: true },
+    include: programInclude,
   });
 });
 

@@ -5,7 +5,12 @@ export default async function EditCareerPage({ params }: { params: Promise<{ id:
   const { id } = await params;
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-semibold">Edit career</h1>
+      <div>
+        <h1 className="text-3xl font-semibold">Edit career</h1>
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+          Work through one block at a time. Publishing and the job details stay in the column on the right.
+        </p>
+      </div>
       <RecordForm collection="careers" id={id} fields={careerFields} />
     </div>
   );

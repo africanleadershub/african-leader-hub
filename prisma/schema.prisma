@@ -53,6 +53,12 @@ enum CategoryKind {
   PROGRAM
 }
 
+enum ProgramApplicationMethod {
+  EMAIL
+  EXTERNAL_LINK
+  BUILT_IN_FORM
+}
+
 model User {
   id                   String    @id @default(uuid())
   email                String    @unique
@@ -172,14 +178,17 @@ model Asset {
 
   uploadedBy User? @relation("AssetUploadedBy", fields: [uploadedById], references: [id], onDelete: SetNull)
 
-  programImages        Program[]    @relation("ProgramImage")
-  programBanners       Program[]    @relation("ProgramBanner")
-  teamImages           TeamMember[] @relation("TeamImage")
+  programImages            Program[]    @relation("ProgramImage")
+  programBanners           Program[]    @relation("ProgramBanner")
+  programBrochures         Program[]    @relation("ProgramBrochure")
+  programBrochurePreviews  Program[]    @relation("ProgramBrochurePreview")
+  teamImages               TeamMember[] @relation("TeamImage")
   partnerLogos         Partner[]    @relation("PartnerLogo")
   postFeaturedImages   Post[]       @relation("PostFeaturedImage")
   postBannerImages     Post[]       @relation("PostBannerImage")
   settingsLogo         WebsiteSettings[] @relation("SettingsLogo")
   identityHero         OrganizationIdentity[] @relation("IdentityHero")
+  programGallery       ProgramGalleryImage[]
 
   @@index([kind])
   @@index([active])
@@ -265,37 +274,47 @@ model Faq {
 }
 
 model Program {
-  id                  String         @id @default(uuid())
-  slug                String         @unique
-  title               String
-  category            String
-  description         String
-  background          String         @default("")
-  goal                String         @default("")
-  objectives          String[]       @default([])
-  keyActivities       String[]       @default([])
-  targetGroups        String[]       @default([])
-  expectedOutcomes    String[]       @default([])
-  implementationPlan  String?
-  partners            String[]       @default([])
-  duration            String?
-  budget              String?
-  imageAssetId        String?
-  bannerAssetId       String?
-  imageAsset          Asset?         @relation("ProgramImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
-  bannerAsset         Asset?         @relation("ProgramBanner", fields: [bannerAssetId], references: [id], onDelete: SetNull)
-  status              ContentStatus  @default(PUBLISHED)
-  featured            Boolean        @default(false)
-  sortOrder           Int            @default(0)
-  seoTitle            String?
-  seoDescription      String?
-  createdAt           DateTime       @default(now())
-  updatedAt           DateTime       @updatedAt
+  id                           String                     @id @default(uuid())
+  slug                         String                     @unique
+  title                        String
+  category                     String
+  description                  String
+  detailsHtml                  String                     @default("")
+  detailsJson                  Json?
+  timelineHtml                 String                     @default("")
+  timelineJson                 Json?
+  imageAssetId                 String?
+  bannerAssetId                String?
+  brochureAssetId              String?
+  brochurePreviewAssetId       String?
+  imageAsset                   Asset?                     @relation("ProgramImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+  bannerAsset                  Asset?                     @relation("ProgramBanner", fields: [bannerAssetId], references: [id], onDelete: SetNull)
+  brochureAsset                Asset?                     @relation("ProgramBrochure", fields: [brochureAssetId], references: [id], onDelete: SetNull)
+  brochurePreviewAsset         Asset?                     @relation("ProgramBrochurePreview", fields: [brochurePreviewAssetId], references: [id], onDelete: SetNull)
+  partners                     Partner[]
+  galleryImages                ProgramGalleryImage[]
+  status                       ContentStatus              @default(PUBLISHED)
+  featured                     Boolean                    @default(false)
+  sortOrder                    Int                        @default(0)
+  applicationsEnabled          Boolean                    @default(false)
+  applicationsOpenAt           DateTime?
+  applicationsCloseAt          DateTime?
+  applicationMethod            ProgramApplicationMethod?
+  applicationEmail             String?
+  applicationUrl               String?
+  applicationGuidelinesHtml    String                     @default("")
+  applicationGuidelinesJson    Json?
+  seoTitle                     String?
+  seoDescription               String?
+  createdAt                    DateTime                   @default(now())
+  updatedAt                    DateTime                   @updatedAt
+  applications                 ProgramApplication[]
 
   @@index([category])
   @@index([status])
   @@index([featured])
   @@index([sortOrder])
+  @@index([applicationsEnabled])
 }
 
 model TeamMember {
@@ -324,20 +343,56 @@ model TeamMember {
 }
 
 model Partner {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   category    String
   website     String?
   logoAssetId String?
-  logoAsset   Asset?   @relation("PartnerLogo", fields: [logoAssetId], references: [id], onDelete: SetNull)
-  published   Boolean  @default(true)
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  logoAsset   Asset?    @relation("PartnerLogo", fields: [logoAssetId], references: [id], onDelete: SetNull)
+  published   Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  programs    Program[]
 
   @@index([category])
   @@index([published])
   @@index([sortOrder])
+}
+
+model ProgramGalleryImage {
+  id        String  @id @default(uuid())
+  programId String
+  assetId   String
+  sortOrder Int     @default(0)
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  asset     Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([programId, sortOrder])
+  @@index([assetId])
+}
+
+model ProgramApplication {
+  id                 String            @id @default(uuid())
+  programId          String?
+  program            Program?          @relation(fields: [programId], references: [id], onDelete: SetNull)
+  firstName          String
+  lastName           String
+  email              String
+  phone              String?
+  location           String?
+  motivation         String
+  resumeAssetId      String?
+  additionalAssetIds String[]          @default([])
+  status             ApplicationStatus @default(NEW)
+  adminNotes         String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@index([programId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
 }
 
 model ImpactStat {

@@ -5,6 +5,7 @@ export type FieldGroup =
   | "media"
   | "taxonomy"
   | "details"
+  | "applications"
   | "seo"
   | "social";
 
@@ -14,17 +15,23 @@ export type FormField = {
   placeholder?: string;
   section?: FieldSection;
   group?: FieldGroup;
+  groupLabel?: string;
+  panel?: string;
+  panelHint?: string;
   required?: boolean;
   maxLength?: number;
   recommendedLength?: number;
   help?: string;
+  visibleWhen?: { field: string; in: Array<string | boolean> };
 } & (
   | { type: "text" | "textarea" | "number" | "datetime" | "url" }
   | { type: "select"; options: { label: string; value: string }[] }
-  | { type: "asset" }
+  | { type: "asset"; assetKind?: "IMAGE" | "FILE" | "ALL" }
   | { type: "list" }
   | { type: "richtext"; compact?: boolean }
   | { type: "switch" }
+  | { type: "partners" }
+  | { type: "gallery"; max?: number }
   | { type: "category"; categoryKind: "NEWS" | "PROGRAM" }
 );
 
@@ -44,6 +51,8 @@ export const programFields: FormField[] = [
     maxLength: 70,
     recommendedLength: 60,
     help: "Used as the page title and primary search heading.",
+    panel: "Overview",
+    panelHint: "The name and short summary visitors see in listings and at the top of the page.",
   },
   {
     name: "description",
@@ -54,42 +63,60 @@ export const programFields: FormField[] = [
     maxLength: 160,
     recommendedLength: 155,
     help: "Shown in listings, social previews, and search results.",
+    panel: "Overview",
   },
   {
-    name: "background",
-    label: "Background",
-    type: "textarea",
-    placeholder: "Why this program exists and who it serves",
+    name: "detailsHtml",
+    label: "Program details",
+    type: "richtext",
+    placeholder: "Paste or write the full program description…",
+    help: "Use this for everything that used to live in separate sections. Paste from a Word document if that is easier.",
+    panel: "Program story",
+    panelHint: "The long description on the public program page.",
   },
   {
-    name: "goal",
-    label: "Goal",
-    type: "textarea",
-    placeholder: "The primary outcome you want to achieve",
+    name: "timelineHtml",
+    label: "Program timeline",
+    type: "richtext",
+    compact: true,
+    placeholder: "Duration, phases, or any timeline details…",
+    help: "Shown on the public page under the heading Program Timeline.",
+    panel: "Timeline",
+    panelHint: "Shown on the program page and beside the application form.",
   },
   {
-    name: "objectives",
-    label: "Objectives (one per line)",
-    type: "list",
-    placeholder: "Build leadership capacity\nConnect alumni across countries",
+    name: "partners",
+    label: "Partners",
+    type: "partners",
+    help: "Choose from partners already in the system. Their logos appear on the program page.",
+    panel: "Partners and brochure",
+    panelHint: "Logos and an optional PDF visitors can download.",
   },
   {
-    name: "keyActivities",
-    label: "Key activities (one per line)",
-    type: "list",
-    placeholder: "Workshops\nMentorship\nField visits",
+    name: "brochurePreviewAssetId",
+    label: "Brochure preview",
+    type: "asset",
+    assetKind: "IMAGE",
+    help: "Screenshot or cover image. Visitors click it to download the PDF.",
+    panel: "Partners and brochure",
   },
   {
-    name: "targetGroups",
-    label: "Target groups (one per line)",
-    type: "list",
-    placeholder: "University students\nEarly-career professionals",
+    name: "brochureAssetId",
+    label: "Brochure PDF",
+    type: "asset",
+    assetKind: "FILE",
+    help: "Optional. PDF only. Available whether or not applications are open.",
+    panel: "Partners and brochure",
   },
   {
-    name: "expectedOutcomes",
-    label: "Expected outcomes (one per line)",
-    type: "list",
-    placeholder: "50 graduates per cohort\nRegional alumni network",
+    name: "applicationGuidelinesHtml",
+    label: "Application guidelines",
+    type: "richtext",
+    compact: true,
+    placeholder: "How to apply by email, what to include, and any deadlines…",
+    visibleWhen: { field: "applicationMethod", in: ["EMAIL"] },
+    panel: "Email application",
+    panelHint: "Instructions shown when someone applies by email.",
   },
   {
     name: "status",
@@ -108,6 +135,64 @@ export const programFields: FormField[] = [
     group: "publish",
   },
   {
+    name: "applicationsEnabled",
+    label: "Receiving applications",
+    type: "switch",
+    section: "sidebar",
+    group: "applications",
+    help: "Turn off to close applications even if the dates have not passed.",
+  },
+  {
+    name: "applicationsOpenAt",
+    label: "Applications open",
+    type: "datetime",
+    section: "sidebar",
+    group: "applications",
+    help: "Leave blank to open as soon as receiving applications is on.",
+  },
+  {
+    name: "applicationsCloseAt",
+    label: "Applications close",
+    type: "datetime",
+    section: "sidebar",
+    group: "applications",
+    help: "Leave blank to keep applications open until you turn the switch off.",
+  },
+  {
+    name: "applicationMethod",
+    label: "Application method",
+    type: "select",
+    placeholder: "Select a method",
+    section: "sidebar",
+    group: "applications",
+    options: [
+      { label: "None", value: "NONE" },
+      { label: "Apply via email", value: "EMAIL" },
+      { label: "Apply via link", value: "EXTERNAL_LINK" },
+      { label: "Built-in form", value: "BUILT_IN_FORM" },
+    ],
+    help: "Only one method is used. The apply section appears when receiving applications is on and the dates allow it.",
+  },
+  {
+    name: "applicationEmail",
+    label: "Application email",
+    type: "text",
+    placeholder: "programs@africanleadershub.org",
+    section: "sidebar",
+    group: "applications",
+    visibleWhen: { field: "applicationMethod", in: ["EMAIL"] },
+    help: "If blank, the site contact email is used.",
+  },
+  {
+    name: "applicationUrl",
+    label: "Application link",
+    type: "url",
+    placeholder: "https://forms.office.com/…",
+    section: "sidebar",
+    group: "applications",
+    visibleWhen: { field: "applicationMethod", in: ["EXTERNAL_LINK"] },
+  },
+  {
     name: "category",
     label: "Category",
     type: "category",
@@ -120,33 +205,19 @@ export const programFields: FormField[] = [
     name: "imageAssetId",
     label: "Image",
     type: "asset",
+    assetKind: "IMAGE",
     section: "sidebar",
     group: "media",
     help: "Used for listings, the program page banner, and navigation.",
   },
   {
-    name: "slug",
-    label: "Slug",
-    type: "text",
-    placeholder: "youth-leadership-fellowship",
+    name: "galleryAssets",
+    label: "Application gallery",
+    type: "gallery",
+    max: 5,
     section: "sidebar",
-    group: "details",
-  },
-  {
-    name: "duration",
-    label: "Duration",
-    type: "text",
-    placeholder: "12 months",
-    section: "sidebar",
-    group: "details",
-  },
-  {
-    name: "budget",
-    label: "Budget",
-    type: "text",
-    placeholder: "USD 50,000",
-    section: "sidebar",
-    group: "details",
+    group: "media",
+    help: "Up to 5 images shown beside the application form.",
   },
   {
     name: "seoTitle",
@@ -177,18 +248,23 @@ export const careerFields: FormField[] = [
     type: "text",
     placeholder: "Program Manager",
     required: true,
+    panel: "Overview",
+    panelHint: "The role name and short overview visitors see in listings.",
   },
   {
     name: "description",
     label: "Summary",
     type: "textarea",
     placeholder: "A short overview of the role and who should apply",
+    panel: "Overview",
   },
   {
     name: "detailsHtml",
-    label: "Details",
+    label: "Role description",
     type: "richtext",
     placeholder: "Add responsibilities, requirements, and how to apply…",
+    panel: "Role",
+    panelHint: "Responsibilities and requirements on the public career page.",
   },
   {
     name: "status",
@@ -213,6 +289,7 @@ export const careerFields: FormField[] = [
     placeholder: "Select employment type",
     section: "sidebar",
     group: "details",
+    groupLabel: "Position",
     options: [
       { label: "Full time", value: "FULL_TIME" },
       { label: "Part time", value: "PART_TIME" },
@@ -373,6 +450,8 @@ export const legalFields: FormField[] = [
     required: true,
     maxLength: 70,
     recommendedLength: 60,
+    panel: "Overview",
+    panelHint: "The page name and short summary shown in listings.",
   },
   {
     name: "excerpt",
@@ -381,12 +460,15 @@ export const legalFields: FormField[] = [
     placeholder: "A short summary shown in listings",
     maxLength: 160,
     recommendedLength: 155,
+    panel: "Overview",
   },
   {
     name: "contentHtml",
-    label: "Content",
+    label: "Page content",
     type: "richtext",
     placeholder: "Write the legal page content…",
+    panel: "Page",
+    panelHint: "The full text visitors read on the public page.",
   },
   {
     name: "published",
@@ -526,6 +608,8 @@ export const postFields: FormField[] = [
     maxLength: 70,
     recommendedLength: 60,
     help: "Keep this under 60 characters for search results.",
+    panel: "Overview",
+    panelHint: "The headline and short summary visitors see in listings and search results.",
   },
   {
     name: "excerpt",
@@ -536,12 +620,15 @@ export const postFields: FormField[] = [
     maxLength: 160,
     recommendedLength: 155,
     help: "This is the meta description if no SEO description is set.",
+    panel: "Overview",
   },
   {
     name: "contentHtml",
-    label: "Content",
+    label: "Article",
     type: "richtext",
     placeholder: "Write the article…",
+    panel: "Story",
+    panelHint: "The full article on the public news page.",
   },
   {
     name: "status",
@@ -581,6 +668,7 @@ export const postFields: FormField[] = [
     categoryKind: "NEWS",
     section: "sidebar",
     group: "taxonomy",
+    groupLabel: "Category",
     required: true,
   },
   {

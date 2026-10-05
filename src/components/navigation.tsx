@@ -36,9 +36,13 @@ export function Navigation({
   const [openMenu, setOpenMenu] = useState<MenuKey>(null);
   const pathname = usePathname();
 
-  const featuredPrograms = [...programs]
-    .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
-    .slice(0, 6);
+  const programsByCategory = programs.reduce<Map<string, NavProgram[]>>((groups, program) => {
+    const category = program.category || "Programs";
+    const current = groups.get(category) ?? [];
+    current.push(program);
+    groups.set(category, current);
+    return groups;
+  }, new Map());
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleLinkClick = () => {
@@ -152,34 +156,35 @@ export function Navigation({
             onOpen={() => setOpenMenu("programs")}
             onClose={() => setOpenMenu((current) => (current === "programs" ? null : current))}
           >
-            <div className="flex items-end justify-between gap-4 border-b pb-4">
-              <div>
-                <p className="text-xl font-bold text-[#8B4513]">Our programs</p>
-                <p className="text-sm text-muted-foreground">
-                  Education, rights awareness, entrepreneurship, and climate action across Africa.
-                </p>
-              </div>
-              <Link href="/programs" className="shrink-0 text-sm font-medium text-[#8B4513] hover:underline">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-sm text-muted-foreground">
+                Browse by focus area, or open the full list.
+              </p>
+              <Link href="/programs" className="shrink-0 text-sm font-medium text-[#8B4513] hover:underline" onClick={() => setOpenMenu(null)}>
                 View all programs →
               </Link>
             </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredPrograms.map((program) => (
-                <Link
-                  key={program.slug}
-                  href={`/programs/${program.slug}`}
-                  className="group overflow-hidden rounded-2xl border border-stone-200 transition hover:border-[#8B4513] hover:shadow-md"
-                  onClick={() => setOpenMenu(null)}
-                >
-                  <div className="relative h-28">
-                    <Image src={program.imageUrl} alt="" fill className="object-cover transition group-hover:scale-105" />
-                  </div>
-                  <div className="p-4">
-                    <p className="text-xs uppercase tracking-wide text-[#8B4513]">{program.category}</p>
-                    <p className="mt-1 font-semibold text-gray-900">{program.title}</p>
-                    <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{program.description}</p>
-                  </div>
-                </Link>
+            <div className="mt-5 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[...programsByCategory.entries()].map(([category, items]) => (
+                <div key={category}>
+                  <p className="px-2 text-xs font-semibold uppercase tracking-widest text-[#8B4513]">{category}</p>
+                  <ul className="mt-2 space-y-0.5">
+                    {items.map((program) => (
+                      <li key={program.slug}>
+                        <Link
+                          href={`/programs/${program.slug}`}
+                          className="group flex items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-amber-50"
+                          onClick={() => setOpenMenu(null)}
+                        >
+                          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md bg-stone-100">
+                            <Image src={program.imageUrl} alt="" fill className="object-cover" />
+                          </span>
+                          <span className="text-sm font-medium text-gray-900 group-hover:text-[#8B4513]">{program.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </MegaMenu>

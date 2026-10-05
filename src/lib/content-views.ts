@@ -4,16 +4,8 @@ type ProgramLike = {
   title: string;
   category: string;
   description: string;
-  background: string;
-  goal: string;
-  objectives: string[];
-  keyActivities: string[];
-  targetGroups: string[];
-  expectedOutcomes: string[];
-  implementationPlan?: string | null;
-  partners: string[];
-  duration?: string | null;
-  budget?: string | null;
+  detailsHtml?: string | null;
+  timelineHtml?: string | null;
   imageAsset?: { url: string } | null;
   bannerAsset?: { url: string } | null;
   seoTitle?: string | null;
@@ -60,16 +52,8 @@ export function toProgramView(program: ProgramLike) {
     title: program.title,
     category: program.category,
     description: program.description,
-    background: program.background,
-    goal: program.goal,
-    objectives: program.objectives,
-    keyActivities: program.keyActivities,
-    targetGroups: program.targetGroups,
-    expectedOutcomes: program.expectedOutcomes,
-    implementationPlan: program.implementationPlan || undefined,
-    partners: program.partners,
-    duration: program.duration || undefined,
-    budget: program.budget || undefined,
+    detailsHtml: program.detailsHtml || "",
+    timelineHtml: program.timelineHtml || "",
     image: program.imageAsset?.url || program.bannerAsset?.url || "/background-pattern-3.jpg",
     bannerImage: program.imageAsset?.url || program.bannerAsset?.url || "/hero-image.jpg",
     seoTitle: program.seoTitle || undefined,

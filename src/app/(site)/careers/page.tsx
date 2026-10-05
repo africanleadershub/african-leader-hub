@@ -78,10 +78,10 @@ export default async function Careers() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
 
-      <section className="relative h-[420px] text-white">
+      <section className="relative h-[600px] text-white">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/hero-image.jpg)" }} />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/40 to-black/70" />
+        <div className="absolute inset-0 bg-linear-to-br from-[#8B4513]/40 to-black/70" />
         <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-12 sm:px-6 lg:px-8">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-amber-200">Work with us</p>
           <h1 className="max-w-3xl text-4xl font-bold md:text-6xl">Build Africa&apos;s future with us</h1>
@@ -193,7 +193,7 @@ export default async function Careers() {
           </div>
           <div className="grid gap-6 md:grid-cols-4">
             {[
-              { icon: FileText, step: "01", title: "Apply", text: "Send your CV and any supporting documents through the role page." },
+              { icon: FileText, step: "01", title: "Apply", text: "Open the role, then submit your CV and supporting documents on its application page." },
               { icon: BadgeCheck, step: "02", title: "Review", text: "We read every application and shortlist against the role, not against noise." },
               { icon: MessagesSquare, step: "03", title: "Conversation", text: "Interviews are two-way: we learn about you, and you learn about the work." },
               { icon: Handshake, step: "04", title: "Offer", text: "We move as promptly as we can and keep unsuccessful candidates informed." },
