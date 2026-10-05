@@ -28,6 +28,15 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const user = await prisma.user.findUnique({
+    where: { id: challenge.userId },
+    select: { active: true },
+  });
+  if (!user?.active) {
+    await consumeChallenge(challenge.id);
+    return NextResponse.json({ error: "This account is not active. Contact an administrator." }, { status: 403 });
+  }
+
   await prisma.user.update({
     where: { id: challenge.userId },
     data: {
