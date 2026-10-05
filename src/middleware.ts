@@ -24,7 +24,8 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access-token")?.value;
   const payload = token ? await verifyAccessToken(token) : null;
 
-  if (isPublicAuthRoute && payload) {
+  const hasResetToken = pathname === "/reset-password" && request.nextUrl.searchParams.has("token");
+  if (isPublicAuthRoute && payload && !hasResetToken) {
     return NextResponse.redirect(new URL("/admin/dashboard", request.url));
   }
 

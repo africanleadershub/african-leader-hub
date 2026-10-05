@@ -211,6 +211,12 @@ function validateRecord(collection: CollectionName, body: Record<string, unknown
       throw new Error("SEO description must be 160 characters or fewer");
     }
   }
+  if (collection === "partners") {
+    if ("name" in body && !String(body.name || "").trim()) throw new Error("Partner name is required");
+    if ("category" in body && !String(body.category || "").trim()) {
+      throw new Error("Partner category is required");
+    }
+  }
   if (collection === "programs") {
     if (body.applicationsEnabled && !body.applicationMethod) {
       throw new Error("Choose an application method before receiving applications");
