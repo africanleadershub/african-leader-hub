@@ -105,13 +105,13 @@ export default function OurFocus() {
         }}
       />
       {/* Hero Section */}
-      <section className="relative text-white py-16 h-[300px]">
+      <section className="relative text-white py-16 h-[500px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/background-pattern-3.jpg)' }}
         ></div>
         <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/30 to-black/70"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-[#8B4513]/30 to-black/70"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end justify-start">
           <div className="text-start">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Focus</h1>

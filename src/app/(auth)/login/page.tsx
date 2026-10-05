@@ -7,6 +7,7 @@ import { KeyRound } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { authenticateBrowserPasskey } from "@/lib/auth/browser-passkeys";
 import { toast } from "sonner";
@@ -123,9 +124,8 @@ function LoginForm() {
               Forgot password?
             </Link>
           </div>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="current-password"
             placeholder="Enter your password"
             value={password}

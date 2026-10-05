@@ -65,6 +65,42 @@ const IMAGE_PARTNERS = [
   { name: "Transparency International", category: "International NGO", logo: "/logos/transparency-international-logo.png" },
 ];
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br>");
+}
+
+function headingBlock(title: string, body?: string) {
+  if (!body?.trim()) return "";
+  return `<h2>${title}</h2><p>${escapeHtml(body)}</p>`;
+}
+
+function listBlock(title: string, items: string[]) {
+  if (!items.length) return "";
+  return `<h2>${title}</h2><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+}
+
+function programDetailsHtml(program: (typeof programs)[number]) {
+  return [
+    headingBlock("Background", program.background),
+    headingBlock("Goal", program.goal),
+    listBlock("Objectives", program.objectives),
+    listBlock("Key activities", program.keyActivities),
+    listBlock("Target groups", program.targetGroups),
+    listBlock("Expected outcomes", program.expectedOutcomes),
+  ].join("");
+}
+
+function programTimelineHtml(program: (typeof programs)[number]) {
+  return [
+    program.duration ? `<p>${escapeHtml(program.duration)}</p>` : "",
+    program.implementationPlan ? `<p>${escapeHtml(program.implementationPlan)}</p>` : "",
+  ].join("");
+}
+
 function careerType(value: string): CareerType {
   switch (value) {
     case "part-time":
@@ -214,16 +250,8 @@ async function main() {
         title: program.title,
         category: program.category,
         description: program.description,
-        background: program.background,
-        goal: program.goal,
-        objectives: program.objectives,
-        keyActivities: program.keyActivities,
-        targetGroups: program.targetGroups,
-        expectedOutcomes: program.expectedOutcomes,
-        implementationPlan: program.implementationPlan,
-        partners: program.partners,
-        duration: program.duration,
-        budget: program.budget,
+        detailsHtml: programDetailsHtml(program),
+        timelineHtml: programTimelineHtml(program),
         imageAssetId: image.id,
         bannerAssetId: banner.id,
         status: "PUBLISHED",
@@ -277,6 +305,32 @@ async function main() {
         },
       });
     }
+  }
+
+  const programPartnerNames = [...new Set(programs.flatMap((program) => program.partners))];
+  for (const name of programPartnerNames) {
+    const existing = await prisma.partner.findFirst({ where: { name } });
+    if (!existing) {
+      await prisma.partner.create({
+        data: {
+          name,
+          category: "Program partner",
+          published: true,
+        },
+      });
+    }
+  }
+
+  const allPartners = await prisma.partner.findMany();
+  const partnerIdByName = new Map(allPartners.map((partner) => [partner.name.toLowerCase(), partner.id]));
+  for (const program of programs) {
+    const ids = program.partners
+      .map((name) => partnerIdByName.get(name.toLowerCase()))
+      .filter((id): id is string => Boolean(id));
+    await prisma.program.update({
+      where: { slug: program.slug },
+      data: { partners: { set: ids.map((id) => ({ id })) } },
+    });
   }
 
   for (const [index, stat] of impactStats.entries()) {
