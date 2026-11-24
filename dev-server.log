@@ -1,0 +1,1179 @@
+$ prisma generate && next dev --turbopack
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.4.1 -> 8.0.0-rc.34                  │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.4.1) to .\src\generated\prisma in 351ms
+
+   ▲ Next.js 15.5.7 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.64:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+Creating turbopack project { dir: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw', testMode: true }
+ ✓ Compiled middleware in 211ms
+ ✓ Ready in 3.2s
+ ○ Compiling /programs/[slug] ...
+ ✓ Compiled /programs/[slug] in 6.3s
+ GET /programs/aheza 200 in 14273ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 589ms
+ GET /favicon.ico?favicon.a3a4e899.ico 200 in 1204ms
+ ✓ Compiled / in 466ms
+ GET / 200 in 1187ms
+ GET /programs/aheza 200 in 810ms
+ ○ Compiling /programs/aheza/stories ...
+ ✓ Compiled /programs/aheza/stories in 544ms
+ GET /programs/aheza/stories 200 in 1048ms
+ ✓ Compiled /api/content/[type] in 208ms
+ GET /api/content/programs 200 in 1857ms
+ ○ Compiling /programs ...
+ ✓ Compiled /programs in 538ms
+ GET /programs 200 in 854ms
+ ✓ Compiled /programs/aheza/stories/[storySlug] in 442ms
+ GET /programs/aheza/stories/demo-aheza-tailoring 200 in 1986ms
+ ✓ Compiled /login in 434ms
+ GET /login 200 in 637ms
+ GET /programs/aheza/stories/demo-aheza-mentor-voice 200 in 522ms
+ GET /programs/teen-mothers-empowerment 200 in 707ms
+ GET /programs/fight-gbv 200 in 518ms
+ ✓ Compiled in 200ms
+ ✓ Compiled /programs/[slug] in 413ms
+ GET /programs/aheza 200 in 6002ms
+ GET /favicon.ico?favicon.a3a4e899.ico 200 in 701ms
+ GET /programs/aheza 200 in 1896ms
+ GET /favicon.ico?favicon.a3a4e899.ico 200 in 542ms
+ ○ Compiling /programs/aheza/stories ...
+ ✓ Compiled /programs/aheza/stories in 894ms
+ GET /programs/aheza/stories 200 in 1881ms
+ GET /programs/aheza/stories 200 in 1382ms
+ GET /favicon.ico?favicon.a3a4e899.ico 200 in 534ms
+ ✓ Compiled /programs/aheza/stories/[storySlug] in 190ms
+ GET /programs/aheza/stories/kayitesi-deborah 200 in 1281ms
+ GET /programs/aheza/stories 200 in 1240ms
+ GET /programs/aheza 200 in 2210ms
+ ✓ Compiled in 523ms
+ ✓ Compiled / in 11ms
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\(site)\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\app\\(site)\\page\\app-build-manifest.json'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 8.5s
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\static\development\_buildManifest.js.tmp.fauul5o4t4e'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\static\\development\\_buildManifest.js.tmp.fauul5o4t4e'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\(site)\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\app\\(site)\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\static\development\_buildManifest.js.tmp.2c3d76nz3cd'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\static\\development\\_buildManifest.js.tmp.2c3d76nz3cd'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\static\development\_buildManifest.js.tmp.wbir5bils9'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\static\\development\\_buildManifest.js.tmp.wbir5bils9'
+}
+ ✓ Compiled in 1168ms
+ ✓ Compiled in 1546ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 2.3s
+ GET /admin 307 in 3814ms
+ ○ Compiling /admin/dashboard ...
+ ✓ Compiled /admin/dashboard in 1004ms
+ GET /admin/dashboard 200 in 1953ms
+ ○ Compiling /api/admin/dashboard ...
+ ✓ Compiled /api/admin/dashboard in 1025ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 2098ms
+ GET /api/admin/dashboard 500 in 134ms
+ ○ Compiling /admin/programs ...
+ ✓ Compiled /admin/programs in 2.4s
+ GET /admin/programs 200 in 3000ms
+ ○ Compiling /api/admin/collections/[collection] ...
+ ✓ Compiled /api/admin/collections/[collection] in 735ms
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/collections/programs 500 in 1677ms
+ GET /api/admin/collections/programs 500 in 144ms
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/collections/programs 500 in 1181ms
+ GET /api/admin/collections/programs 500 in 129ms
+ GET /admin/dashboard 200 in 654ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 1130ms
+ GET /api/admin/dashboard 500 in 170ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 1040ms
+ GET /api/admin/dashboard 500 in 141ms
+ GET /admin/dashboard 200 in 649ms
+ GET /admin/dashboard 200 in 569ms
+ GET /admin/programs 200 in 628ms
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/collections/programs 500 in 1116ms
+ GET /api/admin/collections/programs 500 in 123ms
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\collections\[collection]\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/collections/programs'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/collections/programs 500 in 1139ms
+ GET /api/admin/collections/programs 500 in 132ms
+ GET /admin 307 in 848ms
+ GET /admin/dashboard 200 in 668ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 783ms
+ GET /api/admin/dashboard 500 in 73ms
+ ○ Compiling /admin/account ...
+ ✓ Compiled /admin/account in 2.1s
+ GET /admin/account 200 in 2661ms
+ GET /admin/account 200 in 678ms
+ GET /admin/account 200 in 579ms
+ GET /admin/account 200 in 603ms
+ ○ Compiling /api/admin/account ...
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account/sessions'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account/sessions'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/account/sessions 500 in 3379ms
+ GET /api/admin/account/sessions 500 in 140ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/account 500 in 4051ms
+ GET /api/admin/account 500 in 159ms
+ ✓ Compiled /api/admin/account in 4.5s
+ ⨯ Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account/sessions'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\sessions\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account/sessions'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /admin/dashboard 200 in 2170ms
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/account/sessions 500 in 2128ms
+ GET /api/admin/account/sessions 500 in 202ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/passkey'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/passkey'
+}
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/auth/passkey 500 in 6189ms
+ GET /api/auth/passkey 500 in 319ms
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\account\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/account'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/account 500 in 2387ms
+ GET /api/admin/account 500 in 193ms
+ GET /admin/dashboard 200 in 1883ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/passkey'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\passkey\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/passkey'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/auth/passkey 500 in 1472ms
+ GET /api/auth/passkey 500 in 148ms
+ GET /admin/dashboard 200 in 1016ms
+ GET /admin/dashboard 200 in 581ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 978ms
+ GET /api/admin/dashboard 500 in 114ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 1045ms
+ GET /api/admin/dashboard 500 in 127ms
+ GET /admin/dashboard 200 in 1379ms
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\favicon.ico\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\app\\favicon.ico\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\admin\dashboard\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/admin/dashboard'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ GET /api/admin/dashboard 500 in 1157ms
+ GET /api/admin/dashboard 500 in 151ms
+ ○ Compiling /api/auth/logout ...
+ ✓ Compiled /api/auth/logout in 524ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/logout'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/logout'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ POST /api/auth/logout 500 in 1478ms
+ POST /api/auth/logout 500 in 149ms
+ GET /admin/dashboard 200 in 653ms
+ GET /admin/dashboard 200 in 690ms
+ ⨯ Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/logout'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+Error: Cannot find module '../../../../chunks/[turbopack]_runtime.js'
+Require stack:
+- C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\require.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\load-components.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\utils.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\options.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\swc\index.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\config.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\next.js
+- C:\Users\educa\Desktop\ALH\ALHw\node_modules\.pnpm\next@15.5.7_react-dom@19.1.0_react@19.1.0__react@19.1.0\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (C:\Users\educa\Desktop\ALH\ALHw\.next\server\app\api\auth\logout\route.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/auth/logout'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\educa\Desktop\ALH\ALHw\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\educa\\Desktop\\ALH\\ALHw\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ POST /api/auth/logout 500 in 1152ms
+ POST /api/auth/logout 500 in 153ms
+ GET /admin/dashboard 200 in 720ms
+ GET /admin/dashboard 200 in 704ms
+ ✓ Compiled in 1149ms
+ ✓ Compiled in 1226ms
+ ✓ Compiled in 1207ms
+ ✓ Compiled in 2.9s
+ ✓ Compiled in 571ms
+ ✓ Compiled in 2.4s
+ ✓ Compiled in 1625ms
+[ELIFECYCLE] Command failed with exit code 1073807364.

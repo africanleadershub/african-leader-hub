@@ -1,0 +1,20 @@
+[33mf5f7cf9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32maheza-dev[m[33m, [m[1;31morigin/aheza-dev[m[33m)[m feat: add AHEZA program gallery and testimonials
+[33m22918fe[m[33m ([m[1;31morigin/dev[m[33m)[m Merge pull request #12 from africanleadershub/ft/cms
+[33m2a91d73[m[33m ([m[1;31morigin/ft/cms[m[33m)[m feat: Enhance program page with gallery and partner logos
+[33m2e0e44b[m Merge pull request #10 from africanleadershub/ft/cms
+[33m5e2169f[m feat: Enhance user management and reset password flow
+[33m348611d[m Merge pull request #8 from africanleadershub/ft/cms
+[33mdebd810[m feat: Redesign program model and enhance application process
+[33m4fb5ae3[m Merge pull request #6 from africanleadershub/ft/cms
+[33m1620e2b[m fix: Remove unnecessary class from Link component in Home page
+[33m24f3f46[m fix: Correct gradient class name and conditionally render impact stats section
+[33md70c27b[m Merge pull request #4 from africanleadershub/ft/cms
+[33me22687f[m chore: Remove ENV_SETUP.md file containing environment setup instructions
+[33m88b2d49[m Merge pull request #2 from africanleadershub/ft/cms
+[33m9821cf6[m refactor: Improve structure and formatting of form fields in admin components
+[33mb2174b7[m refactor: Improve RichTextEditor component styling and structure
+[33mce0a588[m feat: Add content categories and enhance career application model
+[33meaa026a[m feat: Add content categories management with CRUD API
+[33mdb6ec36[m fix: Update OTP confirmation and login flow for password reset handling
+[33m66b6707[m feat: Enhance authentication flow with new routes and password management
+[33m6965c3e[m feat: Implement two-factor authentication and passkey support
